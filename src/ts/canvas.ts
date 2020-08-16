@@ -6,6 +6,8 @@ canvas.width = configStore.get().gameWidth;
 canvas.height = configStore.get().gameHeight;
 
 function handleWindowResize() {
+  if (!canvas.parentElement) return;
+
   const proportion = {
     width: canvas.parentElement.clientWidth / canvas.width,
     height: canvas.parentElement.clientHeight / canvas.height,
