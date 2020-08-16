@@ -1,11 +1,16 @@
 import { idleText } from "./idleText";
 import { workingText } from "./workingText";
 import { Sprite, GameObject } from "kontra";
+import { Action } from "../enums";
 
-export const person: Sprite & {
+interface Person extends Sprite {
+  currentAction?: Action;
+  sickOrInjured?: boolean;
   speed?: number;
   targetGameObject?: GameObject;
-} = Sprite({
+}
+
+export const person: Person = Sprite({
   x: idleText.x,
   y: idleText.y,
   color: "red",
@@ -26,5 +31,6 @@ export const person: Sprite & {
   },
 });
 
+person.sickOrInjured = false;
 person.speed = 3;
 person.targetGameObject = workingText;
