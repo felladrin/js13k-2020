@@ -1,0 +1,16 @@
+$color-black: #000000;
+$color-brown: #916848;
+
+body {
+  background-color: $color-black;
+  margin: 0;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+}
+
+#gameCanvas {
+  background-color: $color-black;
+  border-right: 1px solid $color-brown;
+  border-bottom: 1px solid $color-brown;
+}
