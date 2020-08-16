@@ -5,7 +5,7 @@ export const { canvas } = init("gameCanvas");
 canvas.width = configStore.get().gameWidth;
 canvas.height = configStore.get().gameHeight;
 
-const handleWindowResize = () => {
+function handleWindowResize() {
   const proportion = {
     width: canvas.parentElement.clientWidth / canvas.width,
     height: canvas.parentElement.clientHeight / canvas.height,
@@ -16,7 +16,7 @@ const handleWindowResize = () => {
 
   canvas.style.transformOrigin = "left top";
   canvas.style.transform = `scale(${scale})`;
-};
+}
 
 handleWindowResize();
 
