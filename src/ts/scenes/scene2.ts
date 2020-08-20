@@ -1,25 +1,25 @@
 import { Scene } from "kontra";
-import { workingText } from "../gameObjects/workingText";
+import { idleText } from "../gameObjects/idleText";
 import {
   gameLoopCallbacksStore,
   GameLoopCallbacksStoreAction,
 } from "../stores/gameLoopCallbacksStore";
 
-export const scene = Scene({
-  id: "game",
-  children: [workingText],
+export const scene2 = Scene({
+  id: "scene2",
+  children: [idleText],
 });
 
 gameLoopCallbacksStore.dispatch(
   GameLoopCallbacksStoreAction.AddUpdateCallback,
   () => {
-    scene.update();
+    scene2.update();
   }
 );
 
 gameLoopCallbacksStore.dispatch(
   GameLoopCallbacksStoreAction.AddRenderCallback,
   () => {
-    scene.render();
+    scene2.render();
   }
 );

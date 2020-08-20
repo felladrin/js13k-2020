@@ -1,15 +1,17 @@
 import { GameLoop } from "kontra";
-import { scene } from "./scenes/scene";
-import { population, fillPopulation } from "./game-objects/population";
+import { gameLoopCallbacksStore } from "./stores/gameLoopCallbacksStore";
+import "./scenes";
+import "./gamePools";
 
 export const game = GameLoop({
-  update: () => {
-    scene.update();
-    fillPopulation();
-    population.update();
+  update: (deltaTime) => {
+    for (const gameUpdateCallback of gameLoopCallbacksStore.get().onUpdate) {
+      gameUpdateCallback(deltaTime);
+    }
   },
   render: () => {
-    scene.render();
-    population.render();
+    for (const gameRenderCallback of gameLoopCallbacksStore.get().onRender) {
+      gameRenderCallback();
+    }
   },
 });

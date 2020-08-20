@@ -4,9 +4,9 @@
   "description": "Game created for the Js13kGames competition from 2020.",
   "private": true,
   "scripts": {
-    "start": "run-p parcel",
+    "start": "run-p create-ts-index parcel",
     "build": "run-s clean-dist-dir make-dist-dir parcel-build inline-build zip",
-    "parcel": "parcel src/index.html --dist-dir dist/bundled",
+    "parcel": "parcel serve src/index.html --dist-dir dist/bundled",
     "clean-dist-dir": "rimraf dist",
     "make-dist-dir": "mkdirp dist/bundled dist/inlined dist/zipped",
     "parcel-build": "parcel build src/index.html --dist-dir dist/bundled --no-source-maps",
@@ -15,7 +15,8 @@
     "lint": "eslint \"src/**/*.{js,ts}\" --fix",
     "find-duplicate-code": "jscpd src",
     "find-circular-dependencies": "dpdm --tree false --warning false src/scripts/index.ts",
-    "update-dependencies": "ncu -u && npm i"
+    "update-dependencies": "ncu -u && npm i",
+    "create-ts-index": "cti -w -b -q '\"' create src/ts/gamePools src/ts/scenes"
   },
   "author": "Victor Nogueira <victor@victornogueira.app>",
   "license": "MIT",
@@ -24,6 +25,7 @@
     "@typescript-eslint/eslint-plugin": "^3.9.0",
     "@typescript-eslint/parser": "^3.9.0",
     "archiver": "^5.0.0",
+    "create-ts-index": "^1.13.3",
     "dpdm": "^3.4.3",
     "eslint": "^7.7.0",
     "eslint-config-prettier": "^6.11.0",

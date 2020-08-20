@@ -1,15 +1,21 @@
 import { Pool, Sprite, GameObject, randInt } from "kontra";
-import { idleText } from "./idleText";
-import { workingText } from "./workingText";
+import { idleText } from "../gameObjects/idleText";
+import { workingText } from "../gameObjects/workingText";
 import { Action } from "../enums";
+import {
+  gameLoopCallbacksStore,
+  GameLoopCallbacksStoreAction,
+} from "../stores/gameLoopCallbacksStore";
 
 export const population = Pool({
+  // eslint-disable-next-line
+  // @ts-ignore
   create: Sprite,
   maxSize: 404,
   fill: true,
 });
 
-export function fillPopulation(): void {
+function fillPopulation(): void {
   population.get({
     x: idleText.x + randInt(-50, 50),
     y: idleText.y + randInt(-50, 50),
@@ -41,3 +47,18 @@ interface Person extends Sprite {
   speed?: number;
   targetGameObject?: GameObject;
 }
+
+gameLoopCallbacksStore.dispatch(
+  GameLoopCallbacksStoreAction.AddUpdateCallback,
+  () => {
+    fillPopulation();
+    population.update();
+  }
+);
+
+gameLoopCallbacksStore.dispatch(
+  GameLoopCallbacksStoreAction.AddRenderCallback,
+  () => {
+    population.render();
+  }
+);
