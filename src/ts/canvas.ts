@@ -34,4 +34,21 @@ function handleWindowResize() {
 
 handleWindowResize();
 
-window.addEventListener("resize", handleWindowResize, false);
+const lastRecordedWindowSize = {
+  width: 0,
+  height: 0,
+};
+
+setInterval(() => {
+  const currentWidth = window.innerWidth;
+  const currentHeight = window.innerHeight;
+
+  if (
+    currentWidth != lastRecordedWindowSize.width ||
+    currentHeight != lastRecordedWindowSize.height
+  ) {
+    lastRecordedWindowSize.width = currentWidth;
+    lastRecordedWindowSize.height = currentHeight;
+    handleWindowResize();
+  }
+}, 250);
