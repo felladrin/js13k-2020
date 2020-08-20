@@ -16,7 +16,7 @@
     "find-duplicate-code": "jscpd src",
     "find-circular-dependencies": "dpdm --tree false --warning false src/scripts/index.ts",
     "update-dependencies": "ncu -u && npm i",
-    "create-ts-index": "cti -w -b -q '\"' create src/ts/gamePools src/ts/scenes"
+    "create-ts-index": "cti -w -b -q '\"' create src/ts/imports"
   },
   "author": "Victor Nogueira <victor@victornogueira.app>",
   "license": "MIT",

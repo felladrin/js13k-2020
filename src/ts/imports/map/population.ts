@@ -1,11 +1,11 @@
 import { Pool, Sprite, GameObject, randInt } from "kontra";
-import { idleText } from "../scenes/hud/idleText";
-import { workingText } from "../scenes/map/workingText";
-import { Action } from "../enums";
+import { idleText } from "../hud/idleText";
+import { workingText } from "./workingText";
+import { Action } from "../../enums";
 import {
   gameLoopCallbacksStore,
   GameLoopCallbacksStoreAction,
-} from "../stores/gameLoopCallbacksStore";
+} from "../../stores/gameLoopCallbacksStore";
 
 export const population = Pool({
   // eslint-disable-next-line

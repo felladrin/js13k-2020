@@ -1,25 +1,25 @@
 import { Scene } from "kontra";
-import { idleText } from "./hud/idleText";
+import { workingText } from "./workingText";
 import {
   gameLoopCallbacksStore,
   GameLoopCallbacksStoreAction,
-} from "../stores/gameLoopCallbacksStore";
+} from "../../stores/gameLoopCallbacksStore";
 
-export const scene2 = Scene({
-  id: "scene2",
-  children: [idleText],
+export const scene = Scene({
+  id: "game",
+  children: [workingText],
 });
 
 gameLoopCallbacksStore.dispatch(
   GameLoopCallbacksStoreAction.AddUpdateCallback,
   () => {
-    scene2.update();
+    scene.update();
   }
 );
 
 gameLoopCallbacksStore.dispatch(
   GameLoopCallbacksStoreAction.AddRenderCallback,
   () => {
-    scene2.render();
+    scene.render();
   }
 );
