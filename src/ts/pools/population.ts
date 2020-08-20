@@ -1,6 +1,6 @@
 import { Pool, Sprite, GameObject, randInt } from "kontra";
-import { idleText } from "../gameObjects/idleText";
-import { workingText } from "../gameObjects/workingText";
+import { idleText } from "../scenes/hud/idleText";
+import { workingText } from "../scenes/map/workingText";
 import { Action } from "../enums";
 import {
   gameLoopCallbacksStore,

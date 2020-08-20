@@ -1,2 +1,2 @@
-export * from "./scene";
-export * from "./scene2";
+export * from "./map";
+export * from "./hud";

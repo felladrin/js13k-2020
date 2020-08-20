@@ -1,5 +1,5 @@
 import { Scene } from "kontra";
-import { idleText } from "../gameObjects/idleText";
+import { idleText } from "./hud/idleText";
 import {
   gameLoopCallbacksStore,
   GameLoopCallbacksStoreAction,

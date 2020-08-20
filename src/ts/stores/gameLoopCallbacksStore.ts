@@ -1,8 +1,8 @@
 import { createStoreon, StoreonModule } from "storeon";
 
 export enum GameLoopCallbacksStoreAction {
-  AddUpdateCallback = "AddUpdateCallback",
-  AddRenderCallback = "AddRenderCallback",
+  AddUpdateCallback,
+  AddRenderCallback,
 }
 
 type GameUpdateCallback = (deltaTime?: number) => void;

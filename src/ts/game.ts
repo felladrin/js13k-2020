@@ -1,7 +1,7 @@
 import { GameLoop } from "kontra";
 import { gameLoopCallbacksStore } from "./stores/gameLoopCallbacksStore";
 import "./scenes";
-import "./gamePools";
+import "./pools";
 
 export const game = GameLoop({
   update: (deltaTime) => {

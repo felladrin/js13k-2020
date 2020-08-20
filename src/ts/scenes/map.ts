@@ -1,5 +1,5 @@
 import { Scene } from "kontra";
-import { workingText } from "../gameObjects/workingText";
+import { workingText } from "./map/workingText";
 import {
   gameLoopCallbacksStore,
   GameLoopCallbacksStoreAction,
