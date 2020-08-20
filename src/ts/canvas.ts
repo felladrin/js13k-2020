@@ -16,8 +16,20 @@ function handleWindowResize() {
   const scale =
     proportion.width < proportion.height ? proportion.width : proportion.height;
 
-  canvas.style.transformOrigin = "left top";
-  canvas.style.transform = `scale(${scale})`;
+  const style: Partial<CSSStyleDeclaration> = {
+    position: "relative",
+    top: "50%",
+    left: "50%",
+    transform: `translate(-50%, -50%) scale(${scale})`,
+    transformOrigin: "center center",
+  };
+
+  for (const declaration of Object.keys(style)) {
+    canvas.style.setProperty(
+      declaration,
+      (style as Record<string, string>)[declaration]
+    );
+  }
 }
 
 handleWindowResize();
