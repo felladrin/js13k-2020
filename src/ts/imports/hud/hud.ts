@@ -1,13 +1,13 @@
 import { Scene } from "kontra";
-import { idleText } from "./idleText";
 import {
   gameLoopCallbacksStore,
   GameLoopCallbacksStoreAction,
 } from "../../stores/gameLoopCallbacksStore";
+import { button } from "./button";
 
 export const scene2 = Scene({
-  id: "scene2",
-  children: [idleText],
+  id: "hud",
+  children: [button],
 });
 
 gameLoopCallbacksStore.dispatch(

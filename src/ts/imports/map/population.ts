@@ -1,5 +1,5 @@
 import { Pool, Sprite, GameObject, randInt } from "kontra";
-import { idleText } from "../hud/idleText";
+import { idleText } from "./idleText";
 import { workingText } from "./workingText";
 import { Action } from "../../enums";
 import {

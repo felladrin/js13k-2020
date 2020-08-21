@@ -1,4 +1,4 @@
-import { init } from "kontra";
+import { init, initPointer } from "kontra";
 import { configStore } from "./stores/configStore";
 
 export const { canvas } = init("gameCanvas");
@@ -30,6 +30,8 @@ function handleWindowResize() {
       (style as Record<string, string>)[declaration]
     );
   }
+
+  initPointer(canvas);
 }
 
 handleWindowResize();
