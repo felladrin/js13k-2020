@@ -1,4 +1,3 @@
-export * from "./idleText";
+export * from "./actionAreaLabels";
 export * from "./map";
 export * from "./population";
-export * from "./workingText";

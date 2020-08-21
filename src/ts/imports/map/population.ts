@@ -1,11 +1,10 @@
-import { Pool, Sprite, GameObject, randInt } from "kontra";
-import { idleText } from "./idleText";
-import { workingText } from "./workingText";
+import { Pool, Sprite, randInt, Vector } from "kontra";
 import { Action } from "../../enums";
 import {
   gameLoopCallbacksStore,
   GameLoopCallbacksStoreAction,
 } from "../../stores/gameLoopCallbacksStore";
+import { getActionAreaLabel } from "./actionAreaLabels";
 
 export const population = Pool({
   // eslint-disable-next-line
@@ -17,21 +16,24 @@ export const population = Pool({
 
 function fillPopulation(): void {
   population.get({
-    x: idleText.x + randInt(-50, 50),
-    y: idleText.y + randInt(-50, 50),
-    color: "red",
+    x: getActionAreaLabel(Action.Constructing).position.x + randInt(-100, 100),
+    y: getActionAreaLabel(Action.Constructing).position.y + randInt(-100, 100),
+    color: "lightGreen",
     width: 4,
     height: 4,
     sickOrInjured: false,
     speed: 3,
-    targetGameObject: workingText,
+    targetPosition: new Vector(
+      getActionAreaLabel(Action.Researching).position.x + randInt(-100, 100),
+      getActionAreaLabel(Action.Researching).position.y + randInt(-100, 100)
+    ),
     update: function (this: Person) {
       if (
-        this.targetGameObject &&
+        this.targetPosition &&
         this.speed &&
-        this.position.distance(this.targetGameObject.position) > this.speed
+        this.position.distance(this.targetPosition) > this.speed
       ) {
-        const direction = this.targetGameObject.position
+        const direction = this.targetPosition
           .subtract(this.position)
           .normalize();
         this.velocity = direction.scale(this.speed);
@@ -45,7 +47,7 @@ interface Person extends Sprite {
   currentAction?: Action;
   sickOrInjured?: boolean;
   speed?: number;
-  targetGameObject?: GameObject;
+  targetPosition?: Vector;
 }
 
 gameLoopCallbacksStore.dispatch(

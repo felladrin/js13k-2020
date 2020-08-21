@@ -1,15 +1,18 @@
 import { Scene } from "kontra";
-import { workingText } from "./workingText";
-import { idleText } from "../map/idleText";
 
 import {
   gameLoopCallbacksStore,
   GameLoopCallbacksStoreAction,
 } from "../../stores/gameLoopCallbacksStore";
+import { getActionAreaLabel } from "./actionAreaLabels";
+import { Action } from "../../enums";
 
 export const scene = Scene({
   id: "map",
-  children: [idleText, workingText],
+  children: [
+    getActionAreaLabel(Action.Constructing),
+    getActionAreaLabel(Action.Researching),
+  ],
 });
 
 gameLoopCallbacksStore.dispatch(
