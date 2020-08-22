@@ -4,7 +4,7 @@
   "description": "Game created for the Js13kGames competition from 2020.",
   "private": true,
   "scripts": {
-    "start": "run-p create-ts-index parcel",
+    "start": "run-s clean-dist-dir create-ts-index parcel",
     "build": "run-s clean-dist-dir make-dist-dir parcel-build inline-build zip",
     "parcel": "parcel serve src/index.html --dist-dir dist/bundled",
     "clean-dist-dir": "rimraf dist",
