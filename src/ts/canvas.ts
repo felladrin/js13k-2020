@@ -1,9 +1,9 @@
 import { init, initPointer } from "kontra";
-import { configStore } from "./stores/configStore";
+import { gameWidth, gameHeight } from "./constants";
 
 export const { canvas } = init("gameCanvas");
-canvas.width = configStore.get().gameWidth;
-canvas.height = configStore.get().gameHeight;
+canvas.width = gameWidth;
+canvas.height = gameHeight;
 
 function handleWindowResize() {
   if (!canvas.parentElement) return;
