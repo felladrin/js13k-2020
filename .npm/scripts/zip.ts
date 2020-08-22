@@ -19,7 +19,7 @@ output.on("close", () => {
   console.log(`File size: ${fileSize} Bytes`);
   console.log(
     `${statusColor}%s\x1b[0m`,
-    `Status: ${fileSizeDifference} bytes ${status} the 13KB limit!`
+    `Status: ${fileSizeDifference} Bytes ${status} the 13KB limit!`
   );
 });
 
