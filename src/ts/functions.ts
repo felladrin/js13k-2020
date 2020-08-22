@@ -2,7 +2,7 @@ export function getKeysFromEnum<E>(e: E): (keyof E)[] {
   return Object.keys(e) as (keyof E)[];
 }
 
-export function disablePinchToZoom() {
+export function disablePinchToZoom(): void {
   document.addEventListener(
     "touchmove",
     function (event) {
