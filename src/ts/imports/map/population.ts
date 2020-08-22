@@ -4,7 +4,7 @@ import {
   gameLoopCallbacksStore,
   GameLoopCallbacksStoreAction,
 } from "../../stores/gameLoopCallbacksStore";
-import { getActionAreaLabel } from "./actionAreaLabels";
+import { getActionAreaLabel } from "./actionAreas";
 import { getKeysFromEnum } from "../../functions";
 
 export const population = Pool({

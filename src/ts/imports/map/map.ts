@@ -4,7 +4,7 @@ import {
   gameLoopCallbacksStore,
   GameLoopCallbacksStoreAction,
 } from "../../stores/gameLoopCallbacksStore";
-import { getAllActionAreaLabels } from "./actionAreaLabels";
+import { getAllActionAreaLabels } from "./actionAreas";
 
 export const scene = Scene({
   id: "map",

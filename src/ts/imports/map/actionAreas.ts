@@ -3,14 +3,14 @@ import { Action } from "../../enums";
 import { getKeysFromEnum } from "../../functions";
 import { actionToSVGPathMap, gameWidth, gameHeight } from "../../constants";
 
-const actionAreaLabels: Text[] = [];
+const actionAreas: Sprite[] = [];
 const actionsAmount = Object.keys(Action).length;
 const centralPosition = Vector(gameWidth / 2, gameHeight / 2);
 const radiusX = 350;
 const radiusY = 350;
 
 for (const action of getKeysFromEnum(Action)) {
-  const currentActionIndex = actionAreaLabels.length;
+  const currentActionIndex = actionAreas.length;
   const fractionOfTheCircle = currentActionIndex / actionsAmount;
   const angle = fractionOfTheCircle * Math.PI * 2;
   const x = Math.sin(angle) * radiusX;
@@ -19,7 +19,7 @@ for (const action of getKeysFromEnum(Action)) {
 
   const icon = Sprite({
     x: -60,
-    y: 25,
+    y: -30,
     scaleX: 120 / 512,
     scaleY: 120 / 512,
     opacity: 0.3,
@@ -33,8 +33,8 @@ for (const action of getKeysFromEnum(Action)) {
   });
 
   const label = Text({
-    x: positionInTheCircle.x,
-    y: positionInTheCircle.y,
+    x: 0,
+    y: -55,
     text: Action[action],
     font: "32px Arial",
     color: "white",
@@ -44,12 +44,12 @@ for (const action of getKeysFromEnum(Action)) {
   });
 
   const circle = Sprite({
-    x: 0,
-    y: 55,
+    x: positionInTheCircle.x,
+    y: positionInTheCircle.y,
     color: "white",
     radius: 120,
     opacity: 0.3,
-    anchor: { x: 0.5, y: 0.5 },
+    action: Action[action],
     render: function (this: Sprite) {
       this.context.fillStyle = this.color;
       this.context.beginPath();
@@ -58,18 +58,18 @@ for (const action of getKeysFromEnum(Action)) {
     },
   });
 
-  label.addChild(circle);
-  label.addChild(icon);
+  circle.addChild(label);
+  circle.addChild(icon);
 
-  actionAreaLabels.push(label);
+  actionAreas.push(circle);
 }
 
-export function getActionAreaLabel(action: Action): Text {
-  return actionAreaLabels.find((item) => item.text === action) as NonNullable<
-    Text
+export function getActionAreaLabel(action: Action): Sprite {
+  return actionAreas.find((area) => area.action === action) as NonNullable<
+    Sprite
   >;
 }
 
-export function getAllActionAreaLabels(): Text[] {
-  return Object.values(actionAreaLabels);
+export function getAllActionAreaLabels(): Sprite[] {
+  return Object.values(actionAreas);
 }
