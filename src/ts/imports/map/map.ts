@@ -4,15 +4,11 @@ import {
   gameLoopCallbacksStore,
   GameLoopCallbacksStoreAction,
 } from "../../stores/gameLoopCallbacksStore";
-import { getActionAreaLabel } from "./actionAreaLabels";
-import { Action } from "../../enums";
+import { getAllActionAreaLabels } from "./actionAreaLabels";
 
 export const scene = Scene({
   id: "map",
-  children: [
-    getActionAreaLabel(Action.Constructing),
-    getActionAreaLabel(Action.Researching),
-  ],
+  children: [...getAllActionAreaLabels()],
 });
 
 gameLoopCallbacksStore.dispatch(
