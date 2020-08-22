@@ -1,16 +1,7 @@
 import "inobounce";
 import "./canvas";
 import { game } from "./game";
+import { disablePinchToZoom } from "./functions";
 
-document.addEventListener(
-  "touchmove",
-  function (event) {
-    const { scale } = (event as unknown) as { scale: number };
-    if (scale !== 1) {
-      event.preventDefault();
-    }
-  },
-  { passive: false }
-);
-
+disablePinchToZoom();
 game.start();
