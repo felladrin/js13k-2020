@@ -10,12 +10,17 @@ output.on("close", () => {
   const maxSizeAllowed = 13 * 1024;
   const fileSize = archive.pointer();
   const fileSizeDifference = Math.abs(maxSizeAllowed - fileSize);
-  const status = fileSize <= maxSizeAllowed ? "under" : "over";
+  const isUnderSizeLimit = fileSize <= maxSizeAllowed;
+  const status = isUnderSizeLimit ? "under" : "over";
+  const statusColor = isUnderSizeLimit ? "\x1b[32m" : "\x1b[31m";
 
   console.log(`Zip file created successfully!`);
   console.log(`File path: ${outputFilePath}`);
-  console.log(`File size: ${fileSize} bytes`);
-  console.log(`Status: ${fileSizeDifference} bytes ${status} the 13KB limit`);
+  console.log(`File size: ${fileSize} Bytes`);
+  console.log(
+    `${statusColor}%s\x1b[0m`,
+    `Status: ${fileSizeDifference} bytes ${status} the 13KB limit!`
+  );
 });
 
 archive.pipe(output);
