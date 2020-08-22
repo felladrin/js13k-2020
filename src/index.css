@@ -1,7 +1,5 @@
-$color-black: #000000;
-
 body {
-  background-color: $color-black;
+  background-color: #000000;
   margin: 0;
   overflow: hidden;
   width: 100vw;
