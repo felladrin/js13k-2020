@@ -5,7 +5,6 @@ import {
   GameLoopCallbacksStoreAction,
 } from "../../stores/gameLoopCallbacksStore";
 import { getActionAreaLabel } from "./actionAreaLabels";
-import { configStore } from "../../stores/configStore";
 import { getKeysFromEnum } from "../../functions";
 
 export const population = Pool({
@@ -18,8 +17,8 @@ export const population = Pool({
 
 function fillPopulation(): void {
   population.get({
-    x: configStore.get().gameWidth / 2,
-    y: configStore.get().gameHeight / 2,
+    x: getActionAreaLabel(Action.Resting).position.x,
+    y: getActionAreaLabel(Action.Resting).position.y,
     color: "lightGreen",
     width: 4,
     height: 4,
