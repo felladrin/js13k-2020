@@ -5,6 +5,8 @@ import {
   GameLoopCallbacksStoreAction,
 } from "../../stores/gameLoopCallbacksStore";
 import { getActionAreaLabel } from "./actionAreaLabels";
+import { configStore } from "../../stores/configStore";
+import { getKeysFromEnum } from "../../functions";
 
 export const population = Pool({
   // eslint-disable-next-line
@@ -16,21 +18,30 @@ export const population = Pool({
 
 function fillPopulation(): void {
   population.get({
-    x: getActionAreaLabel(Action.Constructing).position.x + randInt(-100, 100),
-    y: getActionAreaLabel(Action.Constructing).position.y + randInt(-100, 100),
+    x: configStore.get().gameWidth / 2,
+    y: configStore.get().gameHeight / 2,
     color: "lightGreen",
     width: 4,
     height: 4,
     sickOrInjured: false,
     speed: 3,
-    targetPosition: new Vector(
-      getActionAreaLabel(Action.Researching).position.x + randInt(-100, 100),
-      getActionAreaLabel(Action.Researching).position.y + randInt(-100, 100)
-    ),
-    update: function (this: Person) {
+    timeOnTargetPosition: 0,
+    update: function (this: Person, deltaTime: number) {
+      if (!this.currentAction) {
+        this.currentAction =
+          Action[
+            getKeysFromEnum(Action)[randInt(0, getKeysFromEnum(Action).length)]
+          ];
+      }
+
+      if (!this.targetPosition && this.currentAction) {
+        this.targetPosition = getActionAreaLabel(
+          this.currentAction
+        ).position.add(Vector(randInt(-80, 80), randInt(-80, 80)));
+      }
+
       if (
         this.targetPosition &&
-        this.speed &&
         this.position.distance(this.targetPosition) > this.speed
       ) {
         const direction = this.targetPosition
@@ -38,6 +49,13 @@ function fillPopulation(): void {
           .normalize();
         this.velocity = direction.scale(this.speed);
         this.advance();
+      } else {
+        this.timeOnTargetPosition += deltaTime;
+      }
+
+      if (this.timeOnTargetPosition > randInt(2, 3)) {
+        this.timeOnTargetPosition = 0;
+        this.targetPosition = undefined;
       }
     },
   } as Partial<Person>);
@@ -45,16 +63,17 @@ function fillPopulation(): void {
 
 interface Person extends Sprite {
   currentAction?: Action;
-  sickOrInjured?: boolean;
-  speed?: number;
+  sickOrInjured: boolean;
+  speed: number;
   targetPosition?: Vector;
+  timeOnTargetPosition: number;
 }
 
 gameLoopCallbacksStore.dispatch(
   GameLoopCallbacksStoreAction.AddUpdateCallback,
-  () => {
+  (deltaTime: number) => {
     fillPopulation();
-    population.update();
+    population.update(deltaTime);
   }
 );
 
