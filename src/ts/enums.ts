@@ -1,8 +1,8 @@
 export enum Action {
-  Farming = "Farming",
-  GatheringResources = "GatheringResources",
-  Researching = "Researching",
+  Resting = "Resting",
   Exploring = "Exploring",
+  Researching = "Researching",
+  Farming = "Farming",
+  Scavenging = "Scavenging",
   Constructing = "Constructing",
-  Recovering = "Recovering",
 }
