@@ -5,10 +5,11 @@ import {
   GameLoopCallbacksStoreAction,
 } from "../../stores/gameLoopCallbacksStore";
 import { getAllActionAreaLabels } from "./actionAreas";
+import { mapArea } from "./mapArea";
 
 export const scene = Scene({
   id: "map",
-  children: [...getAllActionAreaLabels()],
+  children: [mapArea, ...getAllActionAreaLabels()],
 });
 
 gameLoopCallbacksStore.dispatch(

@@ -1,27 +1,29 @@
 import { Text, Vector, Sprite } from "kontra";
 import { Action } from "../../enums";
 import { getKeysFromEnum } from "../../functions";
-import { actionToSVGPathMap, gameWidth, gameHeight } from "../../constants";
+import { actionToSVGPathMap } from "../../constants";
 
 const actionAreas: Sprite[] = [];
 const actionsAmount = Object.keys(Action).length;
-const centralPosition = Vector(gameWidth / 2, gameHeight / 2);
-const radiusX = 350;
-const radiusY = 350;
+const centralPosition = Vector(380, 560);
+const radius = 260;
 
 for (const action of getKeysFromEnum(Action)) {
   const currentActionIndex = actionAreas.length;
   const fractionOfTheCircle = currentActionIndex / actionsAmount;
   const angle = fractionOfTheCircle * Math.PI * 2;
-  const x = Math.sin(angle) * radiusX;
-  const y = Math.cos(angle) * radiusY;
+  const x = Math.sin(angle) * radius;
+  const y = Math.cos(angle) * radius;
   const positionInTheCircle = Vector(x, y).add(centralPosition);
 
   const icon = Sprite({
-    x: -60,
-    y: -30,
+    x: 0,
+    y: 30,
+    width: 512,
+    height: 512,
     scaleX: 120 / 512,
     scaleY: 120 / 512,
+    anchor: { x: 0.5, y: 0.5 },
     opacity: 0.3,
     color: "white",
     render: function (this: Sprite) {
@@ -49,6 +51,7 @@ for (const action of getKeysFromEnum(Action)) {
     color: "white",
     radius: 120,
     opacity: 0.3,
+    anchor: { x: 0.5, y: 0.5 },
     action: Action[action],
     render: function (this: Sprite) {
       this.context.fillStyle = this.color;
@@ -56,10 +59,8 @@ for (const action of getKeysFromEnum(Action)) {
       this.context.arc(0, 0, this.radius, 0, 2 * Math.PI);
       this.context.fill();
     },
+    children: [label, icon],
   });
-
-  circle.addChild(label);
-  circle.addChild(icon);
 
   actionAreas.push(circle);
 }
