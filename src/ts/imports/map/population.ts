@@ -6,12 +6,13 @@ import {
 } from "../../stores/gameLoopCallbacksStore";
 import { getActionAreaLabel } from "./actionAreas";
 import { getKeysFromEnum } from "../../functions";
+import { gameStore } from "../../stores/gameStore";
 
 export const population = Pool({
   // eslint-disable-next-line
   // @ts-ignore
   create: Sprite,
-  maxSize: 404,
+  maxSize: gameStore.get().population,
   fill: true,
 });
 
@@ -19,7 +20,7 @@ function fillPopulation(): void {
   population.get({
     x: getActionAreaLabel(Action.Resting).position.x,
     y: getActionAreaLabel(Action.Resting).position.y,
-    color: "lightGreen",
+    color: "darkRed",
     width: 4,
     height: 4,
     sickOrInjured: false,
