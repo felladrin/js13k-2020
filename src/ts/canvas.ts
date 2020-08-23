@@ -45,6 +45,7 @@ function handleWindowResize() {
     );
   }
 
+  window.scrollTo(1, 0);
   initPointer(canvas);
 }
 
