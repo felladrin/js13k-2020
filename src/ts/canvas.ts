@@ -5,20 +5,34 @@ export const { canvas } = init("gameCanvas");
 canvas.width = gameWidth;
 canvas.height = gameHeight;
 
+const lastRecordedWindowSize = {
+  width: window.innerWidth,
+  height: window.innerHeight,
+};
+
 function handleWindowResize() {
   if (!canvas.parentElement) return;
 
   const proportion = {
-    width: canvas.parentElement.clientWidth / canvas.width,
-    height: canvas.parentElement.clientHeight / canvas.height,
+    width:
+      Math.min(canvas.parentElement.clientWidth, lastRecordedWindowSize.width) /
+      canvas.width,
+    height:
+      Math.min(
+        canvas.parentElement.clientHeight,
+        lastRecordedWindowSize.height
+      ) / canvas.height,
   };
 
   const scale =
     proportion.width < proportion.height ? proportion.width : proportion.height;
 
+  const topPercentage =
+    50 * (lastRecordedWindowSize.height / canvas.parentElement.clientHeight);
+
   const style: Partial<CSSStyleDeclaration> = {
     position: "relative",
-    top: "50%",
+    top: `${topPercentage}%`,
     left: "50%",
     transform: `translate(-50%, -50%) scale(${scale})`,
     transformOrigin: "center center",
@@ -35,11 +49,6 @@ function handleWindowResize() {
 }
 
 handleWindowResize();
-
-const lastRecordedWindowSize = {
-  width: 0,
-  height: 0,
-};
 
 setInterval(() => {
   const currentWidth = window.innerWidth;
