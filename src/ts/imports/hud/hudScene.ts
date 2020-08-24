@@ -1,13 +1,10 @@
 import { Scene } from "kontra";
-import {
-  gameLoopCallbacksStore,
-  GameLoopCallbacksStoreAction,
-} from "../../stores/gameLoopCallbacksStore";
 import { button } from "./button";
 import { daysPassedLabel } from "./daysPassedLabel";
 import { foodLabel } from "./foodLabel";
 import { resourcesLabel } from "./resourcesLabel";
 import { populationLabel } from "./populationLabel";
+import { gameStore, GameStoreAction } from "../../stores/gameStore";
 
 export const hudScene = Scene({
   id: "hud",
@@ -20,16 +17,10 @@ export const hudScene = Scene({
   ],
 });
 
-gameLoopCallbacksStore.dispatch(
-  GameLoopCallbacksStoreAction.AddUpdateCallback,
-  () => {
-    hudScene.update();
-  }
-);
+gameStore.dispatch(GameStoreAction.AddUpdateCallback, () => {
+  hudScene.update();
+});
 
-gameLoopCallbacksStore.dispatch(
-  GameLoopCallbacksStoreAction.AddRenderCallback,
-  () => {
-    hudScene.render();
-  }
-);
+gameStore.dispatch(GameStoreAction.AddRenderCallback, () => {
+  hudScene.render();
+});

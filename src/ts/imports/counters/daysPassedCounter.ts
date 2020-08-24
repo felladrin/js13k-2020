@@ -1,7 +1,3 @@
-import {
-  gameLoopCallbacksStore,
-  GameLoopCallbacksStoreAction,
-} from "../../stores/gameLoopCallbacksStore";
 import { gameStore, GameStoreAction } from "../../stores/gameStore";
 import { secondsPerInGameDay } from "../../constants";
 
@@ -16,9 +12,6 @@ export function increaseAccumulatedDeltaTime(deltaTime: number): void {
   }
 }
 
-gameLoopCallbacksStore.dispatch(
-  GameLoopCallbacksStoreAction.AddUpdateCallback,
-  (deltaTime: number) => {
-    increaseAccumulatedDeltaTime(deltaTime);
-  }
-);
+gameStore.dispatch(GameStoreAction.AddUpdateCallback, (deltaTime: number) => {
+  increaseAccumulatedDeltaTime(deltaTime);
+});

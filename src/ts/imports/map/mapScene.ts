@@ -1,27 +1,17 @@
 import { Scene } from "kontra";
-
-import {
-  gameLoopCallbacksStore,
-  GameLoopCallbacksStoreAction,
-} from "../../stores/gameLoopCallbacksStore";
 import { getAllActionAreaLabels } from "./actionAreas";
 import { mapArea } from "./mapArea";
+import { gameStore, GameStoreAction } from "../../stores/gameStore";
 
 export const mapScene = Scene({
   id: "map",
   children: [mapArea, ...getAllActionAreaLabels()],
 });
 
-gameLoopCallbacksStore.dispatch(
-  GameLoopCallbacksStoreAction.AddUpdateCallback,
-  () => {
-    mapScene.update();
-  }
-);
+gameStore.dispatch(GameStoreAction.AddUpdateCallback, () => {
+  mapScene.update();
+});
 
-gameLoopCallbacksStore.dispatch(
-  GameLoopCallbacksStoreAction.AddRenderCallback,
-  () => {
-    mapScene.render();
-  }
-);
+gameStore.dispatch(GameStoreAction.AddRenderCallback, () => {
+  mapScene.render();
+});

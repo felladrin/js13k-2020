@@ -1,12 +1,8 @@
 import { Pool, Sprite, randInt, Vector } from "kontra";
 import { Action } from "../../enums";
-import {
-  gameLoopCallbacksStore,
-  GameLoopCallbacksStoreAction,
-} from "../../stores/gameLoopCallbacksStore";
 import { getActionAreaLabel } from "./actionAreas";
 import { getKeysFromEnum } from "../../functions";
-import { gameStore } from "../../stores/gameStore";
+import { gameStore, GameStoreAction } from "../../stores/gameStore";
 
 export const population = Pool({
   // eslint-disable-next-line
@@ -69,17 +65,11 @@ interface Person extends Sprite {
   timeOnTargetPosition: number;
 }
 
-gameLoopCallbacksStore.dispatch(
-  GameLoopCallbacksStoreAction.AddUpdateCallback,
-  (deltaTime: number) => {
-    fillPopulation();
-    population.update(deltaTime);
-  }
-);
+gameStore.dispatch(GameStoreAction.AddUpdateCallback, (deltaTime: number) => {
+  fillPopulation();
+  population.update(deltaTime);
+});
 
-gameLoopCallbacksStore.dispatch(
-  GameLoopCallbacksStoreAction.AddRenderCallback,
-  () => {
-    population.render();
-  }
-);
+gameStore.dispatch(GameStoreAction.AddRenderCallback, () => {
+  population.render();
+});
