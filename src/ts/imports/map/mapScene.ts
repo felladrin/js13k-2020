@@ -7,7 +7,7 @@ import {
 import { getAllActionAreaLabels } from "./actionAreas";
 import { mapArea } from "./mapArea";
 
-export const scene = Scene({
+export const mapScene = Scene({
   id: "map",
   children: [mapArea, ...getAllActionAreaLabels()],
 });
@@ -15,13 +15,13 @@ export const scene = Scene({
 gameLoopCallbacksStore.dispatch(
   GameLoopCallbacksStoreAction.AddUpdateCallback,
   () => {
-    scene.update();
+    mapScene.update();
   }
 );
 
 gameLoopCallbacksStore.dispatch(
   GameLoopCallbacksStoreAction.AddRenderCallback,
   () => {
-    scene.render();
+    mapScene.render();
   }
 );

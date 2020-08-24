@@ -1,3 +1,4 @@
 export * from "./actionAreas";
-export * from "./map";
+export * from "./mapArea";
+export * from "./mapScene";
 export * from "./population";

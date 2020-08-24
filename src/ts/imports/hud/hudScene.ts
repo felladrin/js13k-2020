@@ -5,22 +5,31 @@ import {
 } from "../../stores/gameLoopCallbacksStore";
 import { button } from "./button";
 import { daysPassedLabel } from "./daysPassedLabel";
+import { foodLabel } from "./foodLabel";
+import { resourcesLabel } from "./resourcesLabel";
+import { populationLabel } from "./populationLabel";
 
-export const scene2 = Scene({
+export const hudScene = Scene({
   id: "hud",
-  children: [button, daysPassedLabel],
+  children: [
+    button,
+    foodLabel,
+    resourcesLabel,
+    daysPassedLabel,
+    populationLabel,
+  ],
 });
 
 gameLoopCallbacksStore.dispatch(
   GameLoopCallbacksStoreAction.AddUpdateCallback,
   () => {
-    scene2.update();
+    hudScene.update();
   }
 );
 
 gameLoopCallbacksStore.dispatch(
   GameLoopCallbacksStoreAction.AddRenderCallback,
   () => {
-    scene2.render();
+    hudScene.render();
   }
 );
