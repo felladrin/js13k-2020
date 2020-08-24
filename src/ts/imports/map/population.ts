@@ -65,7 +65,15 @@ interface Person extends Sprite {
   timeOnTargetPosition: number;
 }
 
+let updatePopulationStatsTimer = 0;
+
 gameStore.dispatch(GameStoreAction.AddUpdateCallback, (deltaTime: number) => {
+  updatePopulationStatsTimer += deltaTime;
+  if (updatePopulationStatsTimer > 1) {
+    updatePopulationStatsTimer = 0;
+    updatePopulationStats();
+  }
+
   fillPopulation();
   population.update(deltaTime);
 });
@@ -73,3 +81,30 @@ gameStore.dispatch(GameStoreAction.AddUpdateCallback, (deltaTime: number) => {
 gameStore.dispatch(GameStoreAction.AddRenderCallback, () => {
   population.render();
 });
+
+let oldStatsHash = "";
+
+function updatePopulationStats() {
+  const newStats: {
+    [key in Action]: number;
+  } = {
+    Farming: 0,
+    Scavenging: 0,
+    Researching: 0,
+    Constructing: 0,
+    Exploring: 0,
+    Resting: 0,
+  };
+
+  population.getAliveObjects().forEach((person: Partial<Person>) => {
+    if (person.currentAction) newStats[person.currentAction]++;
+  });
+
+  const newStatsHash = JSON.stringify(newStats);
+
+  if (newStatsHash != oldStatsHash) {
+    gameStore.dispatch(GameStoreAction.UpdatePopulationStats, newStats);
+  }
+
+  oldStatsHash = newStatsHash;
+}

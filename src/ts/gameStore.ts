@@ -1,10 +1,12 @@
 import { createStoreon, StoreonModule } from "storeon";
 import { initialPopulation } from "./constants";
+import { Action } from "./enums";
 
 export enum GameStoreAction {
   AddUpdateCallback,
   AddRenderCallback,
   AddOneDayPassed,
+  UpdatePopulationStats,
 }
 
 type GameUpdateCallback = (deltaTime?: number) => void;
@@ -43,21 +45,38 @@ const gameStoreModule: StoreonModule<GameState> = (store) => {
 
   store.on(
     GameStoreAction.AddUpdateCallback,
-    ({ onUpdateCallbacks: onUpdate }, callback: GameUpdateCallback) => ({
-      onUpdateCallbacks: onUpdate.concat([callback]),
+    ({ onUpdateCallbacks }, callback: GameUpdateCallback) => ({
+      onUpdateCallbacks: onUpdateCallbacks.concat([callback]),
     })
   );
 
   store.on(
     GameStoreAction.AddRenderCallback,
-    ({ onRenderCallbacks: onRender }, callback: GameRenderCallback) => ({
-      onRenderCallbacks: onRender.concat([callback]),
+    ({ onRenderCallbacks }, callback: GameRenderCallback) => ({
+      onRenderCallbacks: onRenderCallbacks.concat([callback]),
     })
   );
 
   store.on(GameStoreAction.AddOneDayPassed, ({ daysPassed }) => ({
     daysPassed: daysPassed + 1,
   }));
+
+  store.on(
+    GameStoreAction.UpdatePopulationStats,
+    (
+      _,
+      newStats: {
+        [key in Action]: number;
+      }
+    ) => ({
+      farming: newStats.Farming,
+      scavenging: newStats.Scavenging,
+      researching: newStats.Researching,
+      constructing: newStats.Constructing,
+      exploring: newStats.Exploring,
+      resting: newStats.Resting,
+    })
+  );
 };
 
 export const gameStore = createStoreon<GameState>([gameStoreModule]);
