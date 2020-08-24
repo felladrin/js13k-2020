@@ -1,5 +1,5 @@
 import { Text } from "kontra";
-import { gameStore } from "../../stores/gameStore";
+import { gameStore } from "../../gameStore";
 
 function getDaysPassedText() {
   return `Days Passed: ${gameStore.get().daysPassed}`;

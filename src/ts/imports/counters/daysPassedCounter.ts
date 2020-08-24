@@ -1,4 +1,4 @@
-import { gameStore, GameStoreAction } from "../../stores/gameStore";
+import { gameStore, GameStoreAction } from "../../gameStore";
 import { secondsPerInGameDay } from "../../constants";
 
 let accumulatedDeltaTime = 0;

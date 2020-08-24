@@ -1,7 +1,7 @@
 import { Scene } from "kontra";
 import { getAllActionAreaLabels } from "./actionAreas";
 import { mapArea } from "./mapArea";
-import { gameStore, GameStoreAction } from "../../stores/gameStore";
+import { gameStore, GameStoreAction } from "../../gameStore";
 
 export const mapScene = Scene({
   id: "map",

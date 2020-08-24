@@ -2,7 +2,7 @@ import { Pool, Sprite, randInt, Vector } from "kontra";
 import { Action } from "../../enums";
 import { getActionAreaLabel } from "./actionAreas";
 import { getKeysFromEnum } from "../../functions";
-import { gameStore, GameStoreAction } from "../../stores/gameStore";
+import { gameStore, GameStoreAction } from "../../gameStore";
 
 export const population = Pool({
   // eslint-disable-next-line

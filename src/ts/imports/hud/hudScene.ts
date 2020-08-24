@@ -4,7 +4,7 @@ import { daysPassedLabel } from "./daysPassedLabel";
 import { foodLabel } from "./foodLabel";
 import { resourcesLabel } from "./resourcesLabel";
 import { populationLabel } from "./populationLabel";
-import { gameStore, GameStoreAction } from "../../stores/gameStore";
+import { gameStore, GameStoreAction } from "../../gameStore";
 
 export const hudScene = Scene({
   id: "hud",

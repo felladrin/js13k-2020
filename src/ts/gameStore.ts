@@ -1,5 +1,5 @@
 import { createStoreon, StoreonModule } from "storeon";
-import { initialPopulation } from "../constants";
+import { initialPopulation } from "./constants";
 
 export enum GameStoreAction {
   AddUpdateCallback,
