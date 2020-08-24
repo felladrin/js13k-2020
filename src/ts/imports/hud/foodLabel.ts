@@ -6,7 +6,7 @@ function getFoodText() {
 }
 
 export const foodLabel = Text({
-  x: 116,
+  x: 106,
   y: 11,
   text: getFoodText(),
   font: "24px Arial",

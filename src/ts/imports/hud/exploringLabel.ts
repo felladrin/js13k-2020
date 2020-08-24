@@ -1,14 +1,14 @@
 import { Text } from "kontra";
 import { gameStore } from "../../gameStore";
 
-function getResourcesText() {
-  return `Resources: ${gameStore.get().resources}`;
+function getExploringText() {
+  return `Exploring: ${gameStore.get().exploring}`;
 }
 
-export const resourcesLabel = Text({
-  x: 296,
-  y: 11,
-  text: getResourcesText(),
+export const exploringLabel = Text({
+  x: 916,
+  y: 111,
+  text: getExploringText(),
   font: "24px Arial",
   color: "white",
   anchor: { x: 0.5, y: 0.5 },
@@ -16,5 +16,5 @@ export const resourcesLabel = Text({
 });
 
 gameStore.on("@changed", () => {
-  resourcesLabel.text = getResourcesText();
+  exploringLabel.text = getExploringText();
 });

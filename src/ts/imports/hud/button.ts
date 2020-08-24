@@ -1,8 +1,10 @@
 import { Button } from "kontra";
 
 export const button = Button({
+  x: 780,
+  y: 211,
   text: {
-    text: "Menu",
+    text: "Click To Boost",
     color: "white",
     font: "32px",
   },
