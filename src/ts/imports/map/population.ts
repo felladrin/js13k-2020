@@ -65,6 +65,10 @@ interface Person extends Sprite {
   timeOnTargetPosition: number;
 }
 
+gameStore.on("@changed", () => {
+  population.maxSize = gameStore.get().population;
+});
+
 let updatePopulationStatsTimer = 0;
 
 gameStore.dispatch(GameStoreAction.AddUpdateCallback, (deltaTime: number) => {
