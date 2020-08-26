@@ -1,5 +1,5 @@
 import { Scene } from "kontra";
-import { button } from "./button";
+import { buttons } from "./buttons";
 import { daysPassedLabel } from "./daysPassedLabel";
 import { foodLabel } from "./foodLabel";
 import { resourcesLabel } from "./resourcesLabel";
@@ -15,7 +15,7 @@ import { restingLabel } from "./restingLabel";
 export const hudScene = Scene({
   id: "hud",
   children: [
-    button,
+    buttons,
     foodLabel,
     resourcesLabel,
     daysPassedLabel,

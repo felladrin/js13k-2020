@@ -73,8 +73,9 @@ let updatePopulationStatsTimer = 0;
 
 gameStore.dispatch(GameStoreAction.AddUpdateCallback, (deltaTime: number) => {
   updatePopulationStatsTimer += deltaTime;
-  if (updatePopulationStatsTimer > 1) {
+  if (updatePopulationStatsTimer > 0.3) {
     updatePopulationStatsTimer = 0;
+    boostActionIfNeeded();
     updatePopulationStats();
   }
 
@@ -85,6 +86,24 @@ gameStore.dispatch(GameStoreAction.AddUpdateCallback, (deltaTime: number) => {
 gameStore.dispatch(GameStoreAction.AddRenderCallback, () => {
   population.render();
 });
+
+function boostActionIfNeeded() {
+  const { actionToBoost } = gameStore.get();
+
+  if (!actionToBoost) return;
+
+  for (const action in Action) {
+    if (action == actionToBoost) continue;
+
+    const personFoundOnAnotherAction = (population.getAliveObjects() as Person[]).find(
+      (person) => person.currentAction == action
+    );
+
+    if (personFoundOnAnotherAction) {
+      personFoundOnAnotherAction.currentAction = actionToBoost;
+    }
+  }
+}
 
 let oldStatsHash = "";
 

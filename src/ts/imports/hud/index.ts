@@ -1,4 +1,4 @@
-export * from "./button";
+export * from "./buttons";
 export * from "./constructingLabel";
 export * from "./daysPassedLabel";
 export * from "./exploringLabel";

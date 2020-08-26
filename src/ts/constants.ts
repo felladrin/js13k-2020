@@ -22,3 +22,15 @@ export const actionToSVGPathMap: { [key in Action]: string } = {
   Scavenging:
     "M117 18l-94 96c16 19 43 36 66 40 15 3 30 2 43-4l87 88 22-23-87-87c6-13 8-28 4-43-8-31-21-48-41-67zm126 9c-10 0-19 1-28 3a827 827 0 01274 274c2-60-22-121-60-170-15 6-33 1-46-12a45 45 0 01-12-47c-40-29-85-48-128-48zM128 60c6 10 10 19 12 29 3 16 0 30-9 38-9 9-22 12-39 9-9-2-18-6-28-11zm264 16c-7 7-7 22 4 33 11 10 25 11 33 4 7-7 7-22-5-33-8-8-23-13-32-4zm-56 71L22 461c5 11 11 20 25 25l313-314c-7-9-15-17-24-25zm-44 119l-23 23 98 103c-16 15-32 27-47 36 56 56 125 78 162 55 23-38 1-107-54-162-10 15-22 30-36 45z",
 };
+
+export const buttonImage = new Image();
+buttonImage.src =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAL4AAAAxCAMAAABTTOOiAAAASFBMVEUAAAAXh7UWh7cSfKkUbZEWa5EZh7YWbJIVa5AVhrYTa5EQao4ep+EZibg1uvMWbpMlrucno9gureQYhbMXf6sWdp4xs+slntFwgIU+AAAADHRSTlMAv58/79/Pr59fX0+++ysmAAAArElEQVRo3u3ZyRHDIBQE0dG+mAHEIuWfqVXOgBvfNS+CvjeAaRwGmjMM44TXSLNG4CCflLw5KT3kgZWXN+riCtL7GJ05MXpP/vKdScpvoHzl90P5DZSv/H4ov4Hyld8P5TdQvvL7ofwGyld+P5TfQPnK74fyGyj///Izb29wbTkX/c2MYvksFlRa7b/IilBoVgmYQ800KdcwYwuGbfgEwyZgD2bteJ1LMGk5gS/Js8ccmtBzLgAAAABJRU5ErkJggg==";
+buttonImage.width = 190;
+buttonImage.height = 49;
+
+export const buttonPressedImage = new Image();
+buttonPressedImage.src =
+  "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAL4AAAAtCAMAAAAnWCFCAAAANlBMVEUAAAAWh7cXh7UUhrYXh7UVhrYZh7YZh7YZiLYVhbUep+EZibg1uvMqruYopNkmoNMxtO0jq+Wejsy5AAAACnRSTlMAn78/31/P769vFljH9QAAAJNJREFUaN7t2cEVwyAMBNEFbCdhJcD9N5u8dKAb8ttfwdwHQCu1Mp1aS8NPYVoFOMnpbum4T/LExWFJDV4gzfzu6dxuRv7ze0rKD1C+8veh/ADlK38fyg9QvvL3ofwA5St/H8oPUL7y96H8AOUrfx/KD1D+8/JfXOY9IbfFA4XTkpp8ozHpGV2DbNmvOvA5mNJxAl8KHVeSsFKP5gAAAABJRU5ErkJggg==";
+buttonPressedImage.width = 190;
+buttonPressedImage.height = 49;

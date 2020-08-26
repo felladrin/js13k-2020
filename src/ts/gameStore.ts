@@ -7,6 +7,7 @@ export enum GameStoreAction {
   AddRenderCallback,
   AddOneDayPassed,
   UpdatePopulationStats,
+  SetActionToBoost,
 }
 
 type GameUpdateCallback = (deltaTime?: number) => void;
@@ -25,6 +26,7 @@ interface GameState {
   constructing: number;
   exploring: number;
   resting: number;
+  actionToBoost: Action | null;
 }
 
 const gameStoreModule: StoreonModule<GameState> = (store) => {
@@ -41,6 +43,7 @@ const gameStoreModule: StoreonModule<GameState> = (store) => {
     constructing: 0,
     exploring: 0,
     resting: 0,
+    actionToBoost: null,
   }));
 
   store.on(
@@ -77,6 +80,10 @@ const gameStoreModule: StoreonModule<GameState> = (store) => {
       resting: newStats.Resting,
     })
   );
+
+  store.on(GameStoreAction.SetActionToBoost, (_, action: Action) => ({
+    actionToBoost: action,
+  }));
 };
 
 export const gameStore = createStoreon<GameState>([gameStoreModule]);
