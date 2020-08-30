@@ -1,10 +1,16 @@
-import { Pool, Sprite, randInt, Vector } from "kontra";
+import { Pool, Sprite, randInt, clamp, Vector } from "kontra";
 import { Action } from "../../enums";
 import { getActionAreaLabel } from "./actionAreas";
 import { getKeysFromEnum } from "../../functions";
 import { gameStore, GameStoreAction } from "../../gameStore";
 import { Person } from "./declarations";
 import { tickStore } from "../../tickStore";
+import {
+  minHealthConsumedPerTick,
+  maxHealthConsumedPerTick,
+  minHealthRestoredPerTick,
+  maxHealthRestoredPerTick,
+} from "./constants";
 
 export const population = Pool({
   // eslint-disable-next-line
@@ -24,11 +30,18 @@ function fillPopulation(): void {
     sickOrInjured: false,
     speed: 3,
     timeOnTargetPosition: 0,
+    health: 100,
     update: function (this: Person, deltaTime: number) {
+      this.health = clamp(0, 100, this.health);
+      this.color = percentageFromRedToGreenColor(this.health);
+
       if (!this.currentAction) {
+        const allActionsExceptResting = getKeysFromEnum(Action).filter(
+          (action) => action != Action.Resting
+        );
         this.currentAction =
           Action[
-            getKeysFromEnum(Action)[randInt(0, getKeysFromEnum(Action).length)]
+            allActionsExceptResting[randInt(0, allActionsExceptResting.length)]
           ];
       }
 
@@ -64,6 +77,7 @@ gameStore.on("@changed", () => {
 });
 
 tickStore.on("@changed", () => {
+  processHealth();
   boostActionIfNeeded();
   updatePopulationStats();
 });
@@ -109,7 +123,7 @@ function updatePopulationStats() {
     Resting: 0,
   };
 
-  population.getAliveObjects().forEach((person: Partial<Person>) => {
+  (population.getAliveObjects() as Person[]).forEach((person) => {
     if (person.currentAction) newStats[person.currentAction]++;
   });
 
@@ -120,4 +134,51 @@ function updatePopulationStats() {
   }
 
   oldStatsHash = newStatsHash;
+}
+
+function processHealth() {
+  (population.getAliveObjects() as Person[]).forEach((person) => {
+    if (person.currentAction == Action.Resting) {
+      if (person.health >= randInt(80, 100)) {
+        person.currentAction = person.previousAction;
+        person.previousAction = Action.Resting;
+      } else {
+        person.health += randInt(
+          minHealthRestoredPerTick,
+          maxHealthRestoredPerTick
+        );
+      }
+    } else {
+      if (person.health > randInt(0, 5)) {
+        person.health -= randInt(
+          minHealthConsumedPerTick,
+          maxHealthConsumedPerTick
+        );
+      } else {
+        person.previousAction = person.currentAction;
+        person.currentAction = Action.Resting;
+      }
+    }
+  });
+}
+
+/**
+ * Javascript color scale from 0% to 100%, rendering it from red to yellow to green.
+ * @see https://gist.github.com/mlocati/7210513
+ */
+function percentageFromRedToGreenColor(percentage: number) {
+  let red: number;
+  let green: number;
+  const blue = 0;
+
+  if (percentage < 50) {
+    red = 255;
+    green = Math.round(5.1 * percentage);
+  } else {
+    green = 255;
+    red = Math.round(510 - 5.1 * percentage);
+  }
+
+  const hex = red * 0x10000 + green * 0x100 + blue * 0x1;
+  return `#${("000000" + hex.toString(16)).slice(-6)}`;
 }

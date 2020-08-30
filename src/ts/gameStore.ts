@@ -12,6 +12,8 @@ export enum GameStoreAction {
   AddRenderCallback,
   AddOneDayPassed,
   UpdatePopulationStats,
+  UpdateFoodStats,
+  UpdateResourcesStats,
   SetActionToBoost,
 }
 
@@ -21,8 +23,12 @@ const gameStoreModule: StoreonModule<GameState> = (store) => {
     onRenderCallbacks: [],
     population: initialPopulation,
     daysPassed: 0,
-    food: 0,
-    resources: 0,
+    food: 10000,
+    foodCreatedPerTick: 0,
+    foodConsumedPerTick: 0,
+    resources: 10000,
+    resourcesCreatedPerTick: 0,
+    resourcesConsumedPerTick: 0,
     farming: 0,
     scavenging: 0,
     researching: 0,
@@ -67,9 +73,33 @@ const gameStoreModule: StoreonModule<GameState> = (store) => {
     })
   );
 
-  store.on(GameStoreAction.SetActionToBoost, (_, action: Action) => ({
-    actionToBoost: action,
+  store.on(GameStoreAction.SetActionToBoost, (_, actionToBoost: Action) => ({
+    actionToBoost,
   }));
+
+  store.on(
+    GameStoreAction.UpdateFoodStats,
+    (
+      _,
+      foodStats: {
+        food: number;
+        foodCreatedPerTick: number;
+        foodConsumedPerTick: number;
+      }
+    ) => ({ ...foodStats })
+  );
+
+  store.on(
+    GameStoreAction.UpdateResourcesStats,
+    (
+      _,
+      resourcesStats: {
+        resources: number;
+        resourcesCreatedPerTick: number;
+        resourcesConsumedPerTick: number;
+      }
+    ) => ({ ...resourcesStats })
+  );
 };
 
 export const gameStore = createStoreon<GameState>([gameStoreModule]);

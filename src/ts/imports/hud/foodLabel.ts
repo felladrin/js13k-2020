@@ -2,12 +2,13 @@ import { Text } from "kontra";
 import { gameStore } from "../../gameStore";
 
 function getFoodText() {
-  return `Food: ${gameStore.get().food}`;
+  const gameState = gameStore.get();
+  return `Food: ${gameState.food}\n⇧${gameState.foodCreatedPerTick} ⇩${gameState.foodConsumedPerTick}`;
 }
 
 export const foodLabel = Text({
   x: 106,
-  y: 11,
+  y: 111,
   text: getFoodText(),
   font: "24px Arial",
   color: "white",

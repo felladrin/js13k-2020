@@ -2,12 +2,13 @@ import { Text } from "kontra";
 import { gameStore } from "../../gameStore";
 
 function getResourcesText() {
-  return `Resources: ${gameStore.get().resources}`;
+  const gameState = gameStore.get();
+  return `Resources: ${gameState.resources}\n⇧${gameState.resourcesCreatedPerTick} ⇩${gameState.resourcesConsumedPerTick}`;
 }
 
 export const resourcesLabel = Text({
-  x: 296,
-  y: 11,
+  x: 316,
+  y: 111,
   text: getResourcesText(),
   font: "24px Arial",
   color: "white",

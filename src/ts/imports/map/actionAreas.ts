@@ -2,6 +2,7 @@ import { Text, Vector, Sprite } from "kontra";
 import { Action } from "../../enums";
 import { getKeysFromEnum } from "../../functions";
 import { actionToSVGPathMap } from "../../constants";
+import { gameStore } from "../../gameStore";
 
 const actionAreas: Sprite[] = [];
 const actionsAmount = Object.keys(Action).length;
@@ -34,7 +35,28 @@ for (const action of getKeysFromEnum(Action)) {
     },
   });
 
-  const label = Text({
+  const peopleActingLabel = Text({
+    x: 0,
+    y: -85,
+    text: "0",
+    font: "32px Arial",
+    color: "white",
+    anchor: { x: 0.5, y: 0.5 },
+    textAlign: "center",
+    opacity: 0.3,
+    update: function (this: Text) {
+      const actionNameInLowerCase = Action[action].toLocaleLowerCase() as
+        | "resting"
+        | "exploring"
+        | "researching"
+        | "farming"
+        | "scavenging"
+        | "constructing";
+      this.text = gameStore.get()[actionNameInLowerCase].toString();
+    },
+  });
+
+  const actionNameLabel = Text({
     x: 0,
     y: -55,
     text: Action[action],
@@ -59,7 +81,7 @@ for (const action of getKeysFromEnum(Action)) {
       this.context.arc(0, 0, this.radius, 0, 2 * Math.PI);
       this.context.fill();
     },
-    children: [label, icon],
+    children: [peopleActingLabel, actionNameLabel, icon],
   });
 
   actionAreas.push(circle);

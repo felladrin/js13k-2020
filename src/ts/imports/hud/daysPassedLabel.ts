@@ -6,8 +6,8 @@ function getDaysPassedText() {
 }
 
 export const daysPassedLabel = Text({
-  x: 516,
-  y: 11,
+  x: 556,
+  y: 111,
   text: getDaysPassedText(),
   font: "24px Arial",
   color: "white",

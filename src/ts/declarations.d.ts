@@ -9,7 +9,11 @@ interface GameState {
   population: number;
   daysPassed: number;
   food: number;
+  foodCreatedPerTick: number;
+  foodConsumedPerTick: number;
   resources: number;
+  resourcesCreatedPerTick: number;
+  resourcesConsumedPerTick: number;
   farming: number;
   scavenging: number;
   researching: number;
