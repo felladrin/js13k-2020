@@ -26,6 +26,8 @@ const textCommonProperties = {
 const children: GameObject[] = [];
 
 for (const action in Action) {
+  if (action == Action.Resting) continue;
+
   children.push(
     Button({
       ...buttonProperties,
