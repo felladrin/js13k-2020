@@ -1,17 +1,12 @@
 import { gameStore, GameStoreAction } from "../../gameStore";
-import { secondsPerInGameDay } from "../../constants";
+import { gameTicksPerGameDay } from "../../constants";
+import { tickStore } from "../../tickStore";
 
-let accumulatedDeltaTime = 0;
-
-export function increaseAccumulatedDeltaTime(deltaTime: number): void {
-  accumulatedDeltaTime += deltaTime;
-
-  if (accumulatedDeltaTime > secondsPerInGameDay) {
+tickStore.on("@changed", () => {
+  if (
+    Math.floor(tickStore.get().ticksPassed / gameTicksPerGameDay) >
+    gameStore.get().daysPassed
+  ) {
     gameStore.dispatch(GameStoreAction.AddOneDayPassed);
-    accumulatedDeltaTime -= secondsPerInGameDay;
   }
-}
-
-gameStore.dispatch(GameStoreAction.AddUpdateCallback, (deltaTime: number) => {
-  increaseAccumulatedDeltaTime(deltaTime);
 });

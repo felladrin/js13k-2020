@@ -3,6 +3,8 @@ import { Action } from "../../enums";
 import { getActionAreaLabel } from "./actionAreas";
 import { getKeysFromEnum } from "../../functions";
 import { gameStore, GameStoreAction } from "../../gameStore";
+import { Person } from "./declarations";
+import { tickStore } from "../../tickStore";
 
 export const population = Pool({
   // eslint-disable-next-line
@@ -57,28 +59,16 @@ function fillPopulation(): void {
   } as Partial<Person>);
 }
 
-interface Person extends Sprite {
-  currentAction?: Action;
-  sickOrInjured: boolean;
-  speed: number;
-  targetPosition?: Vector;
-  timeOnTargetPosition: number;
-}
-
 gameStore.on("@changed", () => {
   population.maxSize = gameStore.get().population;
 });
 
-let updatePopulationStatsTimer = 0;
+tickStore.on("@changed", () => {
+  boostActionIfNeeded();
+  updatePopulationStats();
+});
 
 gameStore.dispatch(GameStoreAction.AddUpdateCallback, (deltaTime: number) => {
-  updatePopulationStatsTimer += deltaTime;
-  if (updatePopulationStatsTimer > 0.3) {
-    updatePopulationStatsTimer = 0;
-    boostActionIfNeeded();
-    updatePopulationStats();
-  }
-
   fillPopulation();
   population.update(deltaTime);
 });

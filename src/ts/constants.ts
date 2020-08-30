@@ -6,7 +6,54 @@ export const gameHeight = 1024;
 
 export const initialPopulation = 404;
 
-export const secondsPerInGameDay = 2;
+export const secondsPerGameTick = 0.333;
+
+export const gameTicksPerGameDay = 6;
+
+export const actionToConstructionAllowedMap: { [key in Action]: boolean } = {
+  Constructing: false,
+  Exploring: false,
+  Farming: true,
+  Researching: true,
+  Resting: true,
+  Scavenging: false,
+};
+
+export const actionToResearchAllowedMap: { [key in Action]: boolean } = {
+  Constructing: true,
+  Exploring: true,
+  Farming: false,
+  Researching: false,
+  Resting: false,
+  Scavenging: true,
+};
+
+export const actionToIncreaseMap: { [key in Action]: number } = {
+  Constructing: 0,
+  Exploring: 0,
+  Farming: 1,
+  Researching: 0,
+  Resting: 0,
+  Scavenging: 0,
+};
+
+export const actionToFoodConsumptionMap: { [key in Action]: number } = {
+  Constructing: 1,
+  Exploring: 2,
+  Farming: 0,
+  Researching: 1,
+  Resting: 1,
+  Scavenging: 1,
+};
+
+export const actionToResourcesConsumptionMap: { [key in Action]: number } = {
+  Constructing: 2,
+  Exploring: 1,
+  Farming: 1,
+  Researching: 1,
+  Resting: 1,
+  Scavenging: 0,
+};
 
 export const actionToSVGPathMap: { [key in Action]: string } = {
   Constructing:

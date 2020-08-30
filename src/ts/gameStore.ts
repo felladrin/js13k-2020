@@ -1,6 +1,11 @@
 import { createStoreon, StoreonModule } from "storeon";
 import { initialPopulation } from "./constants";
 import { Action } from "./enums";
+import {
+  GameState,
+  GameRenderCallback,
+  GameUpdateCallback,
+} from "./declarations";
 
 export enum GameStoreAction {
   AddUpdateCallback,
@@ -8,25 +13,6 @@ export enum GameStoreAction {
   AddOneDayPassed,
   UpdatePopulationStats,
   SetActionToBoost,
-}
-
-type GameUpdateCallback = (deltaTime?: number) => void;
-type GameRenderCallback = () => void;
-
-interface GameState {
-  onUpdateCallbacks: GameUpdateCallback[];
-  onRenderCallbacks: GameRenderCallback[];
-  population: number;
-  daysPassed: number;
-  food: number;
-  resources: number;
-  farming: number;
-  scavenging: number;
-  researching: number;
-  constructing: number;
-  exploring: number;
-  resting: number;
-  actionToBoost: Action | null;
 }
 
 const gameStoreModule: StoreonModule<GameState> = (store) => {

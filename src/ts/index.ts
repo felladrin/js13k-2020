@@ -1,5 +1,6 @@
 import "inobounce";
 import "./canvas";
+import "./imports";
 import { game } from "./game";
 import { disablePinchToZoom } from "./functions";
 
