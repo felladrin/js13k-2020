@@ -7,19 +7,28 @@ const buttonProperties = {
   anchor: { x: 0.5, y: 0.5 },
   image: buttonImage,
   action: null,
-  onDown: function () {
+  onDown: function (this: Button) {
     gameStore.dispatch(GameStoreAction.SetActionToBoost, this.action);
     this.image = buttonPressedImage;
+
+    const [childText] = this.children;
+    childText.y = -2;
   },
-  onUp: function () {
+  onUp: function (this: Button) {
     gameStore.dispatch(GameStoreAction.SetActionToBoost, null);
     this.image = buttonImage;
+
+    const [childText] = this.children;
+    childText.y = -5;
   },
 };
 
 const textCommonProperties = {
+  y: -5,
   color: "white",
-  font: "20px Arial",
+  font: "32px Arial",
+  textAlign: "center",
+  lineHeight: 1.2,
   anchor: { x: 0.5, y: 0.5 },
 };
 
@@ -28,23 +37,23 @@ const children: GameObject[] = [];
 for (const action in Action) {
   if (action == Action.Resting) continue;
 
-  children.push(
-    Button({
-      ...buttonProperties,
-      text: {
-        ...textCommonProperties,
-        text: `Boost ${action}`,
-      },
-      action,
-    })
-  );
+  const button = Button({
+    ...buttonProperties,
+    action,
+    text: {
+      ...textCommonProperties,
+      text: `Boost\n${action}`,
+    },
+  });
+
+  children.push(button);
 }
 
 export const buttons = Grid({
-  x: 860,
-  y: 511,
+  x: 880,
+  y: 1024 / 2,
   anchor: { x: 0.5, y: 0.5 },
-  rowGap: 15,
+  rowGap: 20,
   justify: "center",
   children,
 });
