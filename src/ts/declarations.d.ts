@@ -20,6 +20,9 @@ interface GameState {
   constructing: number;
   exploring: number;
   resting: number;
+  explorationProgressPercentage: number;
+  constructionProgressPercentage: number;
+  researchProgressPercentage: number;
   actionToBoost: Action | null;
 }
 

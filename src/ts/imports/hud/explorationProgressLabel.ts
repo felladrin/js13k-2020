@@ -1,5 +1,6 @@
-import { Sprite, randInt, Text } from "kontra";
+import { Sprite, Text } from "kontra";
 import { tickStore } from "../../tickStore";
+import { gameStore } from "../../gameStore";
 
 const commonProgressBarProperties: Partial<Sprite> = {
   x: 0,
@@ -25,7 +26,8 @@ tickStore.on("@changed", () => {
   if (!progressBarForeground.parent?.width) return;
 
   progressBarForeground.width =
-    (progressBarForeground.parent?.width * randInt(1, 100)) / 100;
+    progressBarForeground.parent?.width *
+    (gameStore.get().explorationProgressPercentage / 100);
 });
 
 export const explorationProgressLabel = Text({

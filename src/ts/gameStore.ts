@@ -6,6 +6,7 @@ import {
   GameRenderCallback,
   GameUpdateCallback,
 } from "./declarations";
+import { clamp } from "kontra";
 
 export enum GameStoreAction {
   AddUpdateCallback,
@@ -15,6 +16,9 @@ export enum GameStoreAction {
   UpdateFoodStats,
   UpdateResourcesStats,
   SetActionToBoost,
+  IncreaseExplorationProgress,
+  IncreaseConstructionProgress,
+  IncreaseResearchProgress,
 }
 
 const gameStoreModule: StoreonModule<GameState> = (store) => {
@@ -35,6 +39,9 @@ const gameStoreModule: StoreonModule<GameState> = (store) => {
     constructing: 0,
     exploring: 0,
     resting: 0,
+    explorationProgressPercentage: 0,
+    constructionProgressPercentage: 0,
+    researchProgressPercentage: 0,
     actionToBoost: null,
   }));
 
@@ -99,6 +106,39 @@ const gameStoreModule: StoreonModule<GameState> = (store) => {
         resourcesConsumedPerTick: number;
       }
     ) => ({ ...resourcesStats })
+  );
+
+  store.on(
+    GameStoreAction.IncreaseConstructionProgress,
+    ({ constructionProgressPercentage }, percentage: number) => ({
+      constructionProgressPercentage: clamp(
+        0,
+        100,
+        constructionProgressPercentage + percentage
+      ),
+    })
+  );
+
+  store.on(
+    GameStoreAction.IncreaseExplorationProgress,
+    ({ explorationProgressPercentage }, percentage: number) => ({
+      explorationProgressPercentage: clamp(
+        0,
+        100,
+        explorationProgressPercentage + percentage
+      ),
+    })
+  );
+
+  store.on(
+    GameStoreAction.IncreaseResearchProgress,
+    ({ researchProgressPercentage }, percentage: number) => ({
+      researchProgressPercentage: clamp(
+        0,
+        100,
+        researchProgressPercentage + percentage
+      ),
+    })
   );
 };
 
