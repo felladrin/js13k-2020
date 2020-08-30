@@ -11,10 +11,12 @@ export const game = GameLoop({
       gameUpdateCallback(deltaTime);
     }
 
-    accumulatedDeltaTimeForTickCounting += deltaTime ?? 0;
-    if (accumulatedDeltaTimeForTickCounting > secondsPerGameTick) {
-      accumulatedDeltaTimeForTickCounting -= secondsPerGameTick;
-      tickStore.dispatch(TickStoreAction.IncrementTicksPassed);
+    if (deltaTime) {
+      accumulatedDeltaTimeForTickCounting += deltaTime;
+      if (accumulatedDeltaTimeForTickCounting > secondsPerGameTick) {
+        accumulatedDeltaTimeForTickCounting -= secondsPerGameTick;
+        tickStore.dispatch(TickStoreAction.IncrementTicksPassed);
+      }
     }
   },
   render: () => {

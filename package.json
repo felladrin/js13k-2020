@@ -58,7 +58,8 @@
     }
   },
   "browserslist": [
-    "Last 1 Chrome version",
-    "Last 1 Firefox version"
+    "Last 2 Chrome versions",
+    "Last 2 Firefox versions",
+    "Last 2 Safari versions"
   ]
 }
