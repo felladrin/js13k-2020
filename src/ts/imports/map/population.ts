@@ -1,7 +1,6 @@
 import { Pool, Sprite, randInt, clamp, Vector } from "kontra";
 import { Action } from "../../enums";
 import { getActionAreaLabel } from "./actionAreas";
-import { getKeysFromEnum } from "../../functions";
 import { gameStore, GameStoreAction } from "../../gameStore";
 import { Person } from "./declarations";
 import { tickStore } from "../../tickStore";
@@ -22,8 +21,8 @@ export const population = Pool({
 
 function fillPopulation(): void {
   population.get({
-    x: getActionAreaLabel(Action.Resting).position.x,
-    y: getActionAreaLabel(Action.Resting).position.y,
+    x: getActionAreaLabel(Action.Resting).position.x + randInt(-40, 40),
+    y: getActionAreaLabel(Action.Resting).position.y + randInt(-40, 40),
     color: "darkRed",
     width: 4,
     height: 4,
@@ -31,19 +30,10 @@ function fillPopulation(): void {
     speed: 3,
     timeOnTargetPosition: 0,
     health: 100,
+    currentAction: randInt(0, 100) < 80 ? Action.Farming : Action.Scavenging,
     update: function (this: Person, deltaTime: number) {
       this.health = clamp(0, 100, this.health);
       this.color = percentageFromRedToGreenColor(this.health);
-
-      if (!this.currentAction) {
-        const allActionsExceptResting = getKeysFromEnum(Action).filter(
-          (action) => action != Action.Resting
-        );
-        this.currentAction =
-          Action[
-            allActionsExceptResting[randInt(0, allActionsExceptResting.length)]
-          ];
-      }
 
       if (!this.targetPosition && this.currentAction) {
         this.targetPosition = getActionAreaLabel(

@@ -3,9 +3,9 @@ import { tickStore } from "../../tickStore";
 
 tickStore.on("@changed", () => {
   const gameState = gameStore.get();
-  const resourcesCreatedPerTick = gameState.scavenging * 3;
+  const resourcesCreatedPerTick = gameState.scavenging * 2;
   const resourcesConsumedPerTick =
-    gameState.constructing + gameState.researching + gameState.farming;
+    gameState.constructing + gameState.researching;
   const resources =
     gameState.resources + resourcesCreatedPerTick - resourcesConsumedPerTick;
 
