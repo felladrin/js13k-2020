@@ -13,7 +13,7 @@
     "parcel-build": "parcel build src/index.html --dist-dir dist/bundled --no-source-maps",
     "inline-build": "html-inline -i dist/bundled/index.html -o dist/inlined/index.html",
     "zip": "ts-node --skip-project .npm/scripts/zip.ts",
-    "lint": "eslint \"src/**/*.{js,ts}\" --fix",
+    "lint": "tsc --noEmit && eslint \"src/**/*.{js,ts}\" --fix",
     "find-duplicate-code": "jscpd src",
     "find-circular-dependencies": "dpdm --tree false --warning false src/scripts/index.ts",
     "update-dependencies": "ncu -u && npm i",
