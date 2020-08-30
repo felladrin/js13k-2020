@@ -67,6 +67,8 @@ gameStore.on("@changed", () => {
 });
 
 tickStore.on("@changed", () => {
+  moveEveryoneToFarmsIfNeeded();
+  moveEveryoneToCollectResourcesIfNeeded();
   processHealth();
   boostActionIfNeeded();
   updatePopulationStats();
@@ -171,4 +173,20 @@ function percentageFromRedToGreenColor(percentage: number) {
 
   const hex = red * 0x10000 + green * 0x100 + blue * 0x1;
   return `#${("000000" + hex.toString(16)).slice(-6)}`;
+}
+
+function moveEveryoneToFarmsIfNeeded() {
+  if (gameStore.get().food > 0) return;
+
+  (population.getAliveObjects() as Person[]).forEach((person) => {
+    person.currentAction = Action.Farming;
+  });
+}
+
+function moveEveryoneToCollectResourcesIfNeeded() {
+  if (gameStore.get().resources > 0) return;
+
+  (population.getAliveObjects() as Person[]).forEach((person) => {
+    person.currentAction = Action.Scavenging;
+  });
 }
