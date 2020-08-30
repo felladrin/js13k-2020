@@ -3,7 +3,7 @@ import { gameStore } from "../../gameStore";
 
 function getResourcesText() {
   const gameState = gameStore.get();
-  return `Resources: ${gameState.resources}\n⇧${gameState.resourcesCreatedPerTick} ⇩${gameState.resourcesConsumedPerTick}`;
+  return `Resources: ${gameState.resources}\n⬆${gameState.resourcesCreatedPerTick} ⬇${gameState.resourcesConsumedPerTick}`;
 }
 
 export const resourcesLabel = Text({

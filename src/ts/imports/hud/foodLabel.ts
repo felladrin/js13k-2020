@@ -3,7 +3,7 @@ import { gameStore } from "../../gameStore";
 
 function getFoodText() {
   const gameState = gameStore.get();
-  return `Food: ${gameState.food}\n⇧${gameState.foodCreatedPerTick} ⇩${gameState.foodConsumedPerTick}`;
+  return `Food: ${gameState.food}\n⬆${gameState.foodCreatedPerTick} ⬇${gameState.foodConsumedPerTick}`;
 }
 
 export const foodLabel = Text({
