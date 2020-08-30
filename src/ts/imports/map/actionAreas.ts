@@ -1,12 +1,12 @@
 import { Text, Vector, Sprite } from "kontra";
 import { Action } from "../../enums";
 import { getKeysFromEnum } from "../../functions";
-import { actionToSVGPathMap } from "../../constants";
+import { actionToSVGPathMap, gameHeight } from "../../constants";
 import { gameStore } from "../../gameStore";
 
 const actionAreas: Sprite[] = [];
 const actionsAmount = Object.keys(Action).length;
-const centralPosition = Vector(380, 560);
+const centralPosition = Vector(380, gameHeight / 2);
 const radius = 260;
 
 for (const action of getKeysFromEnum(Action)) {

@@ -7,7 +7,7 @@ function getPopulationText() {
 
 export const populationLabel = Text({
   x: 786,
-  y: 111,
+  y: 50,
   text: getPopulationText(),
   font: "24px Arial",
   color: "white",

@@ -8,7 +8,7 @@ function getResourcesText() {
 
 export const resourcesLabel = Text({
   x: 316,
-  y: 111,
+  y: 50,
   text: getResourcesText(),
   font: "24px Arial",
   color: "white",

@@ -1,5 +1,5 @@
 import { Button, Grid, GameObject } from "kontra";
-import { buttonImage, buttonPressedImage } from "../../constants";
+import { buttonImage, buttonPressedImage, gameHeight } from "../../constants";
 import { gameStore, GameStoreAction } from "../../gameStore";
 import { Action } from "../../enums";
 
@@ -42,7 +42,7 @@ for (const action in Action) {
     action,
     text: {
       ...textCommonProperties,
-      text: `Boost\n${action}`,
+      text: `Hold to Boost\n${action}`,
     },
   });
 
@@ -51,7 +51,7 @@ for (const action in Action) {
 
 export const buttons = Grid({
   x: 880,
-  y: 1024 / 2,
+  y: gameHeight / 2,
   anchor: { x: 0.5, y: 0.5 },
   rowGap: 20,
   justify: "center",
