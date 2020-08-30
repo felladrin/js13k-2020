@@ -5,6 +5,9 @@ import { foodLabel } from "./foodLabel";
 import { resourcesLabel } from "./resourcesLabel";
 import { populationLabel } from "./populationLabel";
 import { gameStore, GameStoreAction } from "../../gameStore";
+import { researchProgressLabel } from "./researchProgressLabel";
+import { constructionProgressLabel } from "./constructionProgressLabel";
+import { explorationProgressLabel } from "./explorationProgressLabel";
 
 export const hudScene = Scene({
   id: "hud",
@@ -14,6 +17,9 @@ export const hudScene = Scene({
     resourcesLabel,
     daysPassedLabel,
     populationLabel,
+    researchProgressLabel,
+    constructionProgressLabel,
+    explorationProgressLabel,
   ],
 });
 
