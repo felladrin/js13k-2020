@@ -2,6 +2,7 @@ import { Button, Grid, GameObject } from "kontra";
 import { buttonImage, buttonPressedImage, gameHeight } from "../../constants";
 import { gameStore, GameStoreAction } from "../../gameStore";
 import { Action } from "../../enums";
+import { getKeysFromEnum } from "../../functions";
 
 const buttonProperties = {
   anchor: { x: 0.5, y: 0.5 },
@@ -34,15 +35,15 @@ const textCommonProperties = {
 
 const children: GameObject[] = [];
 
-for (const action in Action) {
-  if (action == Action.Resting) continue;
+for (const key of getKeysFromEnum(Action)) {
+  if (Action[key] == Action.Resting) continue;
 
   const button = Button({
     ...buttonProperties,
-    action,
+    action: Action[key],
     text: {
       ...textCommonProperties,
-      text: `Hold to Boost\n${action}`,
+      text: `Hold to Boost\n${Action[key]}`,
     },
   });
 

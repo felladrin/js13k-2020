@@ -9,7 +9,7 @@ const actionsAmount = Object.keys(Action).length;
 const centralPosition = Vector(380, gameHeight / 2);
 const radius = 260;
 
-for (const action of getKeysFromEnum(Action)) {
+for (const key of getKeysFromEnum(Action)) {
   const currentActionIndex = actionAreas.length;
   const fractionOfTheCircle = currentActionIndex / actionsAmount;
   const angle = fractionOfTheCircle * Math.PI * 2;
@@ -30,7 +30,7 @@ for (const action of getKeysFromEnum(Action)) {
     render: function (this: Sprite) {
       this.context.fillStyle = this.color;
       this.context.beginPath();
-      const path = new Path2D(actionToSVGPathMap[Action[action]]);
+      const path = new Path2D(actionToSVGPathMap[Action[key]]);
       this.context.fill(path);
     },
   });
@@ -45,7 +45,7 @@ for (const action of getKeysFromEnum(Action)) {
     textAlign: "center",
     opacity: 0.3,
     update: function (this: Text) {
-      const actionNameInLowerCase = Action[action].toLocaleLowerCase() as
+      const actionNameInLowerCase = Action[key].toLocaleLowerCase() as
         | "resting"
         | "exploring"
         | "researching"
@@ -59,7 +59,7 @@ for (const action of getKeysFromEnum(Action)) {
   const actionNameLabel = Text({
     x: 0,
     y: -55,
-    text: Action[action],
+    text: Action[key],
     font: "32px Arial",
     color: "white",
     anchor: { x: 0.5, y: 0.5 },
@@ -74,7 +74,7 @@ for (const action of getKeysFromEnum(Action)) {
     radius: 120,
     opacity: 0.3,
     anchor: { x: 0.5, y: 0.5 },
-    action: Action[action],
+    action: Action[key],
     render: function (this: Sprite) {
       this.context.fillStyle = this.color;
       this.context.beginPath();

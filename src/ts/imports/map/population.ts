@@ -10,6 +10,7 @@ import {
   minHealthRestoredPerTick,
   maxHealthRestoredPerTick,
 } from "./constants";
+import { getKeysFromEnum } from "../../functions";
 
 export const population = Pool({
   // eslint-disable-next-line
@@ -90,9 +91,9 @@ function boostActionIfNeeded() {
 
   const otherActionsList: Action[] = [];
 
-  for (const action in Action) {
-    if (action == actionToBoost) continue;
-    otherActionsList.push(action as Action);
+  for (const key of getKeysFromEnum(Action)) {
+    if (Action[key] == actionToBoost) continue;
+    otherActionsList.push(Action[key]);
   }
 
   let indexOnOtherActionsList = 0;
