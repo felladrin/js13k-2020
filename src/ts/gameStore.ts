@@ -1,4 +1,4 @@
-import { createStoreon, StoreonModule } from "storeon";
+import { createStoreon } from "storeon";
 import { initialPopulation } from "./constants";
 import { Action } from "./enums";
 import { clamp } from "kontra";
@@ -56,135 +56,135 @@ interface State {
   actionToBoost: Action | null;
 }
 
-const gameStoreModule: StoreonModule<State, Events> = (store) => {
-  store.on("@init", () => ({
-    onUpdateCallbacks: [],
-    onRenderCallbacks: [],
-    population: initialPopulation,
-    daysPassed: 0,
-    food: 10000,
-    foodCreatedPerTick: 0,
-    foodConsumedPerTick: 0,
-    resources: 10000,
-    resourcesCreatedPerTick: 0,
-    resourcesConsumedPerTick: 0,
-    farming: 0,
-    scavenging: 0,
-    researching: 0,
-    constructing: 0,
-    exploring: 0,
-    resting: 0,
-    explorationProgressPercentage: 0,
-    constructionProgressPercentage: 0,
-    researchProgressPercentage: 0,
-    availableConstructionSlots: 0,
-    availableImprovementSlots: 0,
-    actionToBoost: null,
-  }));
+export const gameStore = createStoreon<State, Events>([
+  (store) => {
+    store.on("@init", () => ({
+      onUpdateCallbacks: [],
+      onRenderCallbacks: [],
+      population: initialPopulation,
+      daysPassed: 0,
+      food: 10000,
+      foodCreatedPerTick: 0,
+      foodConsumedPerTick: 0,
+      resources: 10000,
+      resourcesCreatedPerTick: 0,
+      resourcesConsumedPerTick: 0,
+      farming: 0,
+      scavenging: 0,
+      researching: 0,
+      constructing: 0,
+      exploring: 0,
+      resting: 0,
+      explorationProgressPercentage: 0,
+      constructionProgressPercentage: 0,
+      researchProgressPercentage: 0,
+      availableConstructionSlots: 0,
+      availableImprovementSlots: 0,
+      actionToBoost: null,
+    }));
 
-  store.on("addUpdateCallback", ({ onUpdateCallbacks }, callback) => ({
-    onUpdateCallbacks: onUpdateCallbacks.concat([callback]),
-  }));
+    store.on("addUpdateCallback", ({ onUpdateCallbacks }, callback) => ({
+      onUpdateCallbacks: onUpdateCallbacks.concat([callback]),
+    }));
 
-  store.on("addRenderCallback", ({ onRenderCallbacks }, callback) => ({
-    onRenderCallbacks: onRenderCallbacks.concat([callback]),
-  }));
+    store.on("addRenderCallback", ({ onRenderCallbacks }, callback) => ({
+      onRenderCallbacks: onRenderCallbacks.concat([callback]),
+    }));
 
-  store.on("addOneDayPassed", ({ daysPassed }) => ({
-    daysPassed: daysPassed + 1,
-  }));
+    store.on("addOneDayPassed", ({ daysPassed }) => ({
+      daysPassed: daysPassed + 1,
+    }));
 
-  store.on("updatePopulationStats", (_, newStats) => ({
-    farming: newStats.Farming,
-    scavenging: newStats.Scavenging,
-    researching: newStats.Researching,
-    constructing: newStats.Constructing,
-    exploring: newStats.Exploring,
-    resting: newStats.Resting,
-  }));
+    store.on("updatePopulationStats", (_, newStats) => ({
+      farming: newStats.Farming,
+      scavenging: newStats.Scavenging,
+      researching: newStats.Researching,
+      constructing: newStats.Constructing,
+      exploring: newStats.Exploring,
+      resting: newStats.Resting,
+    }));
 
-  store.on("setActionToBoost", (_, actionToBoost) => ({
-    actionToBoost,
-  }));
+    store.on("setActionToBoost", (_, actionToBoost) => ({
+      actionToBoost,
+    }));
 
-  store.on("updateFoodStats", (_, foodStats) => ({ ...foodStats }));
+    store.on("updateFoodStats", (_, foodStats) => ({ ...foodStats }));
 
-  store.on("updateResourcesStats", (_, resourcesStats) => ({
-    ...resourcesStats,
-  }));
+    store.on("updateResourcesStats", (_, resourcesStats) => ({
+      ...resourcesStats,
+    }));
 
-  store.on(
-    "increaseConstructionProgress",
-    ({ constructionProgressPercentage }, percentage) => {
-      let newPercentage = clamp(
-        0,
-        100,
-        constructionProgressPercentage + percentage
-      );
+    store.on(
+      "increaseConstructionProgress",
+      ({ constructionProgressPercentage }, percentage) => {
+        let newPercentage = clamp(
+          0,
+          100,
+          constructionProgressPercentage + percentage
+        );
 
-      if (newPercentage == 100) {
-        newPercentage = 0;
+        if (newPercentage == 100) {
+          newPercentage = 0;
+        }
+
+        return {
+          constructionProgressPercentage: newPercentage,
+        };
       }
+    );
 
-      return {
-        constructionProgressPercentage: newPercentage,
-      };
-    }
-  );
+    store.on(
+      "increaseExplorationProgress",
+      ({ explorationProgressPercentage }, percentage) => {
+        let newPercentage = clamp(
+          0,
+          100,
+          explorationProgressPercentage + percentage
+        );
 
-  store.on(
-    "increaseExplorationProgress",
-    ({ explorationProgressPercentage }, percentage) => {
-      let newPercentage = clamp(
-        0,
-        100,
-        explorationProgressPercentage + percentage
-      );
+        if (newPercentage == 100) {
+          newPercentage = 0;
+          store.dispatch("incrementAvailableConstructionSlots");
+        }
 
-      if (newPercentage == 100) {
-        newPercentage = 0;
-        store.dispatch("incrementAvailableConstructionSlots");
+        return {
+          explorationProgressPercentage: newPercentage,
+        };
       }
+    );
 
-      return {
-        explorationProgressPercentage: newPercentage,
-      };
-    }
-  );
+    store.on(
+      "increaseResearchProgress",
+      ({ researchProgressPercentage }, percentage) => {
+        let newPercentage = clamp(
+          0,
+          100,
+          researchProgressPercentage + percentage
+        );
 
-  store.on(
-    "increaseResearchProgress",
-    ({ researchProgressPercentage }, percentage) => {
-      let newPercentage = clamp(
-        0,
-        100,
-        researchProgressPercentage + percentage
-      );
+        if (newPercentage == 100) {
+          newPercentage = 0;
+          store.dispatch("incrementAvailableImprovementSlots");
+        }
 
-      if (newPercentage == 100) {
-        newPercentage = 0;
-        store.dispatch("incrementAvailableImprovementSlots");
+        return {
+          researchProgressPercentage: newPercentage,
+        };
       }
+    );
 
-      return {
-        researchProgressPercentage: newPercentage,
-      };
-    }
-  );
+    store.on(
+      "incrementAvailableImprovementSlots",
+      ({ availableImprovementSlots }) => ({
+        availableImprovementSlots: availableImprovementSlots + 1,
+      })
+    );
 
-  store.on(
-    "incrementAvailableImprovementSlots",
-    ({ availableImprovementSlots }) => ({
-      availableImprovementSlots: availableImprovementSlots + 1,
-    })
-  );
-
-  store.on(
-    "incrementAvailableConstructionSlots",
-    ({ availableConstructionSlots }) => ({
-      availableConstructionSlots: availableConstructionSlots + 1,
-    })
-  );
-};
-
-export const gameStore = createStoreon<State, Events>([gameStoreModule]);
+    store.on(
+      "incrementAvailableConstructionSlots",
+      ({ availableConstructionSlots }) => ({
+        availableConstructionSlots: availableConstructionSlots + 1,
+      })
+    );
+  },
+]);
