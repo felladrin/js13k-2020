@@ -88,15 +88,37 @@ function boostActionIfNeeded() {
 
   if (!actionToBoost) return;
 
+  const otherActionsList: Action[] = [];
+
   for (const action in Action) {
     if (action == actionToBoost) continue;
+    otherActionsList.push(action as Action);
+  }
 
-    const personFoundOnAnotherAction = (population.getAliveObjects() as Person[]).find(
+  let indexOnOtherActionsList = 0;
+
+  const people = population.getAliveObjects() as Person[];
+
+  for (
+    let counter = 0,
+      threePercentOfThePopulation = Math.ceil(people.length * 0.03);
+    counter < threePercentOfThePopulation;
+    counter++
+  ) {
+    const action = otherActionsList[indexOnOtherActionsList];
+
+    const personFoundOnAnotherAction = people.find(
       (person) => person.currentAction == action
     );
 
     if (personFoundOnAnotherAction) {
       personFoundOnAnotherAction.currentAction = actionToBoost;
+    }
+
+    indexOnOtherActionsList++;
+
+    if (indexOnOtherActionsList > otherActionsList.length) {
+      indexOnOtherActionsList = 0;
     }
   }
 }
