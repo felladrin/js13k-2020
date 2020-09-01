@@ -28,6 +28,7 @@ interface Events {
   increaseConstructionProgress: number;
   increaseResearchProgress: number;
   incrementAvailableConstructionSlots: void;
+  incrementAvailableImprovementSlots: void;
 }
 
 interface State {
@@ -51,6 +52,7 @@ interface State {
   constructionProgressPercentage: number;
   researchProgressPercentage: number;
   availableConstructionSlots: number;
+  availableImprovementSlots: number;
   actionToBoost: Action | null;
 }
 
@@ -76,6 +78,7 @@ const gameStoreModule: StoreonModule<State, Events> = (store) => {
     constructionProgressPercentage: 0,
     researchProgressPercentage: 0,
     availableConstructionSlots: 0,
+    availableImprovementSlots: 0,
     actionToBoost: null,
   }));
 
@@ -112,13 +115,21 @@ const gameStoreModule: StoreonModule<State, Events> = (store) => {
 
   store.on(
     "increaseConstructionProgress",
-    ({ constructionProgressPercentage }, percentage) => ({
-      constructionProgressPercentage: clamp(
+    ({ constructionProgressPercentage }, percentage) => {
+      let newPercentage = clamp(
         0,
         100,
         constructionProgressPercentage + percentage
-      ),
-    })
+      );
+
+      if (newPercentage == 100) {
+        newPercentage = 0;
+      }
+
+      return {
+        constructionProgressPercentage: newPercentage,
+      };
+    }
   );
 
   store.on(
@@ -142,20 +153,36 @@ const gameStoreModule: StoreonModule<State, Events> = (store) => {
   );
 
   store.on(
-    "incrementAvailableConstructionSlots",
-    ({ availableConstructionSlots }) => ({
-      availableConstructionSlots: availableConstructionSlots + 1,
+    "increaseResearchProgress",
+    ({ researchProgressPercentage }, percentage) => {
+      let newPercentage = clamp(
+        0,
+        100,
+        researchProgressPercentage + percentage
+      );
+
+      if (newPercentage == 100) {
+        newPercentage = 0;
+        store.dispatch("incrementAvailableImprovementSlots");
+      }
+
+      return {
+        researchProgressPercentage: newPercentage,
+      };
+    }
+  );
+
+  store.on(
+    "incrementAvailableImprovementSlots",
+    ({ availableImprovementSlots }) => ({
+      availableImprovementSlots: availableImprovementSlots + 1,
     })
   );
 
   store.on(
-    "increaseResearchProgress",
-    ({ researchProgressPercentage }, percentage) => ({
-      researchProgressPercentage: clamp(
-        0,
-        100,
-        researchProgressPercentage + percentage
-      ),
+    "incrementAvailableConstructionSlots",
+    ({ availableConstructionSlots }) => ({
+      availableConstructionSlots: availableConstructionSlots + 1,
     })
   );
 };
