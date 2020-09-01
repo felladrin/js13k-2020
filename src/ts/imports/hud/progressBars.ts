@@ -32,23 +32,23 @@ const explorationProgressBar = createProgressBar("lightGreen", "black");
 
 tickStore.on("@changed", () => {
   const [researchProgressBarForeground] = researchProgressBar.children;
-  if (researchProgressBarForeground.parent?.width) {
+  if (researchProgressBarForeground.parent) {
     researchProgressBarForeground.width =
-      researchProgressBarForeground.parent?.width *
+      researchProgressBarForeground.parent.width *
       (gameStore.get().researchProgressPercentage / 100);
   }
 
   const [constructionProgressBarForeground] = constructionProgressBar.children;
-  if (constructionProgressBarForeground.parent?.width) {
+  if (constructionProgressBarForeground.parent) {
     constructionProgressBarForeground.width =
-      constructionProgressBarForeground.parent?.width *
+      constructionProgressBarForeground.parent.width *
       (gameStore.get().constructionProgressPercentage / 100);
   }
 
   const [explorationProgressBarForeground] = explorationProgressBar.children;
-  if (explorationProgressBarForeground.parent?.width) {
+  if (explorationProgressBarForeground.parent) {
     explorationProgressBarForeground.width =
-      explorationProgressBarForeground.parent?.width *
+      explorationProgressBarForeground.parent.width *
       (gameStore.get().explorationProgressPercentage / 100);
   }
 });

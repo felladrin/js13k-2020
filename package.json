@@ -60,6 +60,6 @@
   "browserslist": [
     "Last 2 Chrome versions",
     "Last 2 Firefox versions",
-    "Last 2 Safari versions"
+    "Last 4 Safari versions"
   ]
 }
