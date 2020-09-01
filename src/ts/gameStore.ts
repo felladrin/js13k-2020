@@ -19,6 +19,7 @@ export enum GameStoreAction {
   IncreaseExplorationProgress,
   IncreaseConstructionProgress,
   IncreaseResearchProgress,
+  IncrementAvailableConstructionSlots,
 }
 
 const gameStoreModule: StoreonModule<GameState> = (store) => {
@@ -42,6 +43,7 @@ const gameStoreModule: StoreonModule<GameState> = (store) => {
     explorationProgressPercentage: 0,
     constructionProgressPercentage: 0,
     researchProgressPercentage: 0,
+    availableConstructionSlots: 0,
     actionToBoost: null,
   }));
 
@@ -121,12 +123,28 @@ const gameStoreModule: StoreonModule<GameState> = (store) => {
 
   store.on(
     GameStoreAction.IncreaseExplorationProgress,
-    ({ explorationProgressPercentage }, percentage: number) => ({
-      explorationProgressPercentage: clamp(
+    ({ explorationProgressPercentage }, percentage: number) => {
+      let newPercentage = clamp(
         0,
         100,
         explorationProgressPercentage + percentage
-      ),
+      );
+
+      if (newPercentage == 100) {
+        newPercentage = 0;
+        store.dispatch(GameStoreAction.IncrementAvailableConstructionSlots);
+      }
+
+      return {
+        explorationProgressPercentage: newPercentage,
+      };
+    }
+  );
+
+  store.on(
+    GameStoreAction.IncrementAvailableConstructionSlots,
+    ({ availableConstructionSlots }) => ({
+      availableConstructionSlots: availableConstructionSlots + 1,
     })
   );
 

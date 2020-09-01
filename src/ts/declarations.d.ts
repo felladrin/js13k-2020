@@ -23,6 +23,7 @@ interface GameState {
   explorationProgressPercentage: number;
   constructionProgressPercentage: number;
   researchProgressPercentage: number;
+  availableConstructionSlots: number;
   actionToBoost: Action | null;
 }
 
