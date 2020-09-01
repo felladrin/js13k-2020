@@ -1,7 +1,7 @@
 import { GameLoop } from "kontra";
 import { gameStore } from "./gameStore";
 import { secondsPerGameTick } from "./constants";
-import { tickStore, TickStoreAction } from "./tickStore";
+import { tickStore } from "./tickStore";
 
 let accumulatedDeltaTimeForTickCounting = 0;
 
@@ -15,7 +15,7 @@ export const game = GameLoop({
       accumulatedDeltaTimeForTickCounting += deltaTime;
       if (accumulatedDeltaTimeForTickCounting > secondsPerGameTick) {
         accumulatedDeltaTimeForTickCounting -= secondsPerGameTick;
-        tickStore.dispatch(TickStoreAction.IncrementTicksPassed);
+        tickStore.dispatch("incrementTicksPassed");
       }
     }
   },

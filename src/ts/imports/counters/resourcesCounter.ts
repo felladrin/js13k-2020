@@ -1,4 +1,4 @@
-import { gameStore, GameStoreAction } from "../../gameStore";
+import { gameStore } from "../../gameStore";
 import { tickStore } from "../../tickStore";
 
 tickStore.on("@changed", () => {
@@ -9,7 +9,7 @@ tickStore.on("@changed", () => {
   const resources =
     gameState.resources + resourcesCreatedPerTick - resourcesConsumedPerTick;
 
-  gameStore.dispatch(GameStoreAction.UpdateResourcesStats, {
+  gameStore.dispatch("updateResourcesStats", {
     resources,
     resourcesCreatedPerTick,
     resourcesConsumedPerTick,

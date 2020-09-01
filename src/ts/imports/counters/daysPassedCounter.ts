@@ -1,4 +1,4 @@
-import { gameStore, GameStoreAction } from "../../gameStore";
+import { gameStore } from "../../gameStore";
 import { gameTicksPerGameDay } from "../../constants";
 import { tickStore } from "../../tickStore";
 
@@ -7,6 +7,6 @@ tickStore.on("@changed", () => {
     Math.floor(tickStore.get().ticksPassed / gameTicksPerGameDay) >
     gameStore.get().daysPassed
   ) {
-    gameStore.dispatch(GameStoreAction.AddOneDayPassed);
+    gameStore.dispatch("addOneDayPassed");
   }
 });

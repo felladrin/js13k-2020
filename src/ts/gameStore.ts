@@ -1,28 +1,60 @@
 import { createStoreon, StoreonModule } from "storeon";
 import { initialPopulation } from "./constants";
 import { Action } from "./enums";
-import {
-  GameState,
-  GameRenderCallback,
-  GameUpdateCallback,
-} from "./declarations";
 import { clamp } from "kontra";
 
-export enum GameStoreAction {
-  AddUpdateCallback,
-  AddRenderCallback,
-  AddOneDayPassed,
-  UpdatePopulationStats,
-  UpdateFoodStats,
-  UpdateResourcesStats,
-  SetActionToBoost,
-  IncreaseExplorationProgress,
-  IncreaseConstructionProgress,
-  IncreaseResearchProgress,
-  IncrementAvailableConstructionSlots,
+type GameUpdateCallback = (deltaTime?: number) => void;
+type GameRenderCallback = () => void;
+
+interface Events {
+  addUpdateCallback: GameUpdateCallback;
+  addRenderCallback: GameRenderCallback;
+  addOneDayPassed: void;
+  updatePopulationStats: {
+    [key in Action]: number;
+  };
+  updateFoodStats: {
+    food: number;
+    foodCreatedPerTick: number;
+    foodConsumedPerTick: number;
+  };
+  updateResourcesStats: {
+    resources: number;
+    resourcesCreatedPerTick: number;
+    resourcesConsumedPerTick: number;
+  };
+  setActionToBoost: Action | null;
+  increaseExplorationProgress: number;
+  increaseConstructionProgress: number;
+  increaseResearchProgress: number;
+  incrementAvailableConstructionSlots: void;
 }
 
-const gameStoreModule: StoreonModule<GameState> = (store) => {
+interface State {
+  onUpdateCallbacks: GameUpdateCallback[];
+  onRenderCallbacks: GameRenderCallback[];
+  population: number;
+  daysPassed: number;
+  food: number;
+  foodCreatedPerTick: number;
+  foodConsumedPerTick: number;
+  resources: number;
+  resourcesCreatedPerTick: number;
+  resourcesConsumedPerTick: number;
+  farming: number;
+  scavenging: number;
+  researching: number;
+  constructing: number;
+  exploring: number;
+  resting: number;
+  explorationProgressPercentage: number;
+  constructionProgressPercentage: number;
+  researchProgressPercentage: number;
+  availableConstructionSlots: number;
+  actionToBoost: Action | null;
+}
+
+const gameStoreModule: StoreonModule<State, Events> = (store) => {
   store.on("@init", () => ({
     onUpdateCallbacks: [],
     onRenderCallbacks: [],
@@ -47,72 +79,40 @@ const gameStoreModule: StoreonModule<GameState> = (store) => {
     actionToBoost: null,
   }));
 
-  store.on(
-    GameStoreAction.AddUpdateCallback,
-    ({ onUpdateCallbacks }, callback: GameUpdateCallback) => ({
-      onUpdateCallbacks: onUpdateCallbacks.concat([callback]),
-    })
-  );
+  store.on("addUpdateCallback", ({ onUpdateCallbacks }, callback) => ({
+    onUpdateCallbacks: onUpdateCallbacks.concat([callback]),
+  }));
 
-  store.on(
-    GameStoreAction.AddRenderCallback,
-    ({ onRenderCallbacks }, callback: GameRenderCallback) => ({
-      onRenderCallbacks: onRenderCallbacks.concat([callback]),
-    })
-  );
+  store.on("addRenderCallback", ({ onRenderCallbacks }, callback) => ({
+    onRenderCallbacks: onRenderCallbacks.concat([callback]),
+  }));
 
-  store.on(GameStoreAction.AddOneDayPassed, ({ daysPassed }) => ({
+  store.on("addOneDayPassed", ({ daysPassed }) => ({
     daysPassed: daysPassed + 1,
   }));
 
-  store.on(
-    GameStoreAction.UpdatePopulationStats,
-    (
-      _,
-      newStats: {
-        [key in Action]: number;
-      }
-    ) => ({
-      farming: newStats.Farming,
-      scavenging: newStats.Scavenging,
-      researching: newStats.Researching,
-      constructing: newStats.Constructing,
-      exploring: newStats.Exploring,
-      resting: newStats.Resting,
-    })
-  );
+  store.on("updatePopulationStats", (_, newStats) => ({
+    farming: newStats.Farming,
+    scavenging: newStats.Scavenging,
+    researching: newStats.Researching,
+    constructing: newStats.Constructing,
+    exploring: newStats.Exploring,
+    resting: newStats.Resting,
+  }));
 
-  store.on(GameStoreAction.SetActionToBoost, (_, actionToBoost: Action) => ({
+  store.on("setActionToBoost", (_, actionToBoost) => ({
     actionToBoost,
   }));
 
-  store.on(
-    GameStoreAction.UpdateFoodStats,
-    (
-      _,
-      foodStats: {
-        food: number;
-        foodCreatedPerTick: number;
-        foodConsumedPerTick: number;
-      }
-    ) => ({ ...foodStats })
-  );
+  store.on("updateFoodStats", (_, foodStats) => ({ ...foodStats }));
+
+  store.on("updateResourcesStats", (_, resourcesStats) => ({
+    ...resourcesStats,
+  }));
 
   store.on(
-    GameStoreAction.UpdateResourcesStats,
-    (
-      _,
-      resourcesStats: {
-        resources: number;
-        resourcesCreatedPerTick: number;
-        resourcesConsumedPerTick: number;
-      }
-    ) => ({ ...resourcesStats })
-  );
-
-  store.on(
-    GameStoreAction.IncreaseConstructionProgress,
-    ({ constructionProgressPercentage }, percentage: number) => ({
+    "increaseConstructionProgress",
+    ({ constructionProgressPercentage }, percentage) => ({
       constructionProgressPercentage: clamp(
         0,
         100,
@@ -122,8 +122,8 @@ const gameStoreModule: StoreonModule<GameState> = (store) => {
   );
 
   store.on(
-    GameStoreAction.IncreaseExplorationProgress,
-    ({ explorationProgressPercentage }, percentage: number) => {
+    "increaseExplorationProgress",
+    ({ explorationProgressPercentage }, percentage) => {
       let newPercentage = clamp(
         0,
         100,
@@ -132,7 +132,7 @@ const gameStoreModule: StoreonModule<GameState> = (store) => {
 
       if (newPercentage == 100) {
         newPercentage = 0;
-        store.dispatch(GameStoreAction.IncrementAvailableConstructionSlots);
+        store.dispatch("incrementAvailableConstructionSlots");
       }
 
       return {
@@ -142,15 +142,15 @@ const gameStoreModule: StoreonModule<GameState> = (store) => {
   );
 
   store.on(
-    GameStoreAction.IncrementAvailableConstructionSlots,
+    "incrementAvailableConstructionSlots",
     ({ availableConstructionSlots }) => ({
       availableConstructionSlots: availableConstructionSlots + 1,
     })
   );
 
   store.on(
-    GameStoreAction.IncreaseResearchProgress,
-    ({ researchProgressPercentage }, percentage: number) => ({
+    "increaseResearchProgress",
+    ({ researchProgressPercentage }, percentage) => ({
       researchProgressPercentage: clamp(
         0,
         100,
@@ -160,4 +160,4 @@ const gameStoreModule: StoreonModule<GameState> = (store) => {
   );
 };
 
-export const gameStore = createStoreon<GameState>([gameStoreModule]);
+export const gameStore = createStoreon<State, Events>([gameStoreModule]);

@@ -1,16 +1,16 @@
 import { Scene } from "kontra";
 import { getAllActionAreaLabels } from "./actionAreas";
-import { gameStore, GameStoreAction } from "../../gameStore";
+import { gameStore } from "../../gameStore";
 
 export const mapScene = Scene({
   id: "map",
   children: [...getAllActionAreaLabels()],
 });
 
-gameStore.dispatch(GameStoreAction.AddUpdateCallback, () => {
+gameStore.dispatch("addUpdateCallback", () => {
   mapScene.update();
 });
 
-gameStore.dispatch(GameStoreAction.AddRenderCallback, () => {
+gameStore.dispatch("addRenderCallback", () => {
   mapScene.render();
 });

@@ -1,8 +1,7 @@
 import { Pool, Sprite, randInt, clamp, Vector } from "kontra";
 import { Action } from "../../enums";
 import { getActionAreaLabel } from "./actionAreas";
-import { gameStore, GameStoreAction } from "../../gameStore";
-import { Person } from "./declarations";
+import { gameStore } from "../../gameStore";
 import { tickStore } from "../../tickStore";
 import {
   minHealthConsumedPerTick,
@@ -11,6 +10,16 @@ import {
   maxHealthRestoredPerTick,
 } from "./constants";
 import { getKeysFromEnum } from "../../functions";
+
+interface Person extends Sprite {
+  currentAction?: Action;
+  previousAction?: Action;
+  sickOrInjured: boolean;
+  speed: number;
+  targetPosition?: Vector;
+  timeOnTargetPosition: number;
+  health: number;
+}
 
 export const population = Pool({
   // eslint-disable-next-line
@@ -75,12 +84,12 @@ tickStore.on("@changed", () => {
   updatePopulationStats();
 });
 
-gameStore.dispatch(GameStoreAction.AddUpdateCallback, (deltaTime: number) => {
+gameStore.dispatch("addUpdateCallback", (deltaTime) => {
   fillPopulation();
   population.update(deltaTime);
 });
 
-gameStore.dispatch(GameStoreAction.AddRenderCallback, () => {
+gameStore.dispatch("addRenderCallback", () => {
   population.render();
 });
 
@@ -145,7 +154,7 @@ function updatePopulationStats() {
   const newStatsHash = JSON.stringify(newStats);
 
   if (newStatsHash != oldStatsHash) {
-    gameStore.dispatch(GameStoreAction.UpdatePopulationStats, newStats);
+    gameStore.dispatch("updatePopulationStats", newStats);
   }
 
   oldStatsHash = newStatsHash;

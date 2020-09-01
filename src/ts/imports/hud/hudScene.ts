@@ -4,7 +4,7 @@ import { daysPassedLabel } from "./daysPassedLabel";
 import { foodLabel } from "./foodLabel";
 import { resourcesLabel } from "./resourcesLabel";
 import { populationLabel } from "./populationLabel";
-import { gameStore, GameStoreAction } from "../../gameStore";
+import { gameStore } from "../../gameStore";
 import {
   researchProgressLabel,
   constructionProgressLabel,
@@ -25,10 +25,10 @@ export const hudScene = Scene({
   ],
 });
 
-gameStore.dispatch(GameStoreAction.AddUpdateCallback, () => {
+gameStore.dispatch("addUpdateCallback", () => {
   hudScene.update();
 });
 
-gameStore.dispatch(GameStoreAction.AddRenderCallback, () => {
+gameStore.dispatch("addRenderCallback", () => {
   hudScene.render();
 });

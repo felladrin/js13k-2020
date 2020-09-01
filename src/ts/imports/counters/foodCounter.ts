@@ -1,4 +1,4 @@
-import { gameStore, GameStoreAction } from "../../gameStore";
+import { gameStore } from "../../gameStore";
 import { tickStore } from "../../tickStore";
 
 tickStore.on("@changed", () => {
@@ -12,7 +12,7 @@ tickStore.on("@changed", () => {
     gameState.scavenging;
   const food = gameState.food + foodCreatedPerTick - foodConsumedPerTick;
 
-  gameStore.dispatch(GameStoreAction.UpdateFoodStats, {
+  gameStore.dispatch("updateFoodStats", {
     food,
     foodCreatedPerTick,
     foodConsumedPerTick,

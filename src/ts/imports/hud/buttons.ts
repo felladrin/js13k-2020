@@ -1,6 +1,6 @@
 import { Button, Grid, GameObject } from "kontra";
 import { buttonImage, buttonPressedImage, gameHeight } from "../../constants";
-import { gameStore, GameStoreAction } from "../../gameStore";
+import { gameStore } from "../../gameStore";
 import { Action } from "../../enums";
 import { getKeysFromEnum } from "../../functions";
 
@@ -9,14 +9,14 @@ const buttonProperties = {
   image: buttonImage,
   action: null,
   onDown: function (this: Button) {
-    gameStore.dispatch(GameStoreAction.SetActionToBoost, this.action);
+    gameStore.dispatch("setActionToBoost", this.action);
     this.image = buttonPressedImage;
 
     const [childText] = this.children;
     childText.y = -2;
   },
   onUp: function (this: Button) {
-    gameStore.dispatch(GameStoreAction.SetActionToBoost, null);
+    gameStore.dispatch("setActionToBoost", null);
     this.image = buttonImage;
 
     const [childText] = this.children;
