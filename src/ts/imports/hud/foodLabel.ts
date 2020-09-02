@@ -20,6 +20,8 @@ export const foodLabel = Text({
   textAlign: "center",
 });
 
-gameStore.on("@changed", () => {
-  foodLabel.text = getFoodText();
+gameStore.on("@changed", (state) => {
+  if (state.food || state.foodCreatedPerTick || state.foodConsumedPerTick) {
+    foodLabel.text = getFoodText();
+  }
 });

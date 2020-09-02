@@ -2,10 +2,11 @@ import { gameStore } from "../../gameStore";
 import { gameTicksPerGameDay } from "../../constants";
 import { tickStore } from "../../tickStore";
 
-tickStore.on("@changed", () => {
+tickStore.on("@changed", (state) => {
   if (
-    Math.floor(tickStore.get().ticksPassed / gameTicksPerGameDay) >
-    gameStore.get().daysPassed
+    state.ticksPassed &&
+    Math.floor(state.ticksPassed / gameTicksPerGameDay) >
+      gameStore.get().daysPassed
   ) {
     gameStore.dispatch("addOneDayPassed");
   }

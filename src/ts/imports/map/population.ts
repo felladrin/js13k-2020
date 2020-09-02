@@ -72,8 +72,8 @@ function fillPopulation(): void {
   } as Partial<Person>);
 }
 
-gameStore.on("@changed", () => {
-  population.maxSize = gameStore.get().population;
+gameStore.on("@changed", (state) => {
+  if (state.population) population.maxSize = state.population;
 });
 
 tickStore.on("@changed", () => {

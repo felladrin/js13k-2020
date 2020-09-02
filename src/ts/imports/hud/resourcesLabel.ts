@@ -20,6 +20,12 @@ export const resourcesLabel = Text({
   textAlign: "center",
 });
 
-gameStore.on("@changed", () => {
-  resourcesLabel.text = getResourcesText();
+gameStore.on("@changed", (state) => {
+  if (
+    state.resources ||
+    state.resourcesCreatedPerTick ||
+    state.resourcesConsumedPerTick
+  ) {
+    resourcesLabel.text = getResourcesText();
+  }
 });

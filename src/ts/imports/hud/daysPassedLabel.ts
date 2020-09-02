@@ -1,20 +1,21 @@
 import { Text } from "kontra";
 import { gameStore } from "../../gameStore";
 
-function getDaysPassedText() {
-  return `Days Passed: ${gameStore.get().daysPassed}`;
+function getDaysPassedText(daysPassed: number) {
+  return `Days Passed: ${daysPassed}`;
 }
 
 export const daysPassedLabel = Text({
   x: 556,
   y: 50,
-  text: getDaysPassedText(),
+  text: getDaysPassedText(gameStore.get().daysPassed),
   font: "24px Arial",
   color: "white",
   anchor: { x: 0.5, y: 0.5 },
   textAlign: "center",
 });
 
-gameStore.on("@changed", () => {
-  daysPassedLabel.text = getDaysPassedText();
+gameStore.on("@changed", (state) => {
+  if (state.daysPassed)
+    daysPassedLabel.text = getDaysPassedText(state.daysPassed);
 });

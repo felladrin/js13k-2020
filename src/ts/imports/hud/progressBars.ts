@@ -1,5 +1,4 @@
 import { Sprite, Text } from "kontra";
-import { tickStore } from "../../tickStore";
 import { gameStore } from "../../gameStore";
 
 const commonProgressBarProperties: Partial<Sprite> = {
@@ -30,26 +29,29 @@ const researchProgressBar = createProgressBar("cyan", "black");
 const constructionProgressBar = createProgressBar("yellow", "black");
 const explorationProgressBar = createProgressBar("lightGreen", "black");
 
-tickStore.on("@changed", () => {
-  const [researchProgressBarForeground] = researchProgressBar.children;
-  if (researchProgressBarForeground.parent) {
+gameStore.on("@changed", (state) => {
+  if (state.researchProgressPercentage) {
+    const [researchProgressBarForeground] = researchProgressBar.children;
     researchProgressBarForeground.width =
-      researchProgressBarForeground.parent.width *
-      (gameStore.get().researchProgressPercentage / 100);
+      researchProgressBar.width * (state.researchProgressPercentage / 100);
   }
 
-  const [constructionProgressBarForeground] = constructionProgressBar.children;
-  if (constructionProgressBarForeground.parent) {
+  if (state.constructionProgressPercentage) {
+    const [
+      constructionProgressBarForeground,
+    ] = constructionProgressBar.children;
     constructionProgressBarForeground.width =
-      constructionProgressBarForeground.parent.width *
-      (gameStore.get().constructionProgressPercentage / 100);
+      constructionProgressBar.width *
+      (state.constructionProgressPercentage / 100);
   }
 
-  const [explorationProgressBarForeground] = explorationProgressBar.children;
-  if (explorationProgressBarForeground.parent) {
-    explorationProgressBarForeground.width =
-      explorationProgressBarForeground.parent.width *
-      (gameStore.get().explorationProgressPercentage / 100);
+  if (state.explorationProgressPercentage) {
+    const [explorationProgressBarForeground] = explorationProgressBar.children;
+    if (explorationProgressBarForeground.parent) {
+      explorationProgressBarForeground.width =
+        explorationProgressBarForeground.parent.width *
+        (state.explorationProgressPercentage / 100);
+    }
   }
 });
 

@@ -2,18 +2,14 @@ import { gameStore } from "../../gameStore";
 import { tickStore } from "../../tickStore";
 
 tickStore.on("@changed", () => {
-  gameStore.dispatch(
-    "increaseResearchProgress",
-    gameStore.get().researching / 100
-  );
+  const gameState = gameStore.get();
 
-  gameStore.dispatch(
-    "increaseExplorationProgress",
-    gameStore.get().exploring / 100
-  );
+  gameStore.dispatch("increaseResearchProgress", gameState.researching / 100);
+
+  gameStore.dispatch("increaseExplorationProgress", gameState.exploring / 100);
 
   gameStore.dispatch(
     "increaseConstructionProgress",
-    gameStore.get().constructing / 100
+    gameState.constructing / 100
   );
 });
