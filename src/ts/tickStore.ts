@@ -9,6 +9,9 @@ interface State {
 }
 
 export const tickStore = createStoreon<State, Events>([
+  process.env.NODE_ENV === "development" &&
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    require("storeon/devtools").storeonDevtools,
   (store) => {
     store.on("@init", () => ({
       ticksPassed: 0,

@@ -57,6 +57,9 @@ interface State {
 }
 
 export const gameStore = createStoreon<State, Events>([
+  process.env.NODE_ENV === "development" &&
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    require("storeon/devtools").storeonDevtools,
   (store) => {
     store.on("@init", () => ({
       onUpdateCallbacks: [],
