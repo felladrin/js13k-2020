@@ -53,6 +53,12 @@ interface State {
   researchProgressPercentage: number;
   availableConstructionSlots: number;
   availableImprovementSlots: number;
+  farmingConstructions: number;
+  researchingConstructions: number;
+  restingConstructions: number;
+  constructingImprovements: number;
+  exploringImprovements: number;
+  scavengingImprovements: number;
   actionToBoost: Action | null;
 }
 
@@ -83,6 +89,12 @@ export const gameStore = createStoreon<State, Events>([
       researchProgressPercentage: 0,
       availableConstructionSlots: 0,
       availableImprovementSlots: 0,
+      farmingConstructions: 0,
+      researchingConstructions: 0,
+      restingConstructions: 0,
+      constructingImprovements: 0,
+      exploringImprovements: 0,
+      scavengingImprovements: 0,
       actionToBoost: null,
     }));
 
