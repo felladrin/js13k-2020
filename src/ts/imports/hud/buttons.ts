@@ -27,6 +27,14 @@ const buttonProperties = {
     const [childText] = this.children;
     childText.y = -8;
   },
+  update: function (this: Button) {
+    const { hoveredButton } = gameStore.get();
+    if (this.hovered && hoveredButton != this) {
+      gameStore.dispatch("setHoveredButton", this);
+    } else if (!this.hovered && hoveredButton == this) {
+      gameStore.dispatch("setHoveredButton", null);
+    }
+  },
 };
 
 const textCommonProperties = {

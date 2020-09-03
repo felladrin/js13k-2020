@@ -1,5 +1,7 @@
 import { init, initPointer } from "kontra";
 import { gameWidth, gameHeight } from "./constants";
+import { gameStore } from "./gameStore";
+import { tickStore } from "./tickStore";
 
 export const { canvas } = init("gameCanvas");
 canvas.width = gameWidth;
@@ -36,6 +38,7 @@ function handleWindowResize() {
     left: "50%",
     transform: `translate(-50%, -50%) scale(${scale})`,
     transformOrigin: "center center",
+    cursor: gameStore.get().cursorStyle,
   };
 
   for (const declaration of Object.keys(style)) {
@@ -51,7 +54,11 @@ function handleWindowResize() {
 
 handleWindowResize();
 
-setInterval(() => {
+gameStore.on("@changed", (state) => {
+  if (state.cursorStyle) canvas.style.cursor = state.cursorStyle;
+});
+
+tickStore.on("@changed", () => {
   const currentWidth = window.innerWidth;
   const currentHeight = window.innerHeight;
 
@@ -63,4 +70,4 @@ setInterval(() => {
     lastRecordedWindowSize.height = currentHeight;
     handleWindowResize();
   }
-}, 250);
+});

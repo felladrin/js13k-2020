@@ -1,7 +1,7 @@
 import { createStoreon } from "storeon";
 import { initialPopulation } from "./constants";
 import { Action } from "./enums";
-import { clamp } from "kontra";
+import { clamp, Button } from "kontra";
 
 type GameUpdateCallback = (deltaTime?: number) => void;
 type GameRenderCallback = () => void;
@@ -29,6 +29,7 @@ interface Events {
   increaseResearchProgress: number;
   incrementAvailableConstructionSlots: void;
   incrementAvailableImprovementSlots: void;
+  setHoveredButton: Button | null;
 }
 
 interface State {
@@ -60,6 +61,8 @@ interface State {
   exploringImprovements: number;
   scavengingImprovements: number;
   actionToBoost: Action | null;
+  cursorStyle: "initial" | "pointer";
+  hoveredButton: Button | null;
 }
 
 export const gameStore = createStoreon<State, Events>([
@@ -96,6 +99,8 @@ export const gameStore = createStoreon<State, Events>([
       exploringImprovements: 1,
       scavengingImprovements: 1,
       actionToBoost: null,
+      hoveredButton: null,
+      cursorStyle: "initial",
     }));
 
     store.on("addUpdateCallback", ({ onUpdateCallbacks }, callback) => ({
@@ -201,5 +206,10 @@ export const gameStore = createStoreon<State, Events>([
         availableConstructionSlots: availableConstructionSlots + 1,
       })
     );
+
+    store.on("setHoveredButton", (_, hoveredButton) => ({
+      hoveredButton,
+      cursorStyle: hoveredButton ? "pointer" : "initial",
+    }));
   },
 ]);
