@@ -89,12 +89,12 @@ export const gameStore = createStoreon<State, Events>([
       researchProgressPercentage: 0,
       availableConstructionSlots: 0,
       availableImprovementSlots: 0,
-      farmingConstructions: 0,
-      researchingConstructions: 0,
-      restingConstructions: 0,
-      constructingImprovements: 0,
-      exploringImprovements: 0,
-      scavengingImprovements: 0,
+      farmingConstructions: 1,
+      researchingConstructions: 1,
+      restingConstructions: 1,
+      constructingImprovements: 1,
+      exploringImprovements: 1,
+      scavengingImprovements: 1,
       actionToBoost: null,
     }));
 

@@ -163,13 +163,14 @@ function updatePopulationStats() {
 function processHealth() {
   (population.getAliveObjects() as Person[]).forEach((person) => {
     if (person.currentAction == Action.Resting) {
-      if (person.health >= randInt(80, 100)) {
+      if (person.health >= randInt(90, 100)) {
         person.currentAction = person.previousAction;
         person.previousAction = Action.Resting;
       } else {
+        const { restingConstructions } = gameStore.get();
         person.health += randInt(
-          minHealthRestoredPerTick,
-          maxHealthRestoredPerTick
+          minHealthRestoredPerTick * restingConstructions,
+          maxHealthRestoredPerTick * restingConstructions
         );
       }
     } else {

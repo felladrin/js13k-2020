@@ -3,7 +3,7 @@ import { tickStore } from "../../tickStore";
 
 tickStore.on("@changed", () => {
   const gameState = gameStore.get();
-  const foodCreatedPerTick = gameState.farming * 2;
+  const foodCreatedPerTick = gameState.farming * gameState.farmingConstructions;
   const foodConsumedPerTick =
     gameState.constructing +
     gameState.exploring +
