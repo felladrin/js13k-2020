@@ -1,5 +1,10 @@
 import { Button, Grid, GameObject } from "kontra";
-import { buttonImage, buttonPressedImage, gameHeight } from "../../constants";
+import {
+  buttonImage,
+  buttonPressedImage,
+  gameHeight,
+  defaultFontFamily,
+} from "../../constants";
 import { gameStore } from "../../gameStore";
 import { Action } from "../../enums";
 import { getKeysFromEnum } from "../../functions";
@@ -13,21 +18,21 @@ const buttonProperties = {
     this.image = buttonPressedImage;
 
     const [childText] = this.children;
-    childText.y = -2;
+    childText.y = -5;
   },
   onUp: function (this: Button) {
     gameStore.dispatch("setActionToBoost", null);
     this.image = buttonImage;
 
     const [childText] = this.children;
-    childText.y = -5;
+    childText.y = -8;
   },
 };
 
 const textCommonProperties = {
-  y: -5,
+  y: -8,
   color: "white",
-  font: "32px Arial",
+  font: `32px ${defaultFontFamily}`,
   textAlign: "center",
   lineHeight: 1.2,
   anchor: { x: 0.5, y: 0.5 },

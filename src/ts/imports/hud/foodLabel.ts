@@ -1,5 +1,6 @@
 import { Text } from "kontra";
 import { gameStore } from "../../gameStore";
+import { defaultFontFamily } from "../../constants";
 
 function getFoodText() {
   const gameState = gameStore.get();
@@ -10,7 +11,7 @@ export const foodLabel = Text({
   x: 106,
   y: 50,
   text: getFoodText(),
-  font: "24px Arial",
+  font: `24px ${defaultFontFamily}`,
   color: "white",
   anchor: { x: 0.5, y: 0.5 },
   textAlign: "center",

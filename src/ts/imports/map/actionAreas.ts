@@ -1,7 +1,11 @@
 import { Text, Vector, Sprite } from "kontra";
 import { Action } from "../../enums";
 import { getKeysFromEnum } from "../../functions";
-import { actionToSVGPathMap, gameHeight } from "../../constants";
+import {
+  actionToSVGPathMap,
+  gameHeight,
+  defaultFontFamily,
+} from "../../constants";
 import { gameStore } from "../../gameStore";
 
 const actionAreas: Sprite[] = [];
@@ -39,7 +43,7 @@ for (const key of getKeysFromEnum(Action)) {
     x: 0,
     y: -85,
     text: "0",
-    font: "32px Arial",
+    font: `30px ${defaultFontFamily}`,
     color: "white",
     anchor: { x: 0.5, y: 0.5 },
     textAlign: "center",
@@ -60,7 +64,7 @@ for (const key of getKeysFromEnum(Action)) {
     x: 0,
     y: -55,
     text: Action[key],
-    font: "32px Arial",
+    font: `30px ${defaultFontFamily}`,
     color: "white",
     anchor: { x: 0.5, y: 0.5 },
     textAlign: "center",

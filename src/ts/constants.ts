@@ -10,6 +10,8 @@ export const secondsPerGameTick = 0.333;
 
 export const gameTicksPerGameDay = 6;
 
+export const defaultFontFamily = "Verdana, Geneva, sans-serif";
+
 export const actionToConstructionAllowedMap: { [key in Action]: boolean } = {
   Constructing: false,
   Exploring: false,

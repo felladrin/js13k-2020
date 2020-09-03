@@ -1,5 +1,6 @@
 import { Sprite, Text } from "kontra";
 import { gameStore } from "../../gameStore";
+import { defaultFontFamily } from "../../constants";
 
 const commonProgressBarProperties: Partial<Sprite> = {
   x: 0,
@@ -56,7 +57,7 @@ gameStore.on("@changed", (state) => {
 });
 
 const commonTextProperties = {
-  font: "24px Arial",
+  font: `24px ${defaultFontFamily}`,
   color: "white",
   anchor: { x: 0, y: 0 },
   textAlign: "center",
