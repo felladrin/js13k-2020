@@ -1,4 +1,3 @@
-export * from "./buttons";
 export * from "./daysPassedLabel";
 export * from "./foodLabel";
 export * from "./hudScene";

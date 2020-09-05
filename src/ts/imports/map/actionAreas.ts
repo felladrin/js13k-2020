@@ -1,4 +1,4 @@
-import { Text, Vector, Sprite } from "kontra";
+import { Text, Vector, Sprite, Button } from "kontra";
 import { Action } from "../../enums";
 import { getKeysFromEnum } from "../../functions";
 import {
@@ -12,6 +12,44 @@ const actionAreas: Sprite[] = [];
 const actionsAmount = Object.keys(Action).length;
 const centralPosition = Vector(380, gameHeight / 2);
 const radius = 260;
+const buttonProperties = {
+  width: 120 * 2,
+  height: 120 * 2,
+  anchor: { x: 0.5, y: 0.5 },
+  action: null,
+  text: {
+    y: -8,
+    color: "white",
+    font: `32px ${defaultFontFamily}`,
+    textAlign: "center",
+    lineHeight: 1.2,
+    anchor: { x: 0.5, y: 0.5 },
+  },
+  onDown: function (this: Button) {
+    gameStore.dispatch("setActionToBoost", this.action);
+
+    const [childText] = this.children;
+    childText.y = -5;
+  },
+  onUp: function (this: Button) {
+    gameStore.dispatch("setActionToBoost", null);
+
+    const [childText] = this.children;
+    childText.y = -8;
+  },
+  update: function (this: Button) {
+    const { hoveredButton } = gameStore.get();
+    if (this.hovered && hoveredButton != this) {
+      gameStore.dispatch("setHoveredButton", this);
+      const [childText] = this.children;
+      childText.text = "Hold to Boost!";
+    } else if (!this.hovered && hoveredButton == this) {
+      gameStore.dispatch("setHoveredButton", null);
+      const [childText] = this.children;
+      childText.text = "";
+    }
+  },
+};
 
 for (const key of getKeysFromEnum(Action)) {
   const currentActionIndex = actionAreas.length;
@@ -71,6 +109,11 @@ for (const key of getKeysFromEnum(Action)) {
     opacity: 0.3,
   });
 
+  const boostActionButton = Button({
+    ...buttonProperties,
+    action: Action[key],
+  });
+
   const circle = Sprite({
     x: positionInTheCircle.x,
     y: positionInTheCircle.y,
@@ -85,7 +128,7 @@ for (const key of getKeysFromEnum(Action)) {
       this.context.arc(0, 0, this.radius, 0, 2 * Math.PI);
       this.context.fill();
     },
-    children: [peopleActingLabel, actionNameLabel, icon],
+    children: [peopleActingLabel, actionNameLabel, icon, boostActionButton],
   });
 
   actionAreas.push(circle);
