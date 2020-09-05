@@ -76,6 +76,8 @@ gameStore.on("@changed", (state) => {
 });
 
 on(GameEvent.GameTick, () => {
+  if (gameStore.get().paused) return;
+
   moveEveryoneToFarmsIfNeeded();
   moveEveryoneToCollectResourcesIfNeeded();
   processHealth();
@@ -84,6 +86,8 @@ on(GameEvent.GameTick, () => {
 });
 
 gameStore.dispatch("addUpdateCallback", (deltaTime) => {
+  if (gameStore.get().paused) return;
+
   if (gameStore.get().activeGameScenes.includes(GameScene.GamePlay)) {
     fillPopulation();
     population.update(deltaTime);

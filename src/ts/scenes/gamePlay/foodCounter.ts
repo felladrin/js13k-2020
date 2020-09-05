@@ -3,6 +3,8 @@ import { GameScene, GameEvent } from "../../enums";
 import { on } from "kontra";
 
 on(GameEvent.GameTick, () => {
+  if (gameStore.get().paused) return;
+
   if (!gameStore.get().activeGameScenes.includes(GameScene.GamePlay)) return;
 
   const gameState = gameStore.get();

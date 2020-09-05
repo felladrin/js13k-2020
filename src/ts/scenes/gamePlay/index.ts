@@ -4,6 +4,7 @@ export * from "./daysPassedCounter";
 export * from "./daysPassedLabel";
 export * from "./foodCounter";
 export * from "./foodLabel";
+export * from "./gameOverDialog";
 export * from "./gamePlayScene";
 export * from "./population";
 export * from "./populationLabel";

@@ -6,6 +6,8 @@ export const gameHeight = 1024;
 
 export const initialPopulation = 404;
 
+export const endGameDay = 365;
+
 export const secondsPerGameTick = 0.333;
 
 export const gameTicksPerGameDay = 6;

@@ -11,6 +11,7 @@ import {
   explorationProgressLabel,
 } from "./progressBars";
 import { GameScene } from "../../enums";
+import { gameOverDialog } from "./gameOverDialog";
 
 export const gamePlayScene = Scene({
   id: GameScene.GamePlay,
@@ -35,5 +36,14 @@ gameStore.dispatch("addUpdateCallback", () => {
 gameStore.dispatch("addRenderCallback", () => {
   if (gameStore.get().activeGameScenes.includes(GameScene.GamePlay)) {
     gamePlayScene.render();
+  }
+});
+
+gameStore.on("@changed", (state) => {
+  if (
+    state.showingGameOverDialog &&
+    !gamePlayScene.children.includes(gameOverDialog)
+  ) {
+    gamePlayScene.addChild(gameOverDialog);
   }
 });

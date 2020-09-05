@@ -1,5 +1,5 @@
 import { createStoreon } from "storeon";
-import { initialPopulation } from "./constants";
+import { initialPopulation, endGameDay } from "./constants";
 import { Action, GameScene } from "./enums";
 import { clamp, Button } from "kontra";
 
@@ -32,6 +32,10 @@ interface Events {
   setHoveredButton: Button | null;
   activateGameScene: GameScene;
   deactivateGameScene: GameScene;
+  pauseGame: void;
+  resumeGame: void;
+  showGameOverDialog: void;
+  hideGameOverDialog: void;
 }
 
 interface State {
@@ -66,6 +70,8 @@ interface State {
   cursorStyle: CSSStyleDeclaration["cursor"];
   hoveredButton: Button | null;
   activeGameScenes: GameScene[];
+  paused: boolean;
+  showingGameOverDialog: boolean;
 }
 
 export const gameStore = createStoreon<State, Events>([
@@ -105,6 +111,8 @@ export const gameStore = createStoreon<State, Events>([
       hoveredButton: null,
       cursorStyle: "auto",
       activeGameScenes: [],
+      paused: false,
+      showingGameOverDialog: false,
     }));
 
     store.on("addUpdateCallback", ({ onUpdateCallbacks }, callback) => ({
@@ -223,5 +231,13 @@ export const gameStore = createStoreon<State, Events>([
     store.on("deactivateGameScene", ({ activeGameScenes }, gameScene) => ({
       activeGameScenes: activeGameScenes.filter((scene) => scene != gameScene),
     }));
+
+    store.on("pauseGame", () => ({ paused: true }));
+
+    store.on("resumeGame", () => ({ paused: false }));
+
+    store.on("showGameOverDialog", () => ({ showingGameOverDialog: true }));
+
+    store.on("hideGameOverDialog", () => ({ showingGameOverDialog: false }));
   },
 ]);
