@@ -10,9 +10,10 @@ import {
   constructionProgressLabel,
   explorationProgressLabel,
 } from "./progressBars";
+import { GameScene } from "../../enums";
 
 export const gamePlayScene = Scene({
-  id: "map",
+  id: GameScene.GamePlay,
   children: [
     ...getAllActionAreaLabels(),
     foodLabel,
@@ -26,9 +27,13 @@ export const gamePlayScene = Scene({
 });
 
 gameStore.dispatch("addUpdateCallback", () => {
-  gamePlayScene.update();
+  if (gameStore.get().activeGameScenes.includes(GameScene.GamePlay)) {
+    gamePlayScene.update();
+  }
 });
 
 gameStore.dispatch("addRenderCallback", () => {
-  gamePlayScene.render();
+  if (gameStore.get().activeGameScenes.includes(GameScene.GamePlay)) {
+    gamePlayScene.render();
+  }
 });

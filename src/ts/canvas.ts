@@ -1,7 +1,7 @@
-import { init, initPointer } from "kontra";
+import { init, initPointer, on } from "kontra";
 import { gameWidth, gameHeight } from "./constants";
 import { gameStore } from "./gameStore";
-import { tickStore } from "./tickStore";
+import { GameEvent } from "./enums";
 
 export const { canvas } = init("gameCanvas");
 canvas.width = gameWidth;
@@ -58,7 +58,7 @@ gameStore.on("@changed", (state) => {
   if (state.cursorStyle) canvas.style.cursor = state.cursorStyle;
 });
 
-tickStore.on("@changed", () => {
+on(GameEvent.GameTick, () => {
   const currentWidth = window.innerWidth;
   const currentHeight = window.innerHeight;
 

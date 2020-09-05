@@ -1,12 +1,17 @@
 import { gameStore } from "../../gameStore";
 import { gameTicksPerGameDay } from "../../constants";
-import { tickStore } from "../../tickStore";
+import { GameScene, GameEvent } from "../../enums";
+import { on } from "kontra";
 
-tickStore.on("@changed", (state) => {
+let ticksPassed = 0;
+
+on(GameEvent.GameTick, () => {
+  if (!gameStore.get().activeGameScenes.includes(GameScene.GamePlay)) return;
+
+  ticksPassed++;
+
   if (
-    state.ticksPassed &&
-    Math.floor(state.ticksPassed / gameTicksPerGameDay) >
-      gameStore.get().daysPassed
+    Math.floor(ticksPassed / gameTicksPerGameDay) > gameStore.get().daysPassed
   ) {
     gameStore.dispatch("addOneDayPassed");
   }

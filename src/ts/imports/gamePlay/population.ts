@@ -1,8 +1,7 @@
-import { Pool, Sprite, randInt, clamp, Vector } from "kontra";
-import { Action } from "../../enums";
+import { Pool, Sprite, randInt, clamp, Vector, on } from "kontra";
+import { Action, GameScene, GameEvent } from "../../enums";
 import { getActionAreaLabel } from "./actionAreas";
 import { gameStore } from "../../gameStore";
-import { tickStore } from "../../tickStore";
 import {
   minHealthConsumedPerTick,
   maxHealthConsumedPerTick,
@@ -76,7 +75,7 @@ gameStore.on("@changed", (state) => {
   if (state.population) population.maxSize = state.population;
 });
 
-tickStore.on("@changed", () => {
+on(GameEvent.GameTick, () => {
   moveEveryoneToFarmsIfNeeded();
   moveEveryoneToCollectResourcesIfNeeded();
   processHealth();
@@ -85,12 +84,16 @@ tickStore.on("@changed", () => {
 });
 
 gameStore.dispatch("addUpdateCallback", (deltaTime) => {
-  fillPopulation();
-  population.update(deltaTime);
+  if (gameStore.get().activeGameScenes.includes(GameScene.GamePlay)) {
+    fillPopulation();
+    population.update(deltaTime);
+  }
 });
 
 gameStore.dispatch("addRenderCallback", () => {
-  population.render();
+  if (gameStore.get().activeGameScenes.includes(GameScene.GamePlay)) {
+    population.render();
+  }
 });
 
 function boostActionIfNeeded() {

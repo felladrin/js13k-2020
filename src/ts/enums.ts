@@ -6,3 +6,14 @@ export enum Action {
   Scavenging = "Scavenging",
   Constructing = "Constructing",
 }
+
+export enum GameScene {
+  Intro = "Intro",
+  Start = "Start",
+  GamePlay = "GamePlay",
+  End = "End",
+}
+
+export enum GameEvent {
+  GameTick = "GameTick",
+}

@@ -1,6 +1,6 @@
 import { createStoreon } from "storeon";
 import { initialPopulation } from "./constants";
-import { Action } from "./enums";
+import { Action, GameScene } from "./enums";
 import { clamp, Button } from "kontra";
 
 type GameUpdateCallback = (deltaTime?: number) => void;
@@ -30,6 +30,8 @@ interface Events {
   incrementAvailableConstructionSlots: void;
   incrementAvailableImprovementSlots: void;
   setHoveredButton: Button | null;
+  activateGameScene: GameScene;
+  deactivateGameScene: GameScene;
 }
 
 interface State {
@@ -63,6 +65,7 @@ interface State {
   actionToBoost: Action | null;
   cursorStyle: CSSStyleDeclaration["cursor"];
   hoveredButton: Button | null;
+  activeGameScenes: GameScene[];
 }
 
 export const gameStore = createStoreon<State, Events>([
@@ -101,6 +104,7 @@ export const gameStore = createStoreon<State, Events>([
       actionToBoost: null,
       hoveredButton: null,
       cursorStyle: "auto",
+      activeGameScenes: [],
     }));
 
     store.on("addUpdateCallback", ({ onUpdateCallbacks }, callback) => ({
@@ -210,6 +214,14 @@ export const gameStore = createStoreon<State, Events>([
     store.on("setHoveredButton", (_, hoveredButton) => ({
       hoveredButton,
       cursorStyle: hoveredButton ? "pointer" : "auto",
+    }));
+
+    store.on("activateGameScene", ({ activeGameScenes }, gameScene) => ({
+      activeGameScenes: activeGameScenes.concat([gameScene]),
+    }));
+
+    store.on("deactivateGameScene", ({ activeGameScenes }, gameScene) => ({
+      activeGameScenes: activeGameScenes.filter((scene) => scene != gameScene),
     }));
   },
 ]);

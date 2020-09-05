@@ -12,7 +12,7 @@ export const daysPassedLabel = Text({
   text: getDaysPassedText(gameStore.get().daysPassed),
   lineHeight: 1.5,
   font: `45px ${defaultFontFamily}`,
-  color: "white",
+  color: "#83908f",
   anchor: { x: 0.5, y: 0.5 },
   textAlign: "center",
 });

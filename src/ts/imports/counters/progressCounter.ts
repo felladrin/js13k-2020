@@ -1,7 +1,10 @@
 import { gameStore } from "../../gameStore";
-import { tickStore } from "../../tickStore";
+import { GameScene, GameEvent } from "../../enums";
+import { on } from "kontra";
 
-tickStore.on("@changed", () => {
+on(GameEvent.GameTick, () => {
+  if (!gameStore.get().activeGameScenes.includes(GameScene.GamePlay)) return;
+
   const gameState = gameStore.get();
 
   gameStore.dispatch(

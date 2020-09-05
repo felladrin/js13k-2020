@@ -19,7 +19,6 @@ const buttonProperties = {
   anchor: { x: 0.5, y: 0.5 },
   action: null,
   text: {
-    y: -8,
     color: "white",
     font: `32px ${defaultFontFamily}`,
     textAlign: "center",
@@ -30,24 +29,26 @@ const buttonProperties = {
     gameStore.dispatch("setActionToBoost", this.action);
 
     const [childText] = this.children;
-    childText.y = -5;
+    childText.text = "Boosting";
   },
   onUp: function (this: Button) {
     gameStore.dispatch("setActionToBoost", null);
+    this.hovered = false;
 
     const [childText] = this.children;
-    childText.y = -8;
+    childText.text = "";
   },
   update: function (this: Button) {
     const { hoveredButton } = gameStore.get();
-    if (this.hovered && hoveredButton != this) {
-      gameStore.dispatch("setHoveredButton", this);
-      const [childText] = this.children;
-      childText.text = "Hold to Boost!";
-    } else if (!this.hovered && hoveredButton == this) {
+
+    if (!this.hovered && hoveredButton == this) {
       gameStore.dispatch("setHoveredButton", null);
       const [childText] = this.children;
       childText.text = "";
+    } else if (this.hovered && hoveredButton != this) {
+      gameStore.dispatch("setHoveredButton", this);
+      const [childText] = this.children;
+      childText.text = "Hold to Boost!";
     }
   },
 };
@@ -68,8 +69,7 @@ for (const key of getKeysFromEnum(Action)) {
     scaleX: 120 / 512,
     scaleY: 120 / 512,
     anchor: { x: 0.5, y: 0.5 },
-    opacity: 0.3,
-    color: "white",
+    color: "#83908f",
     render: function (this: Sprite) {
       this.context.fillStyle = this.color;
       this.context.beginPath();
@@ -83,10 +83,9 @@ for (const key of getKeysFromEnum(Action)) {
     y: -85,
     text: "0",
     font: `30px ${defaultFontFamily}`,
-    color: "white",
+    color: "#83908f",
     anchor: { x: 0.5, y: 0.5 },
     textAlign: "center",
-    opacity: 0.3,
     update: function (this: Text) {
       const actionNameInLowerCase = Action[key].toLocaleLowerCase() as
         | "resting"
@@ -104,10 +103,9 @@ for (const key of getKeysFromEnum(Action)) {
     y: -55,
     text: Action[key],
     font: `30px ${defaultFontFamily}`,
-    color: "white",
+    color: "#83908f",
     anchor: { x: 0.5, y: 0.5 },
     textAlign: "center",
-    opacity: 0.3,
   });
 
   const boostActionButton = Button({
@@ -122,9 +120,8 @@ for (const key of getKeysFromEnum(Action)) {
   const circle = Sprite({
     x: positionInTheCircle.x,
     y: positionInTheCircle.y,
-    color: "white",
+    color: "#4d5f5e",
     radius: 140,
-    opacity: 0.3,
     anchor: { x: 0.5, y: 0.5 },
     action: Action[key],
     render: function (this: Sprite) {
