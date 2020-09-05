@@ -115,6 +115,10 @@ for (const key of getKeysFromEnum(Action)) {
     action: Action[key],
   });
 
+  if (Action[key] == Action.Resting) {
+    boostActionButton.disable();
+  }
+
   const circle = Sprite({
     x: positionInTheCircle.x,
     y: positionInTheCircle.y,
