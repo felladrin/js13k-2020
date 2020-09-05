@@ -61,7 +61,7 @@ interface State {
   exploringImprovements: number;
   scavengingImprovements: number;
   actionToBoost: Action | null;
-  cursorStyle: "initial" | "pointer";
+  cursorStyle: CSSStyleDeclaration["cursor"];
   hoveredButton: Button | null;
 }
 
@@ -100,7 +100,7 @@ export const gameStore = createStoreon<State, Events>([
       scavengingImprovements: 1,
       actionToBoost: null,
       hoveredButton: null,
-      cursorStyle: "initial",
+      cursorStyle: "auto",
     }));
 
     store.on("addUpdateCallback", ({ onUpdateCallbacks }, callback) => ({
@@ -209,7 +209,7 @@ export const gameStore = createStoreon<State, Events>([
 
     store.on("setHoveredButton", (_, hoveredButton) => ({
       hoveredButton,
-      cursorStyle: hoveredButton ? "pointer" : "initial",
+      cursorStyle: hoveredButton ? "pointer" : "auto",
     }));
   },
 ]);
