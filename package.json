@@ -4,7 +4,7 @@
   "description": "Game created for the Js13kGames competition from 2020.",
   "private": true,
   "scripts": {
-    "start": "run-s clean-dist-dir create-ts-index && run-p chii parcel",
+    "start": "run-s clean-dist-dir make-dist-dir create-ts-index arkit && run-p chii parcel",
     "build": "run-s clean-dist-dir make-dist-dir parcel-build inline-build zip",
     "parcel": "parcel serve src/index.html --dist-dir dist/bundled",
     "chii": "chii start -p 1233",
@@ -17,13 +17,15 @@
     "find-duplicate-code": "jscpd src",
     "find-circular-dependencies": "dpdm --tree false --warning false src/scripts/index.ts",
     "update-dependencies": "ncu -u && npm i",
-    "create-ts-index": "cti -w -b -q '\"' create src/ts/imports"
+    "create-ts-index": "cti -w -b -q '\"' create src/ts/imports",
+    "arkit": "arkit src/ -o dist/arkit.svg"
   },
   "author": "Victor Nogueira <victor@victornogueira.app>",
   "license": "MIT",
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.0.1",
     "@typescript-eslint/parser": "^4.0.1",
+    "arkit": "^1.6.4",
     "bestzip": "^2.1.7",
     "chii": "^0.6.6",
     "create-ts-index": "^1.13.5",
