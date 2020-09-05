@@ -5,16 +5,17 @@ import {
   actionToSVGPathMap,
   gameHeight,
   defaultFontFamily,
+  gameWidth,
 } from "../../constants";
 import { gameStore } from "../../gameStore";
 
 const actionAreas: Sprite[] = [];
 const actionsAmount = Object.keys(Action).length;
-const centralPosition = Vector(380, gameHeight / 2);
-const radius = 260;
+const centralPosition = Vector(gameWidth / 2, gameHeight / 2);
+const radius = 350;
 const buttonProperties = {
-  width: 120 * 2,
-  height: 120 * 2,
+  width: 140 * 2,
+  height: 140 * 2,
   anchor: { x: 0.5, y: 0.5 },
   action: null,
   text: {
@@ -118,7 +119,7 @@ for (const key of getKeysFromEnum(Action)) {
     x: positionInTheCircle.x,
     y: positionInTheCircle.y,
     color: "white",
-    radius: 120,
+    radius: 140,
     opacity: 0.3,
     anchor: { x: 0.5, y: 0.5 },
     action: Action[key],

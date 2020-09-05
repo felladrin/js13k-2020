@@ -1,16 +1,17 @@
 import { Text } from "kontra";
 import { gameStore } from "../../gameStore";
-import { defaultFontFamily } from "../../constants";
+import { defaultFontFamily, gameWidth, gameHeight } from "../../constants";
 
 function getPopulationText(population: number) {
-  return `Population: ${population}`;
+  return `Population\n${population}`;
 }
 
 export const populationLabel = Text({
-  x: 786,
-  y: 50,
+  x: gameWidth / 2,
+  y: gameHeight / 2 + 80,
   text: getPopulationText(gameStore.get().population),
-  font: `24px ${defaultFontFamily}`,
+  lineHeight: 1.5,
+  font: `45px ${defaultFontFamily}`,
   color: "white",
   anchor: { x: 0.5, y: 0.5 },
   textAlign: "center",

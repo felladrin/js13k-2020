@@ -1,17 +1,17 @@
 import { Text } from "kontra";
 import { gameStore } from "../../gameStore";
-import { defaultFontFamily } from "../../constants";
+import { defaultFontFamily, gameWidth } from "../../constants";
 
 function getFoodText() {
   const gameState = gameStore.get();
-  return `Food: ${gameState.food}\n⇧${gameState.foodCreatedPerTick} ⇩${gameState.foodConsumedPerTick}`;
+  return `Food\n${gameState.food}\n⇧${gameState.foodCreatedPerTick} ⇩${gameState.foodConsumedPerTick}`;
 }
 
 export const foodLabel = Text({
-  x: 106,
-  y: 50,
+  x: gameWidth - 190,
+  y: 100,
   text: getFoodText(),
-  font: `24px ${defaultFontFamily}`,
+  font: `38px ${defaultFontFamily}`,
   lineHeight: 1.3,
   color: "white",
   anchor: { x: 0.5, y: 0.5 },

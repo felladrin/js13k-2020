@@ -1,6 +1,6 @@
 import { Sprite, Text } from "kontra";
 import { gameStore } from "../../gameStore";
-import { defaultFontFamily } from "../../constants";
+import { defaultFontFamily, gameWidth } from "../../constants";
 
 const commonProgressBarProperties: Partial<Sprite> = {
   x: 0,
@@ -57,7 +57,7 @@ gameStore.on("@changed", (state) => {
 });
 
 const commonTextProperties = {
-  font: `24px ${defaultFontFamily}`,
+  font: `20px ${defaultFontFamily}`,
   color: "white",
   anchor: { x: 0, y: 0 },
   textAlign: "center",
@@ -65,25 +65,25 @@ const commonTextProperties = {
 
 export const researchProgressLabel = Text({
   ...commonTextProperties,
-  x: 790,
-  y: 930,
-  text: "Research Progress",
+  x: gameWidth - 250,
+  y: 770,
+  text: "Progress",
   children: [researchProgressBar],
 });
 
 export const explorationProgressLabel = Text({
   ...commonTextProperties,
-  x: 20,
-  y: 930,
-  text: "Exploration Progress",
+  x: 470,
+  y: 945,
+  text: "Progress",
   children: [explorationProgressBar],
 });
 
 export const constructionProgressLabel = Text({
   ...commonTextProperties,
-  x: 420,
-  y: 930,
-  text: "Construction Progress",
+  x: 170,
+  y: 770,
+  text: "Progress",
   children: [constructionProgressBar],
 });
 
