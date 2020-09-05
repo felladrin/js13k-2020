@@ -12,6 +12,7 @@ export const resourcesLabel = Text({
   y: 50,
   text: getResourcesText(),
   font: `24px ${defaultFontFamily}`,
+  lineHeight: 1.3,
   color: "white",
   anchor: { x: 0.5, y: 0.5 },
   textAlign: "center",

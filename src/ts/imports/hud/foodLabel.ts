@@ -12,6 +12,7 @@ export const foodLabel = Text({
   y: 50,
   text: getFoodText(),
   font: `24px ${defaultFontFamily}`,
+  lineHeight: 1.3,
   color: "white",
   anchor: { x: 0.5, y: 0.5 },
   textAlign: "center",
