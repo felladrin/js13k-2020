@@ -1,18 +1,20 @@
 import { Scene } from "kontra";
+import { getAllActionAreaLabels } from "./actionAreas";
+import { gameStore } from "../../gameStore";
 import { daysPassedLabel } from "./daysPassedLabel";
 import { foodLabel } from "./foodLabel";
 import { resourcesLabel } from "./resourcesLabel";
 import { populationLabel } from "./populationLabel";
-import { gameStore } from "../../gameStore";
 import {
   researchProgressLabel,
   constructionProgressLabel,
   explorationProgressLabel,
 } from "./progressBars";
 
-export const hudScene = Scene({
-  id: "hud",
+export const gamePlayScene = Scene({
+  id: "map",
   children: [
+    ...getAllActionAreaLabels(),
     foodLabel,
     resourcesLabel,
     daysPassedLabel,
@@ -24,9 +26,9 @@ export const hudScene = Scene({
 });
 
 gameStore.dispatch("addUpdateCallback", () => {
-  hudScene.update();
+  gamePlayScene.update();
 });
 
 gameStore.dispatch("addRenderCallback", () => {
-  hudScene.render();
+  gamePlayScene.render();
 });
