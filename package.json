@@ -17,7 +17,7 @@
     "find-duplicate-code": "jscpd src",
     "find-circular-dependencies": "dpdm --tree false --warning false src/scripts/index.ts",
     "update-dependencies": "ncu -u && npm i",
-    "create-ts-index": "cti -w -b -q '\"' create src/ts/imports",
+    "create-ts-index": "cti -w -b -q '\"' create src/ts/scenes",
     "arkit": "arkit src/ -o dist/arkit.svg"
   },
   "author": "Victor Nogueira <victor@victornogueira.app>",
