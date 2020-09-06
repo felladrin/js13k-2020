@@ -1,8 +1,7 @@
-import { Scene } from "kontra";
+import { Scene, getCanvas } from "kontra";
 import { gameStore } from "../../gameStore";
 import { GameScene } from "../../enums";
 import { startText } from "./startText";
-import { startButton } from "./startButton";
 
 const fadeSpeed = 0.5;
 let isFadingIn = true;
@@ -10,8 +9,14 @@ let isFadingOut = false;
 
 export const startScene = Scene({
   id: GameScene.Start,
-  children: [startText, startButton],
+  children: [startText],
   opacity: 0,
+  hidden: true,
+  onShow: () => {
+    for (const child of startScene.children) {
+      child.opacity = startScene.opacity;
+    }
+  },
   update: (deltaTime) => {
     if (!deltaTime) return;
 
@@ -40,25 +45,37 @@ export const startScene = Scene({
         gameStore.dispatch("activateGameScene", GameScene.GamePlay);
       }
     }
-
-    if (!isFadingIn && !isFadingOut && startButton.pressed) {
-      isFadingOut = true;
-    }
   },
 });
+
+const eventsToListen = ["click", "touchend"];
+
+for (const eventToAdd of eventsToListen) {
+  getCanvas().addEventListener(eventToAdd, function onClickAnywhere() {
+    isFadingIn = false;
+    isFadingOut = true;
+    for (const eventToRemove of eventsToListen) {
+      getCanvas().removeEventListener(eventToRemove, onClickAnywhere);
+    }
+  });
+}
 
 for (const child of startScene.children) {
   child.opacity = startScene.opacity;
 }
 
 gameStore.dispatch("addUpdateCallback", (deltaTime) => {
-  if (gameStore.get().activeGameScenes.includes(GameScene.Start)) {
-    startScene.update(deltaTime);
-  }
+  startScene.update(deltaTime);
 });
 
 gameStore.dispatch("addRenderCallback", () => {
-  if (gameStore.get().activeGameScenes.includes(GameScene.Start)) {
-    startScene.render();
-  }
+  startScene.render();
+});
+
+gameStore.on("@changed", (state) => {
+  if (!state.activeGameScenes) return;
+
+  state.activeGameScenes.includes(GameScene.Start)
+    ? startScene.show()
+    : startScene.hide();
 });

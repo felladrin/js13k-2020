@@ -25,28 +25,6 @@ const buttonProperties = {
     lineHeight: 1.2,
     anchor: { x: 0.5, y: 0.5 },
   },
-  onDown: function (this: Button) {
-    gameStore.dispatch("setActionToBoost", this.action);
-
-    const [childText] = this.children;
-    childText.text = "Boosting!";
-  },
-  onUp: function (this: Button) {
-    gameStore.dispatch("setActionToBoost", null);
-    this.hovered = false;
-
-    const [childText] = this.children;
-    childText.text = "";
-  },
-  update: function (this: Button) {
-    const { hoveredButton } = gameStore.get();
-
-    if (!this.hovered && hoveredButton == this) {
-      gameStore.dispatch("setHoveredButton", null);
-    } else if (this.hovered && hoveredButton != this) {
-      gameStore.dispatch("setHoveredButton", this);
-    }
-  },
 };
 
 for (const key of getKeysFromEnum(Action)) {
@@ -66,11 +44,11 @@ for (const key of getKeysFromEnum(Action)) {
     scaleY: 120 / 512,
     anchor: { x: 0.5, y: 0.5 },
     color: "#83908f",
-    render: function (this: Sprite) {
-      this.context.fillStyle = this.color;
-      this.context.beginPath();
+    render: () => {
+      icon.context.fillStyle = icon.color;
+      icon.context.beginPath();
       const path = new Path2D(actionToSVGPathMap[Action[key]]);
-      this.context.fill(path);
+      icon.context.fill(path);
     },
   });
 
@@ -82,7 +60,7 @@ for (const key of getKeysFromEnum(Action)) {
     color: "#83908f",
     anchor: { x: 0.5, y: 0.5 },
     textAlign: "center",
-    update: function (this: Text) {
+    update: () => {
       const actionNameInLowerCase = Action[key].toLocaleLowerCase() as
         | "resting"
         | "exploring"
@@ -90,7 +68,9 @@ for (const key of getKeysFromEnum(Action)) {
         | "farming"
         | "scavenging"
         | "constructing";
-      this.text = gameStore.get()[actionNameInLowerCase].toString();
+      peopleActingLabel.text = gameStore
+        .get()
+        [actionNameInLowerCase].toString();
     },
   });
 
@@ -107,6 +87,31 @@ for (const key of getKeysFromEnum(Action)) {
   const boostActionButton = Button({
     ...buttonProperties,
     action: Action[key],
+    onDown: () => {
+      gameStore.dispatch("setActionToBoost", boostActionButton.action);
+
+      const [childText] = boostActionButton.children;
+      childText.text = "Boosting!";
+    },
+    onUp: () => {
+      gameStore.dispatch("setActionToBoost", null);
+      boostActionButton.hovered = false;
+
+      const [childText] = boostActionButton.children;
+      childText.text = "";
+    },
+    update: () => {
+      const { hoveredButton } = gameStore.get();
+
+      if (!boostActionButton.hovered && hoveredButton == boostActionButton) {
+        gameStore.dispatch("setHoveredButton", null);
+      } else if (
+        boostActionButton.hovered &&
+        hoveredButton != boostActionButton
+      ) {
+        gameStore.dispatch("setHoveredButton", boostActionButton);
+      }
+    },
   });
 
   if (Action[key] == Action.Resting) {
@@ -120,11 +125,11 @@ for (const key of getKeysFromEnum(Action)) {
     radius: 140,
     anchor: { x: 0.5, y: 0.5 },
     action: Action[key],
-    render: function (this: Sprite) {
-      this.context.fillStyle = this.color;
-      this.context.beginPath();
-      this.context.arc(0, 0, this.radius, 0, 2 * Math.PI);
-      this.context.fill();
+    render: () => {
+      circle.context.fillStyle = circle.color;
+      circle.context.beginPath();
+      circle.context.arc(0, 0, circle.radius, 0, 2 * Math.PI);
+      circle.context.fill();
     },
     children: [peopleActingLabel, actionNameLabel, icon, boostActionButton],
   });

@@ -15,6 +15,7 @@ import { gameOverDialog } from "./gameOverDialog";
 
 export const gamePlayScene = Scene({
   id: GameScene.GamePlay,
+  hidden: true,
   children: [
     ...getAllActionAreaLabels(),
     foodLabel,
@@ -28,18 +29,20 @@ export const gamePlayScene = Scene({
 });
 
 gameStore.dispatch("addUpdateCallback", () => {
-  if (gameStore.get().activeGameScenes.includes(GameScene.GamePlay)) {
-    gamePlayScene.update();
-  }
+  gamePlayScene.update();
 });
 
 gameStore.dispatch("addRenderCallback", () => {
-  if (gameStore.get().activeGameScenes.includes(GameScene.GamePlay)) {
-    gamePlayScene.render();
-  }
+  gamePlayScene.render();
 });
 
 gameStore.on("@changed", (state) => {
+  if (state.activeGameScenes) {
+    state.activeGameScenes.includes(GameScene.GamePlay)
+      ? gamePlayScene.show()
+      : gamePlayScene.hide();
+  }
+
   if (
     state.showingGameOverDialog &&
     !gamePlayScene.children.includes(gameOverDialog)

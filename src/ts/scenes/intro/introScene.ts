@@ -10,6 +10,12 @@ export const introScene = Scene({
   id: GameScene.Intro,
   children: [introText],
   opacity: 0,
+  hidden: true,
+  onShow: () => {
+    for (const child of introScene.children) {
+      child.opacity = introScene.opacity;
+    }
+  },
   update: (deltaTime) => {
     if (!deltaTime) return;
 
@@ -28,20 +34,20 @@ export const introScene = Scene({
   },
 });
 
-for (const child of introScene.children) {
-  child.opacity = introScene.opacity;
-}
-
-gameStore.dispatch("activateGameScene", GameScene.Intro);
-
 gameStore.dispatch("addUpdateCallback", (deltaTime) => {
-  if (gameStore.get().activeGameScenes.includes(GameScene.Intro)) {
-    introScene.update(deltaTime);
-  }
+  introScene.update(deltaTime);
 });
 
 gameStore.dispatch("addRenderCallback", () => {
-  if (gameStore.get().activeGameScenes.includes(GameScene.Intro)) {
-    introScene.render();
-  }
+  introScene.render();
 });
+
+gameStore.on("@changed", (state) => {
+  if (!state.activeGameScenes) return;
+
+  state.activeGameScenes.includes(GameScene.Intro)
+    ? introScene.show()
+    : introScene.hide();
+});
+
+gameStore.dispatch("activateGameScene", GameScene.Intro);
