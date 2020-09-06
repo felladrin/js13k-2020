@@ -1,4 +1,4 @@
-import { Text, Vector, Sprite, Button } from "kontra";
+import { Text, Vector, Sprite, Button, clamp } from "kontra";
 import { Action } from "../../enums";
 import { getKeysFromEnum } from "../../functions";
 import {
@@ -18,19 +18,6 @@ const actionAreas: Sprite[] = [];
 const actionsAmount = Object.keys(Action).length;
 const centralPosition = Vector(gameWidth / 2, gameHeight / 2);
 const radius = 350;
-const buttonProperties = {
-  width: 140 * 2,
-  height: 140 * 2,
-  anchor: { x: 0.5, y: 0.5 },
-  action: null,
-  text: {
-    color: "white",
-    font: `32px ${defaultFontFamily}`,
-    textAlign: "center",
-    lineHeight: 1.2,
-    anchor: { x: 0.5, y: 0.5 },
-  },
-};
 
 for (const key of getKeysFromEnum(Action)) {
   const currentActionIndex = actionAreas.length;
@@ -92,35 +79,30 @@ for (const key of getKeysFromEnum(Action)) {
   if (actionNameLabel.text == Action.Researching) {
     actionNameLabel.addChild(researchProgressBar);
     researchProgressBar.width = actionNameLabel.width;
-    researchProgressBar.x -= researchProgressBar.width / 2;
+    researchProgressBar.x -= actionNameLabel.width / 2;
     researchProgressBar.y += actionNameLabel.height;
   } else if (actionNameLabel.text == Action.Constructing) {
     actionNameLabel.addChild(constructionProgressBar);
     constructionProgressBar.width = actionNameLabel.width;
-    constructionProgressBar.x -= constructionProgressBar.width / 2;
+    constructionProgressBar.x -= actionNameLabel.width / 2;
     constructionProgressBar.y += actionNameLabel.height;
   } else if (actionNameLabel.text == Action.Exploring) {
     actionNameLabel.addChild(explorationProgressBar);
     explorationProgressBar.width = actionNameLabel.width;
-    explorationProgressBar.x -= explorationProgressBar.width / 2;
+    explorationProgressBar.x -= actionNameLabel.width / 2;
     explorationProgressBar.y += actionNameLabel.height;
   }
 
   const boostActionButton = Button({
-    ...buttonProperties,
+    width: 140 * 2,
+    height: 140 * 2,
+    anchor: { x: 0.5, y: 0.5 },
     action: Action[key],
     onDown: () => {
       gameStore.dispatch("setActionToBoost", boostActionButton.action);
-
-      const [childText] = boostActionButton.children;
-      childText.text = "Boosting!";
     },
     onUp: () => {
       gameStore.dispatch("setActionToBoost", null);
-      boostActionButton.hovered = false;
-
-      const [childText] = boostActionButton.children;
-      childText.text = "";
     },
     update: () => {
       const { hoveredButton } = gameStore.get();
@@ -140,6 +122,33 @@ for (const key of getKeysFromEnum(Action)) {
     boostActionButton.disable();
   }
 
+  const circleShadow = Sprite({
+    color: "#4d5f5e",
+    radius: 140,
+    anchor: { x: 0.5, y: 0.5 },
+    opacity: 0,
+    action: Action[key],
+    update: () => {
+      if (circleShadow.opacity == 0) {
+        if (gameStore.get().actionToBoost == circleShadow.action) {
+          circleShadow.opacity = 1;
+          circleShadow.radius = 140;
+        } else {
+          return;
+        }
+      }
+
+      circleShadow.opacity = clamp(0, 1, circleShadow.opacity - 1 / 60);
+      circleShadow.radius += 0.8;
+    },
+    render: () => {
+      circleShadow.context.fillStyle = circleShadow.color;
+      circleShadow.context.beginPath();
+      circleShadow.context.arc(0, 0, circleShadow.radius, 0, 2 * Math.PI);
+      circleShadow.context.fill();
+    },
+  });
+
   const circle = Sprite({
     x: positionInTheCircle.x,
     y: positionInTheCircle.y,
@@ -153,7 +162,13 @@ for (const key of getKeysFromEnum(Action)) {
       circle.context.arc(0, 0, circle.radius, 0, 2 * Math.PI);
       circle.context.fill();
     },
-    children: [peopleActingLabel, actionNameLabel, icon, boostActionButton],
+    children: [
+      circleShadow,
+      peopleActingLabel,
+      actionNameLabel,
+      icon,
+      boostActionButton,
+    ],
   });
 
   actionAreas.push(circle);
