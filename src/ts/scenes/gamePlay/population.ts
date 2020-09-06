@@ -10,6 +10,8 @@ import {
 } from "./constants";
 import { getKeysFromEnum } from "../../functions";
 
+let canBoost = true;
+
 interface Person extends Sprite {
   currentAction?: Action;
   previousAction?: Action;
@@ -76,17 +78,20 @@ gameStore.on("@changed", (state) => {
 });
 
 on(GameEvent.GameTick, () => {
+  canBoost = true;
+
   if (gameStore.get().paused) return;
 
   moveEveryoneToFarmsIfNeeded();
   moveEveryoneToCollectResourcesIfNeeded();
   processHealth();
-  boostActionIfNeeded();
   updatePopulationStats();
 });
 
 gameStore.dispatch("addUpdateCallback", (deltaTime) => {
   if (gameStore.get().paused) return;
+
+  boostActionIfNeeded();
 
   if (gameStore.get().activeGameScenes.includes(GameScene.GamePlay)) {
     fillPopulation();
@@ -101,9 +106,13 @@ gameStore.dispatch("addRenderCallback", () => {
 });
 
 function boostActionIfNeeded() {
+  if (!canBoost) return;
+
   const { actionToBoost } = gameStore.get();
 
   if (!actionToBoost) return;
+
+  canBoost = false;
 
   const otherActionsList: Action[] = [];
 
