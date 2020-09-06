@@ -3,7 +3,7 @@ import { gameStore } from "../../gameStore";
 import { GameScene } from "../../enums";
 import { startText } from "./startText";
 
-const fadeSpeed = 0.5;
+const fadeSpeed = 0.8;
 let isFadingIn = false;
 let isFadingOut = false;
 
@@ -17,6 +17,18 @@ export const startScene = Scene({
 
     for (const child of startScene.children) {
       child.opacity = startScene.opacity;
+    }
+
+    const eventsToListen = ["click", "touchend"];
+
+    for (const eventToAdd of eventsToListen) {
+      getCanvas().addEventListener(eventToAdd, function onClickAnywhere() {
+        isFadingIn = false;
+        isFadingOut = true;
+        for (const eventToRemove of eventsToListen) {
+          getCanvas().removeEventListener(eventToRemove, onClickAnywhere);
+        }
+      });
     }
   },
   update: (deltaTime) => {
@@ -49,18 +61,6 @@ export const startScene = Scene({
     }
   },
 });
-
-const eventsToListen = ["click", "touchend"];
-
-for (const eventToAdd of eventsToListen) {
-  getCanvas().addEventListener(eventToAdd, function onClickAnywhere() {
-    isFadingIn = false;
-    isFadingOut = true;
-    for (const eventToRemove of eventsToListen) {
-      getCanvas().removeEventListener(eventToRemove, onClickAnywhere);
-    }
-  });
-}
 
 for (const child of startScene.children) {
   child.opacity = startScene.opacity;
