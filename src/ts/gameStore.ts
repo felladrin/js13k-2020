@@ -1,5 +1,5 @@
 import { createStoreon } from "storeon";
-import { initialPopulation, endGameDay } from "./constants";
+import { initialPopulation } from "./constants";
 import { Action, GameScene } from "./enums";
 import { clamp, Button } from "kontra";
 
