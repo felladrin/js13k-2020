@@ -1,4 +1,4 @@
-import { Scene } from "kontra";
+import { Scene, getCanvas } from "kontra";
 import { gameStore } from "../../gameStore";
 import { GameScene } from "../../enums";
 import { introTextTitle, introTextSubtitle } from "./introText";
@@ -18,6 +18,18 @@ export const introScene = Scene({
 
     for (const child of introScene.children) {
       child.opacity = introScene.opacity;
+    }
+
+    const eventsToListen = ["click", "touchend"];
+
+    for (const eventToAdd of eventsToListen) {
+      getCanvas().addEventListener(eventToAdd, function onClickAnywhere() {
+        isFadingIn = false;
+        isFadingOut = true;
+        for (const eventToRemove of eventsToListen) {
+          getCanvas().removeEventListener(eventToRemove, onClickAnywhere);
+        }
+      });
     }
   },
   update: (deltaTime) => {
