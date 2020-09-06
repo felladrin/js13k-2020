@@ -5,11 +5,6 @@ import { daysPassedLabel } from "./daysPassedLabel";
 import { foodLabel } from "./foodLabel";
 import { resourcesLabel } from "./resourcesLabel";
 import { populationLabel } from "./populationLabel";
-import {
-  researchProgressLabel,
-  constructionProgressLabel,
-  explorationProgressLabel,
-} from "./progressBars";
 import { GameScene } from "../../enums";
 import { gameOverDialog } from "./gameOverDialog";
 
@@ -22,9 +17,6 @@ export const gamePlayScene = Scene({
     resourcesLabel,
     daysPassedLabel,
     populationLabel,
-    researchProgressLabel,
-    constructionProgressLabel,
-    explorationProgressLabel,
   ],
 });
 

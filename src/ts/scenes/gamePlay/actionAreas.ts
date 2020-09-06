@@ -8,6 +8,11 @@ import {
   gameWidth,
 } from "../../constants";
 import { gameStore } from "../../gameStore";
+import {
+  researchProgressBar,
+  constructionProgressBar,
+  explorationProgressBar,
+} from "./progressBars";
 
 const actionAreas: Sprite[] = [];
 const actionsAmount = Object.keys(Action).length;
@@ -83,6 +88,23 @@ for (const key of getKeysFromEnum(Action)) {
     anchor: { x: 0.5, y: 0.5 },
     textAlign: "center",
   });
+
+  if (actionNameLabel.text == Action.Researching) {
+    actionNameLabel.addChild(researchProgressBar);
+    researchProgressBar.width = actionNameLabel.width;
+    researchProgressBar.x -= researchProgressBar.width / 2;
+    researchProgressBar.y += actionNameLabel.height;
+  } else if (actionNameLabel.text == Action.Constructing) {
+    actionNameLabel.addChild(constructionProgressBar);
+    constructionProgressBar.width = actionNameLabel.width;
+    constructionProgressBar.x -= constructionProgressBar.width / 2;
+    constructionProgressBar.y += actionNameLabel.height;
+  } else if (actionNameLabel.text == Action.Exploring) {
+    actionNameLabel.addChild(explorationProgressBar);
+    explorationProgressBar.width = actionNameLabel.width;
+    explorationProgressBar.x -= explorationProgressBar.width / 2;
+    explorationProgressBar.y += actionNameLabel.height;
+  }
 
   const boostActionButton = Button({
     ...buttonProperties,
