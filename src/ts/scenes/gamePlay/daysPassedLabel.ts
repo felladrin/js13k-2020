@@ -1,9 +1,14 @@
 import { Text } from "kontra";
 import { gameStore } from "../../gameStore";
-import { defaultFontFamily, gameHeight, gameWidth } from "../../constants";
+import {
+  defaultFontFamily,
+  gameHeight,
+  gameWidth,
+  endGameDay,
+} from "../../constants";
 
 function getDaysPassedText(daysPassed: number) {
-  return `Days Passed\n${daysPassed}`;
+  return `Next Arrival\n${endGameDay - daysPassed}`;
 }
 
 export const daysPassedLabel = Text({
