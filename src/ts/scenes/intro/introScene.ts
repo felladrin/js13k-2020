@@ -1,17 +1,21 @@
 import { Scene } from "kontra";
 import { gameStore } from "../../gameStore";
 import { GameScene } from "../../enums";
-import { introText } from "./introText";
+import { introTextTitle, introTextSubtitle } from "./introText";
 
-const fadeSpeed = 0.5;
-let isFadingIn = true;
+const fadeSpeed = 0.8;
+let fadeOutDelayInSeconds = 3;
+let isFadingIn = false;
+let isFadingOut = false;
 
 export const introScene = Scene({
   id: GameScene.Intro,
-  children: [introText],
+  children: [introTextTitle, introTextSubtitle],
   opacity: 0,
   hidden: true,
   onShow: () => {
+    isFadingIn = true;
+
     for (const child of introScene.children) {
       child.opacity = introScene.opacity;
     }
@@ -19,17 +23,25 @@ export const introScene = Scene({
   update: (deltaTime) => {
     if (!deltaTime) return;
 
-    introScene.opacity += (isFadingIn ? fadeSpeed : -fadeSpeed) * deltaTime;
+    if (isFadingIn || isFadingOut) {
+      introScene.opacity += (isFadingIn ? fadeSpeed : -fadeSpeed) * deltaTime;
 
-    for (const child of introScene.children) {
-      child.opacity = introScene.opacity;
+      for (const child of introScene.children) {
+        child.opacity = introScene.opacity;
+      }
+
+      if (introScene.opacity >= 1) {
+        isFadingIn = false;
+      } else if (introScene.opacity <= 0) {
+        gameStore.dispatch("deactivateGameScene", GameScene.Intro);
+        gameStore.dispatch("activateGameScene", GameScene.Start);
+      }
     }
 
-    if (introScene.opacity >= 1) {
-      isFadingIn = false;
-    } else if (introScene.opacity <= 0) {
-      gameStore.dispatch("deactivateGameScene", GameScene.Intro);
-      gameStore.dispatch("activateGameScene", GameScene.Start);
+    if (!isFadingIn && !isFadingOut) {
+      fadeOutDelayInSeconds -= deltaTime;
+
+      if (fadeOutDelayInSeconds <= 0) isFadingOut = true;
     }
   },
 });
