@@ -29,7 +29,7 @@ const buttonProperties = {
     gameStore.dispatch("setActionToBoost", this.action);
 
     const [childText] = this.children;
-    childText.text = "Boosting";
+    childText.text = "Boosting!";
   },
   onUp: function (this: Button) {
     gameStore.dispatch("setActionToBoost", null);
@@ -43,12 +43,8 @@ const buttonProperties = {
 
     if (!this.hovered && hoveredButton == this) {
       gameStore.dispatch("setHoveredButton", null);
-      const [childText] = this.children;
-      childText.text = "";
     } else if (this.hovered && hoveredButton != this) {
       gameStore.dispatch("setHoveredButton", this);
-      const [childText] = this.children;
-      childText.text = "Hold to Boost!";
     }
   },
 };
