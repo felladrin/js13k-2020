@@ -4,7 +4,10 @@ import { defaultFontFamily, gameWidth } from "../../constants";
 
 function getFoodText() {
   const gameState = gameStore.get();
-  return `Food\n${gameState.food}\n⇧${gameState.foodCreatedPerTick} ⇩${gameState.foodConsumedPerTick}`;
+  const food = gameState.food.toLocaleString();
+  const foodCreatedPerTick = gameState.foodCreatedPerTick.toLocaleString();
+  const foodConsumedPerTick = gameState.foodConsumedPerTick.toLocaleString();
+  return `FOOD\n${food}\n⇧${foodCreatedPerTick} ⇩${foodConsumedPerTick}`;
 }
 
 export const foodLabel = Text({

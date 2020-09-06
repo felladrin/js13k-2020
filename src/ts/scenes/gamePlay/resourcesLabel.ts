@@ -4,7 +4,10 @@ import { defaultFontFamily } from "../../constants";
 
 function getResourcesText() {
   const gameState = gameStore.get();
-  return `Resources\n${gameState.resources}\n⇧${gameState.resourcesCreatedPerTick} ⇩${gameState.resourcesConsumedPerTick}`;
+  const resources = gameState.resources.toLocaleString();
+  const resourcesCreatedPerTick = gameState.resourcesCreatedPerTick.toLocaleString();
+  const resourcesConsumedPerTick = gameState.resourcesConsumedPerTick.toLocaleString();
+  return `RESOURCES\n${resources}\n⇧${resourcesCreatedPerTick} ⇩${resourcesConsumedPerTick}`;
 }
 
 export const resourcesLabel = Text({
