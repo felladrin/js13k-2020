@@ -4,7 +4,7 @@ import { GameScene } from "../../enums";
 import { startText } from "./startText";
 
 const fadeSpeed = 0.5;
-let isFadingIn = true;
+let isFadingIn = false;
 let isFadingOut = false;
 
 export const startScene = Scene({
@@ -13,6 +13,8 @@ export const startScene = Scene({
   opacity: 0,
   hidden: true,
   onShow: () => {
+    isFadingIn = true;
+
     for (const child of startScene.children) {
       child.opacity = startScene.opacity;
     }
