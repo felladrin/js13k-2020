@@ -117,9 +117,8 @@ function boostActionIfNeeded() {
   const people = population.getAliveObjects() as Person[];
 
   for (
-    let counter = 0,
-      threePercentOfThePopulation = Math.ceil(people.length * 0.03);
-    counter < threePercentOfThePopulation;
+    let counter = 0, populationPercentage = Math.ceil(people.length * 0.05);
+    counter < populationPercentage;
     counter++
   ) {
     const action = otherActionsList[indexOnOtherActionsList];
