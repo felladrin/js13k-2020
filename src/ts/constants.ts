@@ -10,7 +10,7 @@ export const endGameDay = 365;
 
 export const secondsPerGameTick = 0.333;
 
-export const gameTicksPerGameDay = 6;
+export const gameTicksPerGameDay = 3;
 
 export const defaultFontFamily = "Verdana, Geneva, sans-serif";
 
