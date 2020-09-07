@@ -28,7 +28,6 @@ interface Events {
   increaseConstructionProgress: number;
   increaseResearchProgress: number;
   incrementAvailableConstructionSlots: void;
-  incrementAvailableImprovementSlots: void;
   setHoveredButton: Button | null;
   activateGameScene: GameScene;
   deactivateGameScene: GameScene;
@@ -61,7 +60,6 @@ interface State {
   constructionProgressPercentage: number;
   researchProgressPercentage: number;
   availableConstructionSlots: number;
-  availableImprovementSlots: number;
   farmingConstructions: number;
   researchingConstructions: number;
   restingConstructions: number;
@@ -104,7 +102,6 @@ export const gameStore = createStoreon<State, Events>([
       constructionProgressPercentage: 0,
       researchProgressPercentage: 0,
       availableConstructionSlots: 1,
-      availableImprovementSlots: 0,
       farmingConstructions: 1,
       researchingConstructions: 1,
       restingConstructions: 1,
@@ -261,13 +258,6 @@ export const gameStore = createStoreon<State, Events>([
           scavengingImprovements,
         };
       }
-    );
-
-    store.on(
-      "incrementAvailableImprovementSlots",
-      ({ availableImprovementSlots }) => ({
-        availableImprovementSlots: availableImprovementSlots + 1,
-      })
     );
 
     store.on(
