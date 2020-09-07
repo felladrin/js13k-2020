@@ -154,7 +154,16 @@ export const gameStore = createStoreon<State, Events>([
 
     store.on(
       "increaseConstructionProgress",
-      ({ constructionProgressPercentage }, percentage) => {
+      (
+        {
+          constructionProgressPercentage,
+          nextConstruction,
+          farmingConstructions,
+          researchingConstructions,
+          restingConstructions,
+        },
+        percentage
+      ) => {
         let newPercentage = clamp(
           0,
           100,
@@ -163,10 +172,25 @@ export const gameStore = createStoreon<State, Events>([
 
         if (newPercentage == 100) {
           newPercentage = 0;
+
+          switch (nextConstruction) {
+            case Action.Farming:
+              farmingConstructions++;
+              break;
+            case Action.Researching:
+              researchingConstructions++;
+              break;
+            case Action.Resting:
+              restingConstructions++;
+              break;
+          }
         }
 
         return {
           constructionProgressPercentage: newPercentage,
+          farmingConstructions,
+          researchingConstructions,
+          restingConstructions,
         };
       }
     );
@@ -193,7 +217,16 @@ export const gameStore = createStoreon<State, Events>([
 
     store.on(
       "increaseResearchProgress",
-      ({ researchProgressPercentage }, percentage) => {
+      (
+        {
+          researchProgressPercentage,
+          nextResearch,
+          constructingImprovements,
+          exploringImprovements,
+          scavengingImprovements,
+        },
+        percentage
+      ) => {
         let newPercentage = clamp(
           0,
           100,
@@ -202,11 +235,25 @@ export const gameStore = createStoreon<State, Events>([
 
         if (newPercentage == 100) {
           newPercentage = 0;
-          store.dispatch("incrementAvailableImprovementSlots");
+
+          switch (nextResearch) {
+            case Action.Constructing:
+              constructingImprovements++;
+              break;
+            case Action.Exploring:
+              exploringImprovements++;
+              break;
+            case Action.Scavenging:
+              scavengingImprovements++;
+              break;
+          }
         }
 
         return {
           researchProgressPercentage: newPercentage,
+          constructingImprovements,
+          exploringImprovements,
+          scavengingImprovements,
         };
       }
     );
