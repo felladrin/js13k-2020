@@ -7,6 +7,8 @@ import { resourcesLabel } from "./resourcesLabel";
 import { populationLabel } from "./populationLabel";
 import { GameScene } from "../../enums";
 import { gameOverDialog } from "./gameOverDialog";
+import { nextConstructionOptions } from "./nextConstructionOptions";
+import { nextResearchOptions } from "./nextResearchOptions";
 
 export const gamePlayScene = Scene({
   id: GameScene.GamePlay,
@@ -17,6 +19,8 @@ export const gamePlayScene = Scene({
     resourcesLabel,
     daysPassedLabel,
     populationLabel,
+    nextConstructionOptions,
+    nextResearchOptions,
   ],
 });
 

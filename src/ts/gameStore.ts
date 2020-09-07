@@ -36,6 +36,8 @@ interface Events {
   resumeGame: void;
   showGameOverDialog: void;
   hideGameOverDialog: void;
+  setNextConstruction: Action;
+  setNextResearch: Action;
 }
 
 interface State {
@@ -72,6 +74,8 @@ interface State {
   activeGameScenes: GameScene[];
   paused: boolean;
   showingGameOverDialog: boolean;
+  nextConstruction: Action;
+  nextResearch: Action;
 }
 
 export const gameStore = createStoreon<State, Events>([
@@ -113,6 +117,8 @@ export const gameStore = createStoreon<State, Events>([
       activeGameScenes: [],
       paused: false,
       showingGameOverDialog: false,
+      nextConstruction: Action.Farming,
+      nextResearch: Action.Scavenging,
     }));
 
     store.on("addUpdateCallback", ({ onUpdateCallbacks }, callback) => ({
@@ -239,5 +245,11 @@ export const gameStore = createStoreon<State, Events>([
     store.on("showGameOverDialog", () => ({ showingGameOverDialog: true }));
 
     store.on("hideGameOverDialog", () => ({ showingGameOverDialog: false }));
+
+    store.on("setNextConstruction", (_, nextConstruction) => ({
+      nextConstruction,
+    }));
+
+    store.on("setNextResearch", (_, nextResearch) => ({ nextResearch }));
   },
 ]);

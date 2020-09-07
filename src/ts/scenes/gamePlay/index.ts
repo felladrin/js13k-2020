@@ -12,3 +12,5 @@ export * from "./progressBars";
 export * from "./progressCounter";
 export * from "./resourcesCounter";
 export * from "./resourcesLabel";
+export * from "./nextConstructionOptions";
+export * from "./nextResearchOptions";
