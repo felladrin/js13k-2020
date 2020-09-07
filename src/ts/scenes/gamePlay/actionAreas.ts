@@ -131,7 +131,7 @@ for (const key of getKeysFromEnum(Action)) {
           break;
         case Action.Resting:
           constructionsAndImprovementsLabel.text +=
-            gameState.researchingConstructions;
+            gameState.restingConstructions;
           break;
         case Action.Scavenging:
           constructionsAndImprovementsLabel.text +=
