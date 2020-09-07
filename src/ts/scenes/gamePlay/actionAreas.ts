@@ -6,6 +6,8 @@ import {
   gameHeight,
   defaultFontFamily,
   gameWidth,
+  actionToConstructionAllowedMap,
+  actionToResearchAllowedMap,
 } from "../../constants";
 import { gameStore } from "../../gameStore";
 import {
@@ -93,6 +95,52 @@ for (const key of getKeysFromEnum(Action)) {
     explorationProgressBar.y += actionNameLabel.height;
   }
 
+  const constructionsAndImprovementsLabel = Text({
+    x: 0,
+    y: 85,
+    text: Action[key],
+    font: `20px ${defaultFontFamily}`,
+    color: "#83908f",
+    anchor: { x: 0.5, y: 0.5 },
+    textAlign: "center",
+    update: () => {
+      if (actionToConstructionAllowedMap[Action[key]]) {
+        constructionsAndImprovementsLabel.text = "Constructions: ";
+      } else if (actionToResearchAllowedMap[Action[key]]) {
+        constructionsAndImprovementsLabel.text = "Improvements: ";
+      }
+
+      const gameState = gameStore.get();
+
+      switch (Action[key]) {
+        case Action.Constructing:
+          constructionsAndImprovementsLabel.text +=
+            gameState.constructingImprovements;
+          break;
+        case Action.Exploring:
+          constructionsAndImprovementsLabel.text +=
+            gameState.exploringImprovements;
+          break;
+        case Action.Farming:
+          constructionsAndImprovementsLabel.text +=
+            gameState.farmingConstructions;
+          break;
+        case Action.Researching:
+          constructionsAndImprovementsLabel.text +=
+            gameState.researchingConstructions;
+          break;
+        case Action.Resting:
+          constructionsAndImprovementsLabel.text +=
+            gameState.researchingConstructions;
+          break;
+        case Action.Scavenging:
+          constructionsAndImprovementsLabel.text +=
+            gameState.scavengingImprovements;
+          break;
+      }
+    },
+  });
+
   const boostActionButton = Button({
     width: 140 * 2,
     height: 140 * 2,
@@ -168,6 +216,7 @@ for (const key of getKeysFromEnum(Action)) {
       actionNameLabel,
       icon,
       boostActionButton,
+      constructionsAndImprovementsLabel,
     ],
   });
 
