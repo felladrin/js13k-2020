@@ -29,13 +29,13 @@ export const explorationProgressBar = createProgressBar(
 );
 
 gameStore.on("@changed", (state) => {
-  if (state.researchProgressPercentage) {
+  if (!isNaN(state.researchProgressPercentage)) {
     const [researchProgressBarForeground] = researchProgressBar.children;
     researchProgressBarForeground.width =
       researchProgressBar.width * (state.researchProgressPercentage / 100);
   }
 
-  if (state.constructionProgressPercentage) {
+  if (!isNaN(state.constructionProgressPercentage)) {
     const [
       constructionProgressBarForeground,
     ] = constructionProgressBar.children;
@@ -44,7 +44,7 @@ gameStore.on("@changed", (state) => {
       (state.constructionProgressPercentage / 100);
   }
 
-  if (state.explorationProgressPercentage) {
+  if (!isNaN(state.explorationProgressPercentage)) {
     const [explorationProgressBarForeground] = explorationProgressBar.children;
     if (explorationProgressBarForeground.parent) {
       explorationProgressBarForeground.width =
