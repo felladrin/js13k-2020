@@ -84,6 +84,7 @@ on(GameEvent.GameTick, () => {
 
   moveEveryoneToFarmsIfNeeded();
   moveEveryoneToCollectResourcesIfNeeded();
+  moveFromConstructingToExploringIfNeeded();
   processHealth();
   updatePopulationStats();
 });
@@ -236,5 +237,15 @@ function moveEveryoneToCollectResourcesIfNeeded() {
 
   (population.getAliveObjects() as Person[]).forEach((person) => {
     person.currentAction = Action.Scavenging;
+  });
+}
+
+function moveFromConstructingToExploringIfNeeded() {
+  if (gameStore.get().availableConstructionSlots > 0) return;
+
+  (population.getAliveObjects() as Person[]).forEach((person) => {
+    if (person.currentAction == Action.Constructing) {
+      person.currentAction = Action.Exploring;
+    }
   });
 }

@@ -103,7 +103,7 @@ export const gameStore = createStoreon<State, Events>([
       explorationProgressPercentage: 0,
       constructionProgressPercentage: 0,
       researchProgressPercentage: 0,
-      availableConstructionSlots: 0,
+      availableConstructionSlots: 1,
       availableImprovementSlots: 0,
       farmingConstructions: 1,
       researchingConstructions: 1,
@@ -161,6 +161,7 @@ export const gameStore = createStoreon<State, Events>([
           farmingConstructions,
           researchingConstructions,
           restingConstructions,
+          availableConstructionSlots,
         },
         percentage
       ) => {
@@ -176,12 +177,15 @@ export const gameStore = createStoreon<State, Events>([
           switch (nextConstruction) {
             case Action.Farming:
               farmingConstructions++;
+              availableConstructionSlots--;
               break;
             case Action.Researching:
               researchingConstructions++;
+              availableConstructionSlots--;
               break;
             case Action.Resting:
               restingConstructions++;
+              availableConstructionSlots--;
               break;
           }
         }
@@ -191,6 +195,7 @@ export const gameStore = createStoreon<State, Events>([
           farmingConstructions,
           researchingConstructions,
           restingConstructions,
+          availableConstructionSlots,
         };
       }
     );
