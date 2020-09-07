@@ -13,7 +13,7 @@ function getDaysPassedText(daysPassed: number) {
 
 export const daysPassedLabel = Text({
   x: gameWidth / 2,
-  y: gameHeight / 2 - 80,
+  y: gameHeight / 2 - 120,
   text: getDaysPassedText(gameStore.get().daysPassed),
   lineHeight: 1.5,
   font: `45px ${defaultFontFamily}`,

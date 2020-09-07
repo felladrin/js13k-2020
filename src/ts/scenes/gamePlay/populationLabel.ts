@@ -8,7 +8,7 @@ function getPopulationText(population: number) {
 
 export const populationLabel = Text({
   x: gameWidth / 2,
-  y: gameHeight / 2 + 80,
+  y: gameHeight / 2 + 30,
   text: getPopulationText(gameStore.get().population),
   lineHeight: 1.5,
   font: `45px ${defaultFontFamily}`,
