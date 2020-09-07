@@ -10,8 +10,8 @@ import { gameStore } from "../../gameStore";
 export const nextConstructionOptions = Text({
   x: 210,
   y: 850,
-  text: "Next Construction",
-  font: `25px ${defaultFontFamily}`,
+  text: "NEXT CONSTRUCTION",
+  font: `23px ${defaultFontFamily}`,
   lineHeight: 1.3,
   color: "#83908f",
   anchor: { x: 0.5, y: 0.5 },

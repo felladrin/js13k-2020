@@ -7,8 +7,8 @@ import { gameStore } from "../../gameStore";
 export const nextResearchOptions = Text({
   x: 825,
   y: 850,
-  text: "Next Research",
-  font: `25px ${defaultFontFamily}`,
+  text: "NEXT RESEARCH",
+  font: `23px ${defaultFontFamily}`,
   lineHeight: 1.3,
   color: "#83908f",
   anchor: { x: 0.5, y: 0.5 },
