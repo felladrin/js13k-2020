@@ -11,7 +11,7 @@ function getFoodText() {
 }
 
 export const foodLabel = Text({
-  x: gameWidth - 190,
+  x: gameWidth - 210,
   y: 100,
   text: getFoodText(),
   font: `38px ${defaultFontFamily}`,

@@ -11,7 +11,7 @@ function getResourcesText() {
 }
 
 export const resourcesLabel = Text({
-  x: 190,
+  x: 210,
   y: 100,
   text: getResourcesText(),
   font: `38px ${defaultFontFamily}`,
