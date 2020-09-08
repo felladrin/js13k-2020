@@ -2,6 +2,7 @@ import { Text, getCanvas } from "kontra";
 import { gameWidth, gameHeight, defaultFontFamily } from "../../constants";
 import { gameStore } from "../../gameStore";
 import wrap from "word-wrap";
+import { addOneTimeListenerForClickTouchEndOnElement } from "../../functions";
 
 function getSuccessMessage() {
   return wrap(
@@ -40,27 +41,15 @@ gameStore.on("@changed", (state) => {
   if (state.showingGameOverDialog && !gameOverDialog.text.length) {
     if (gameStore.get().food > 100000 && gameStore.get().resources > 100000) {
       gameOverDialog.text = getSuccessMessage();
-      const eventsToListen = ["click", "touchend"];
-      for (const eventToAdd of eventsToListen) {
-        getCanvas().addEventListener(eventToAdd, function onClickAnywhere() {
-          for (const eventToRemove of eventsToListen) {
-            getCanvas().removeEventListener(eventToRemove, onClickAnywhere);
-          }
-          gameStore.dispatch("hideGameOverDialog");
-          gameStore.dispatch("resumeGame");
-        });
-      }
+      addOneTimeListenerForClickTouchEndOnElement(getCanvas(), () => {
+        gameStore.dispatch("hideGameOverDialog");
+        gameStore.dispatch("resumeGame");
+      });
     } else {
       gameOverDialog.text = getFailureMessage();
-      const eventsToListen = ["click", "touchend"];
-      for (const eventToAdd of eventsToListen) {
-        getCanvas().addEventListener(eventToAdd, function onClickAnywhere() {
-          for (const eventToRemove of eventsToListen) {
-            getCanvas().removeEventListener(eventToRemove, onClickAnywhere);
-          }
-          window.document.location.reload();
-        });
-      }
+      addOneTimeListenerForClickTouchEndOnElement(getCanvas(), () => {
+        window.document.location.reload();
+      });
     }
   }
 });

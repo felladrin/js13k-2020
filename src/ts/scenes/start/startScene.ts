@@ -2,6 +2,7 @@ import { Scene, getCanvas } from "kontra";
 import { gameStore } from "../../gameStore";
 import { GameScene } from "../../enums";
 import { startText } from "./startText";
+import { addOneTimeListenerForClickTouchEndOnElement } from "../../functions";
 
 const fadeSpeed = 0.8;
 let isFadingIn = false;
@@ -19,17 +20,10 @@ export const startScene = Scene({
       child.opacity = startScene.opacity;
     }
 
-    const eventsToListen = ["click", "touchend"];
-
-    for (const eventToAdd of eventsToListen) {
-      getCanvas().addEventListener(eventToAdd, function onClickAnywhere() {
-        isFadingIn = false;
-        isFadingOut = true;
-        for (const eventToRemove of eventsToListen) {
-          getCanvas().removeEventListener(eventToRemove, onClickAnywhere);
-        }
-      });
-    }
+    addOneTimeListenerForClickTouchEndOnElement(getCanvas(), () => {
+      isFadingIn = false;
+      isFadingOut = true;
+    });
   },
   update: (deltaTime) => {
     if (!deltaTime) return;

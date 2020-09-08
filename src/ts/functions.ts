@@ -14,3 +14,18 @@ export function disablePinchToZoom(): void {
     { passive: false }
   );
 }
+
+export function addOneTimeListenerForClickTouchEndOnElement(
+  htmlElement: HTMLElement,
+  callback: () => void
+): void {
+  const eventsToListen = ["click", "touchend"];
+  for (const eventToAdd of eventsToListen) {
+    htmlElement.addEventListener(eventToAdd, function onClickAnywhere() {
+      for (const eventToRemove of eventsToListen) {
+        htmlElement.removeEventListener(eventToRemove, onClickAnywhere);
+      }
+      callback();
+    });
+  }
+}
