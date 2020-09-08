@@ -3,7 +3,7 @@ import { gameStore } from "../../gameStore";
 
 const commonProgressBarProperties: Partial<Sprite> = {
   anchor: { x: 0, y: 0 },
-  height: 10,
+  height: 8,
 };
 
 function createProgressBar(foregroundColor: string, backgroundColor: string) {

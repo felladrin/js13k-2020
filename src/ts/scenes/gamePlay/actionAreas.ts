@@ -78,23 +78,6 @@ for (const key of getKeysFromEnum(Action)) {
     textAlign: "center",
   });
 
-  if (actionNameLabel.text == Action.Researching) {
-    actionNameLabel.addChild(researchProgressBar);
-    researchProgressBar.width = actionNameLabel.width;
-    researchProgressBar.x -= actionNameLabel.width / 2;
-    researchProgressBar.y += actionNameLabel.height;
-  } else if (actionNameLabel.text == Action.Constructing) {
-    actionNameLabel.addChild(constructionProgressBar);
-    constructionProgressBar.width = actionNameLabel.width;
-    constructionProgressBar.x -= actionNameLabel.width / 2;
-    constructionProgressBar.y += actionNameLabel.height;
-  } else if (actionNameLabel.text == Action.Exploring) {
-    actionNameLabel.addChild(explorationProgressBar);
-    explorationProgressBar.width = actionNameLabel.width;
-    explorationProgressBar.x -= actionNameLabel.width / 2;
-    explorationProgressBar.y += actionNameLabel.height;
-  }
-
   const constructionsAndImprovementsLabel = Text({
     x: 0,
     y: 85,
@@ -219,6 +202,23 @@ for (const key of getKeysFromEnum(Action)) {
       constructionsAndImprovementsLabel,
     ],
   });
+
+  if (Action[key] == Action.Researching) {
+    circle.addChild(researchProgressBar);
+    researchProgressBar.width = 120;
+    researchProgressBar.x -= researchProgressBar.width / 2;
+    researchProgressBar.y += 110;
+  } else if (Action[key] == Action.Constructing) {
+    circle.addChild(constructionProgressBar);
+    constructionProgressBar.width = 120;
+    constructionProgressBar.x -= constructionProgressBar.width / 2;
+    constructionProgressBar.y += 110;
+  } else if (Action[key] == Action.Exploring) {
+    circle.addChild(explorationProgressBar);
+    explorationProgressBar.width = 120;
+    explorationProgressBar.x -= explorationProgressBar.width / 2;
+    explorationProgressBar.y += 110;
+  }
 
   actionAreas.push(circle);
 }
