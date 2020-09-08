@@ -1,7 +1,7 @@
 import { Text, Button } from "kontra";
 import {
   defaultFontFamily,
-  actionToConstructionAllowedMap,
+  actionsImprovedByConstruction,
 } from "../../constants";
 import { getKeysFromEnum } from "../../functions";
 import { Action } from "../../enums";
@@ -21,7 +21,7 @@ export const nextConstructionOptions = Text({
 let actionIndex = 0;
 
 for (const key of getKeysFromEnum(Action)) {
-  if (!actionToConstructionAllowedMap[key]) continue;
+  if (!actionsImprovedByConstruction.includes(Action[key])) continue;
 
   const actionButton = Button({
     x: 0,

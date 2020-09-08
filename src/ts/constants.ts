@@ -14,23 +14,17 @@ export const gameTicksPerGameDay = 6;
 
 export const defaultFontFamily = "Verdana, Geneva, sans-serif";
 
-export const actionToConstructionAllowedMap: { [key in Action]: boolean } = {
-  Constructing: false,
-  Exploring: false,
-  Farming: true,
-  Researching: true,
-  Resting: true,
-  Scavenging: false,
-};
+export const actionsImprovedByConstruction: Action[] = [
+  Action.Farming,
+  Action.Researching,
+  Action.Resting,
+];
 
-export const actionToResearchAllowedMap: { [key in Action]: boolean } = {
-  Constructing: true,
-  Exploring: true,
-  Farming: false,
-  Researching: false,
-  Resting: false,
-  Scavenging: true,
-};
+export const actionsImprovedByResearch: Action[] = [
+  Action.Constructing,
+  Action.Exploring,
+  Action.Scavenging,
+];
 
 export const actionToSVGPathMap: { [key in Action]: string } = {
   Constructing:

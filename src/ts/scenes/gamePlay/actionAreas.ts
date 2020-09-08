@@ -6,8 +6,8 @@ import {
   gameHeight,
   defaultFontFamily,
   gameWidth,
-  actionToConstructionAllowedMap,
-  actionToResearchAllowedMap,
+  actionsImprovedByConstruction,
+  actionsImprovedByResearch,
 } from "../../constants";
 import { gameStore } from "../../gameStore";
 import {
@@ -104,9 +104,9 @@ for (const key of getKeysFromEnum(Action)) {
     anchor: { x: 0.5, y: 0.5 },
     textAlign: "center",
     update: () => {
-      if (actionToConstructionAllowedMap[Action[key]]) {
+      if (actionsImprovedByConstruction.includes(Action[key])) {
         constructionsAndImprovementsLabel.text = "Constructions: ";
-      } else if (actionToResearchAllowedMap[Action[key]]) {
+      } else if (actionsImprovedByResearch.includes(Action[key])) {
         constructionsAndImprovementsLabel.text = "Improvements: ";
       }
 

@@ -1,5 +1,5 @@
 import { Text, Button } from "kontra";
-import { defaultFontFamily, actionToResearchAllowedMap } from "../../constants";
+import { defaultFontFamily, actionsImprovedByResearch } from "../../constants";
 import { getKeysFromEnum } from "../../functions";
 import { Action } from "../../enums";
 import { gameStore } from "../../gameStore";
@@ -18,7 +18,7 @@ export const nextResearchOptions = Text({
 let actionIndex = 0;
 
 for (const key of getKeysFromEnum(Action)) {
-  if (!actionToResearchAllowedMap[key]) continue;
+  if (!actionsImprovedByResearch.includes(Action[key])) continue;
 
   const actionButton = Button({
     x: 0,
