@@ -46,5 +46,16 @@ gameStore.on("@changed", (state) => {
     !gamePlayScene.children.includes(gameOverDialog)
   ) {
     gamePlayScene.addChild(gameOverDialog);
+    gamePlayScene.removeChild(daysPassedLabel);
+    gamePlayScene.removeChild(populationLabel);
+    gamePlayScene.removeChild(constructionSlotsLabel);
+  } else if (
+    !state.showingGameOverDialog &&
+    gamePlayScene.children.includes(gameOverDialog)
+  ) {
+    gamePlayScene.removeChild(gameOverDialog);
+    gamePlayScene.addChild(daysPassedLabel);
+    gamePlayScene.addChild(populationLabel);
+    gamePlayScene.addChild(constructionSlotsLabel);
   }
 });

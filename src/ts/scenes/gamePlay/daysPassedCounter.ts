@@ -19,7 +19,16 @@ on(GameEvent.GameTick, () => {
   }
 
   if (gameStore.get().daysPassed == endGameDay) {
-    gameStore.dispatch("pauseGame");
-    gameStore.dispatch("showGameOverDialog");
+    if (!gameStore.get().hasShownGameOverDialog) {
+      gameStore.dispatch("pauseGame");
+      gameStore.dispatch("showGameOverDialog");
+    }
+
+    gameStore.dispatch("resetDaysPassed");
+    gameStore.dispatch("doublePopulation");
   }
+});
+
+gameStore.on("resetDaysPassed", () => {
+  ticksPassed = 0;
 });

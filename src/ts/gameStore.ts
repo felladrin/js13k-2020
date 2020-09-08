@@ -37,6 +37,8 @@ interface Events {
   hideGameOverDialog: void;
   setNextConstruction: Action;
   setNextResearch: Action;
+  doublePopulation: void;
+  resetDaysPassed: void;
 }
 
 interface State {
@@ -72,6 +74,7 @@ interface State {
   activeGameScenes: GameScene[];
   paused: boolean;
   showingGameOverDialog: boolean;
+  hasShownGameOverDialog: boolean;
   nextConstruction: Action;
   nextResearch: Action;
 }
@@ -114,6 +117,7 @@ export const gameStore = createStoreon<State, Events>([
       activeGameScenes: [],
       paused: false,
       showingGameOverDialog: false,
+      hasShownGameOverDialog: false,
       nextConstruction: Action.Farming,
       nextResearch: Action.Scavenging,
     }));
@@ -286,12 +290,21 @@ export const gameStore = createStoreon<State, Events>([
 
     store.on("showGameOverDialog", () => ({ showingGameOverDialog: true }));
 
-    store.on("hideGameOverDialog", () => ({ showingGameOverDialog: false }));
+    store.on("hideGameOverDialog", () => ({
+      showingGameOverDialog: false,
+      hasShownGameOverDialog: true,
+    }));
 
     store.on("setNextConstruction", (_, nextConstruction) => ({
       nextConstruction,
     }));
 
     store.on("setNextResearch", (_, nextResearch) => ({ nextResearch }));
+
+    store.on("doublePopulation", ({ population }) => ({
+      population: population * 2,
+    }));
+
+    store.on("resetDaysPassed", () => ({ daysPassed: 0 }));
   },
 ]);
