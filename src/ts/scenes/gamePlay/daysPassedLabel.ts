@@ -8,7 +8,7 @@ import {
 } from "../../constants";
 
 function getDaysPassedText(daysPassed: number) {
-  return `Next Arrival\n${endGameDay - daysPassed}`;
+  return `NEXT ARRIVAL\n${endGameDay - daysPassed}`;
 }
 
 export const daysPassedLabel = Text({
@@ -16,7 +16,7 @@ export const daysPassedLabel = Text({
   y: gameHeight / 2 - 120,
   text: getDaysPassedText(gameStore.get().daysPassed),
   lineHeight: 1.5,
-  font: `45px ${defaultFontFamily}`,
+  font: `40px ${defaultFontFamily}`,
   color: "#83908f",
   anchor: { x: 0.5, y: 0.5 },
   textAlign: "center",

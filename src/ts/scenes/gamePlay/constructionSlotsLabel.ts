@@ -3,7 +3,7 @@ import { gameStore } from "../../gameStore";
 import { defaultFontFamily, gameWidth, gameHeight } from "../../constants";
 
 function getConstructionSlotsText(availableConstructionSlots: number) {
-  return `Construction Slots\n${availableConstructionSlots}`;
+  return `CONSTRUCTION SLOTS\n${availableConstructionSlots}`;
 }
 
 export const constructionSlotsLabel = Text({
@@ -11,7 +11,7 @@ export const constructionSlotsLabel = Text({
   y: gameHeight / 2 + 150,
   text: getConstructionSlotsText(gameStore.get().availableConstructionSlots),
   lineHeight: 1.5,
-  font: `26px ${defaultFontFamily}`,
+  font: `22px ${defaultFontFamily}`,
   color: "#83908f",
   anchor: { x: 0.5, y: 0.5 },
   textAlign: "center",
