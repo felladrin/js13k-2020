@@ -31,7 +31,7 @@ for (const key of getKeysFromEnum(Action)) {
 
   const icon = Sprite({
     x: 0,
-    y: 30,
+    y: 15,
     width: 512,
     height: 512,
     scaleX: 120 / 512,
@@ -48,7 +48,7 @@ for (const key of getKeysFromEnum(Action)) {
 
   const peopleActingLabel = Text({
     x: 0,
-    y: -85,
+    y: -105,
     text: "0",
     font: `30px ${defaultFontFamily}`,
     color: "#83908f",
@@ -70,7 +70,7 @@ for (const key of getKeysFromEnum(Action)) {
 
   const actionNameLabel = Text({
     x: 0,
-    y: -55,
+    y: -70,
     text: Action[key],
     font: `30px ${defaultFontFamily}`,
     color: "#83908f",
