@@ -41,15 +41,19 @@ gameStore.on("@changed", (state) => {
   if (state.showingGameOverDialog && !gameOverDialog.text.length) {
     if (gameStore.get().food > 100000 && gameStore.get().resources > 100000) {
       gameOverDialog.text = getSuccessMessage();
-      addOneTimeListenerForClickTouchEndOnElement(getCanvas(), () => {
-        gameStore.dispatch("hideGameOverDialog");
-        gameStore.dispatch("resumeGame");
-      });
+      setTimeout(() => {
+        addOneTimeListenerForClickTouchEndOnElement(getCanvas(), () => {
+          gameStore.dispatch("hideGameOverDialog");
+          gameStore.dispatch("resumeGame");
+        });
+      }, 3000);
     } else {
       gameOverDialog.text = getFailureMessage();
-      addOneTimeListenerForClickTouchEndOnElement(getCanvas(), () => {
-        window.document.location.reload();
-      });
+      setTimeout(() => {
+        addOneTimeListenerForClickTouchEndOnElement(getCanvas(), () => {
+          window.document.location.reload();
+        });
+      }, 3000);
     }
   }
 });
