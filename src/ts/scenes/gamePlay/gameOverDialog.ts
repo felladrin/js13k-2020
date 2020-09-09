@@ -1,30 +1,13 @@
 import { Text, getCanvas } from "kontra";
-import { gameWidth, gameHeight, defaultFontFamily } from "../../constants";
+import {
+  gameWidth,
+  gameHeight,
+  defaultFontFamily,
+  requiredFoodAndResourcesAmount,
+} from "../../constants";
 import { gameStore } from "../../gameStore";
 import wrap from "word-wrap";
 import { addOneTimeListenerForClickTouchEndOnElement } from "../../functions";
-
-function getSuccessMessage() {
-  return wrap(
-    [
-      "Mission Complete!",
-      "The land is ready to receive the newcomers with plenty of food and comfort!",
-      "Click here if you wish to keep playing just for fun.",
-    ].join("\n\n"),
-    { width: 22 }
-  );
-}
-
-function getFailureMessage() {
-  return wrap(
-    [
-      "Mission Failed!",
-      "The lack of food or resources made it impossible to receive the newcomers.",
-      "Click here to restart.",
-    ].join("\n\n"),
-    { width: 22 }
-  );
-}
 
 export const gameOverDialog = Text({
   x: gameWidth / 2,
@@ -38,22 +21,42 @@ export const gameOverDialog = Text({
 });
 
 gameStore.on("@changed", (state) => {
-  if (state.showingGameOverDialog && !gameOverDialog.text.length) {
-    if (gameStore.get().food > 100000 && gameStore.get().resources > 100000) {
-      gameOverDialog.text = getSuccessMessage();
-      setTimeout(() => {
-        addOneTimeListenerForClickTouchEndOnElement(getCanvas(), () => {
-          gameStore.dispatch("hideGameOverDialog");
-          gameStore.dispatch("resumeGame");
-        });
-      }, 3000);
-    } else {
-      gameOverDialog.text = getFailureMessage();
-      setTimeout(() => {
-        addOneTimeListenerForClickTouchEndOnElement(getCanvas(), () => {
-          window.document.location.reload();
-        });
-      }, 3000);
-    }
+  if (!state.showingGameOverDialog) return;
+
+  if (state.hasShownGameOverDialog) return;
+
+  let messageParagraphs = [
+    "Mission Failed!",
+    "The lack of food or resources made it impossible to receive the newcomers.",
+    "Click here to restart.",
+  ];
+
+  let clickOnCanvasCallback = () => {
+    window.document.location.reload();
+  };
+
+  if (
+    gameStore.get().food > requiredFoodAndResourcesAmount &&
+    gameStore.get().resources > requiredFoodAndResourcesAmount
+  ) {
+    messageParagraphs = [
+      "Mission Complete!",
+      "The land is ready to receive the newcomers with plenty of food and comfort!",
+      "Click here if you wish to keep playing just for fun.",
+    ];
+
+    clickOnCanvasCallback = () => {
+      gameStore.dispatch("hideGameOverDialog");
+      gameStore.dispatch("resumeGame");
+    };
   }
+
+  gameOverDialog.text = wrap(messageParagraphs.join("\n\n"), { width: 22 });
+
+  setTimeout(() => {
+    addOneTimeListenerForClickTouchEndOnElement(
+      getCanvas(),
+      clickOnCanvasCallback
+    );
+  }, 3000);
 });

@@ -1,8 +1,13 @@
 import { Text } from "kontra";
-import { gameWidth, gameHeight, defaultFontFamily } from "../../constants";
+import {
+  gameWidth,
+  gameHeight,
+  defaultFontFamily,
+  requiredFoodAndResourcesAmount,
+} from "../../constants";
 import wrap from "word-wrap";
 
-const targetAmount = Number(1000000).toLocaleString();
+const targetAmount = Number(requiredFoodAndResourcesAmount).toLocaleString();
 
 export const startText = Text({
   text: wrap(

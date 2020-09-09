@@ -12,6 +12,8 @@ export const secondsPerGameTick = 0.333;
 
 export const gameTicksPerGameDay = 6;
 
+export const requiredFoodAndResourcesAmount = 1000000;
+
 export const defaultFontFamily = "Verdana, Geneva, sans-serif";
 
 export const actionsImprovedByConstruction: Action[] = [
