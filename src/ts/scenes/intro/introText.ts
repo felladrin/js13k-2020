@@ -1,5 +1,5 @@
 import { Text } from "kontra";
-import { gameWidth, gameHeight, defaultFontFamily } from "../../constants";
+import { gameWidth, gameHeight } from "../../constants";
 
 const commonTextProperties: Partial<Text> = {
   x: gameWidth / 2,
@@ -12,13 +12,5 @@ export const introTextTitle = Text({
   text: "POPULATION: 404",
   font: `70px "Trebuchet MS", Helvetica, sans-serif`,
   color: "white",
-  y: gameHeight / 2 - 60,
-});
-
-export const introTextSubtitle = Text({
-  ...commonTextProperties,
-  text: "A JS13K GAME BY FELLADRIN",
-  font: `40px ${defaultFontFamily}`,
-  color: "white",
-  y: gameHeight / 2 + 120,
+  y: gameHeight / 2,
 });

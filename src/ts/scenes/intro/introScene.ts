@@ -1,7 +1,7 @@
 import { Scene, getCanvas } from "kontra";
 import { gameStore } from "../../gameStore";
 import { GameScene } from "../../enums";
-import { introTextTitle, introTextSubtitle } from "./introText";
+import { introTextTitle } from "./introText";
 import { addOneTimeListenerForClickTouchEndOnElement } from "../../functions";
 
 const fadeSpeed = 0.8;
@@ -11,7 +11,7 @@ let isFadingOut = false;
 
 export const introScene = Scene({
   id: GameScene.Intro,
-  children: [introTextTitle, introTextSubtitle],
+  children: [introTextTitle],
   opacity: 0,
   hidden: true,
   onShow: () => {
