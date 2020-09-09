@@ -1,6 +1,7 @@
 import { Text } from "kontra";
 import { gameStore } from "../../gameStore";
 import { defaultFontFamily } from "../../constants";
+import { Color } from "../../enums";
 
 function getResourcesText() {
   const gameState = gameStore.get();
@@ -16,7 +17,7 @@ export const resourcesLabel = Text({
   text: getResourcesText(),
   font: `38px ${defaultFontFamily}`,
   lineHeight: 1.3,
-  color: "#83908f",
+  color: Color.Gray,
   anchor: { x: 0.5, y: 0.5 },
   textAlign: "center",
 });

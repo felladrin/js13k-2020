@@ -1,7 +1,7 @@
 import { Text, Button } from "kontra";
 import { defaultFontFamily, actionsImprovedByResearch } from "../../constants";
 import { getKeysFromEnum } from "../../functions";
-import { Action } from "../../enums";
+import { Action, Color } from "../../enums";
 import { gameStore } from "../../gameStore";
 
 export const nextResearchOptions = Text({
@@ -10,7 +10,7 @@ export const nextResearchOptions = Text({
   text: "NEXT RESEARCH",
   font: `23px ${defaultFontFamily}`,
   lineHeight: 1.3,
-  color: "#83908f",
+  color: Color.Gray,
   anchor: { x: 0.5, y: 0.5 },
   textAlign: "center",
 });
@@ -26,7 +26,7 @@ for (const key of getKeysFromEnum(Action)) {
     anchor: { x: 0.5, y: 0.5 },
     text: {
       text: Action[key],
-      color: "white",
+      color: Color.White,
       font: `25px ${defaultFontFamily}`,
       anchor: { x: 0.5, y: 0.5 },
     },
@@ -48,7 +48,7 @@ for (const key of getKeysFromEnum(Action)) {
       if (gameStore.get().nextResearch == Action[key]) {
         actionButton.context.setLineDash([10, 10]);
         actionButton.context.lineWidth = 3;
-        actionButton.context.strokeStyle = "white";
+        actionButton.context.strokeStyle = Color.White;
         actionButton.context.strokeRect(
           0,
           0,

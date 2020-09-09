@@ -1,6 +1,7 @@
 import { Text } from "kontra";
 import { gameStore } from "../../gameStore";
 import { defaultFontFamily, gameWidth, gameHeight } from "../../constants";
+import { Color } from "../../enums";
 
 function getConstructionSlotsText(availableConstructionSlots: number) {
   return `CONSTRUCTION SLOTS\n${availableConstructionSlots}`;
@@ -12,7 +13,7 @@ export const constructionSlotsLabel = Text({
   text: getConstructionSlotsText(gameStore.get().availableConstructionSlots),
   lineHeight: 1.5,
   font: `22px ${defaultFontFamily}`,
-  color: "#83908f",
+  color: Color.Gray,
   anchor: { x: 0.5, y: 0.5 },
   textAlign: "center",
 });

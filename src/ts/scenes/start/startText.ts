@@ -6,6 +6,7 @@ import {
   requiredFoodAndResourcesAmount,
 } from "../../constants";
 import wrap from "word-wrap";
+import { Color } from "../../enums";
 
 const targetAmount = Number(requiredFoodAndResourcesAmount).toLocaleString();
 
@@ -24,7 +25,7 @@ export const startText = Text({
   ),
   font: `32px ${defaultFontFamily}`,
   lineHeight: 1.3,
-  color: "white",
+  color: Color.White,
   x: gameWidth / 2,
   y: gameHeight / 2,
   anchor: { x: 0.5, y: 0.5 },

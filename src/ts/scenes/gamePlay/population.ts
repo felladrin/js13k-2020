@@ -34,7 +34,6 @@ function fillPopulation(): void {
   population.get({
     x: getActionAreaLabel(Action.Resting).position.x + randInt(-40, 40),
     y: getActionAreaLabel(Action.Resting).position.y + randInt(-40, 40),
-    color: "darkRed",
     width: 4,
     height: 4,
     sickOrInjured: false,

@@ -1,5 +1,6 @@
 import { Sprite } from "kontra";
 import { gameStore } from "../../gameStore";
+import { Color } from "../../enums";
 
 const commonProgressBarProperties: Partial<Sprite> = {
   anchor: { x: 0, y: 0 },
@@ -21,11 +22,17 @@ function createProgressBar(foregroundColor: string, backgroundColor: string) {
   return progressBarBackground;
 }
 
-export const researchProgressBar = createProgressBar("cyan", "#001a17");
-export const constructionProgressBar = createProgressBar("yellow", "#001a17");
+export const researchProgressBar = createProgressBar(
+  Color.Cyan,
+  Color.DarkGreen
+);
+export const constructionProgressBar = createProgressBar(
+  Color.Yellow,
+  Color.DarkGreen
+);
 export const explorationProgressBar = createProgressBar(
-  "lightGreen",
-  "#001a17"
+  Color.LightGreen,
+  Color.DarkGreen
 );
 
 gameStore.on("@changed", (state) => {

@@ -8,6 +8,7 @@ import {
 import { gameStore } from "../../gameStore";
 import wrap from "word-wrap";
 import { addOneTimeListenerForClickTouchEndOnElement } from "../../functions";
+import { Color } from "../../enums";
 
 export const gameOverDialog = Text({
   x: gameWidth / 2,
@@ -15,7 +16,7 @@ export const gameOverDialog = Text({
   text: "",
   lineHeight: 1.3,
   font: `26px ${defaultFontFamily}`,
-  color: "#83908f",
+  color: Color.Gray,
   anchor: { x: 0.5, y: 0.5 },
   textAlign: "center",
 });

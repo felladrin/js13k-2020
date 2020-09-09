@@ -6,6 +6,7 @@ import {
   gameWidth,
   endGameDay,
 } from "../../constants";
+import { Color } from "../../enums";
 
 function getDaysPassedText(daysPassed: number) {
   return `NEXT ARRIVAL\n${endGameDay - daysPassed}`;
@@ -17,7 +18,7 @@ export const daysPassedLabel = Text({
   text: getDaysPassedText(gameStore.get().daysPassed),
   lineHeight: 1.5,
   font: `40px ${defaultFontFamily}`,
-  color: "#83908f",
+  color: Color.Gray,
   anchor: { x: 0.5, y: 0.5 },
   textAlign: "center",
 });

@@ -1,5 +1,5 @@
 import { Text, Vector, Sprite, Button, clamp } from "kontra";
-import { Action } from "../../enums";
+import { Action, Color } from "../../enums";
 import { getKeysFromEnum } from "../../functions";
 import {
   actionToSVGPathMap,
@@ -37,7 +37,7 @@ for (const key of getKeysFromEnum(Action)) {
     scaleX: 120 / 512,
     scaleY: 120 / 512,
     anchor: { x: 0.5, y: 0.5 },
-    color: "#83908f",
+    color: Color.Gray,
     render: () => {
       icon.context.fillStyle = icon.color;
       icon.context.beginPath();
@@ -51,7 +51,7 @@ for (const key of getKeysFromEnum(Action)) {
     y: -105,
     text: "0",
     font: `30px ${defaultFontFamily}`,
-    color: "#83908f",
+    color: Color.Gray,
     anchor: { x: 0.5, y: 0.5 },
     textAlign: "center",
     update: () => {
@@ -73,7 +73,7 @@ for (const key of getKeysFromEnum(Action)) {
     y: -70,
     text: Action[key],
     font: `30px ${defaultFontFamily}`,
-    color: "#83908f",
+    color: Color.Gray,
     anchor: { x: 0.5, y: 0.5 },
     textAlign: "center",
   });
@@ -83,7 +83,7 @@ for (const key of getKeysFromEnum(Action)) {
     y: 85,
     text: Action[key],
     font: `20px ${defaultFontFamily}`,
-    color: "#83908f",
+    color: Color.Gray,
     anchor: { x: 0.5, y: 0.5 },
     textAlign: "center",
     update: () => {
@@ -154,7 +154,7 @@ for (const key of getKeysFromEnum(Action)) {
   }
 
   const circleShadow = Sprite({
-    color: "#4d5f5e",
+    color: Color.DarkerGray,
     radius: 140,
     anchor: { x: 0.5, y: 0.5 },
     opacity: 0,
@@ -183,7 +183,7 @@ for (const key of getKeysFromEnum(Action)) {
   const circle = Sprite({
     x: positionInTheCircle.x,
     y: positionInTheCircle.y,
-    color: "#4d5f5e",
+    color: Color.DarkerGray,
     radius: 140,
     anchor: { x: 0.5, y: 0.5 },
     action: Action[key],
