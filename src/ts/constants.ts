@@ -17,15 +17,15 @@ export const requiredFoodAndResourcesAmount = 1000000;
 export const defaultFontFamily = "Verdana, Geneva, sans-serif";
 
 export const actionsImprovedByConstruction: Action[] = [
-  Action.Farming,
   Action.Researching,
+  Action.Farming,
   Action.Resting,
 ];
 
 export const actionsImprovedByResearch: Action[] = [
   Action.Constructing,
-  Action.Exploring,
   Action.Scavenging,
+  Action.Exploring,
 ];
 
 export const actionToSVGPathMap: { [key in Action]: string } = {
