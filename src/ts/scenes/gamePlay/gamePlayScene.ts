@@ -10,8 +10,10 @@ import {
 } from "./labels";
 import { GameScene } from "../../enums";
 import { gameOverDialog } from "./gameOverDialog";
-import { nextConstructionOptions } from "./nextConstructionOptions";
-import { nextResearchOptions } from "./nextResearchOptions";
+import {
+  nextConstructionOptions,
+  nextResearchOptions,
+} from "./selectableOptions";
 
 export const gamePlayScene = Scene({
   id: GameScene.GamePlay,

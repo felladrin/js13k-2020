@@ -4,7 +4,6 @@ export * from "./counters";
 export * from "./gameOverDialog";
 export * from "./gamePlayScene";
 export * from "./labels";
-export * from "./nextConstructionOptions";
-export * from "./nextResearchOptions";
 export * from "./population";
 export * from "./progressBars";
+export * from "./selectableOptions";
