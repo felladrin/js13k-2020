@@ -12,20 +12,19 @@ function getPopulationText(population: number) {
   return `POPULATION\n${population}`;
 }
 
-export const populationLabel = Text({
+const commonPopulationAndDaysPassedLabelProperties = {
   x: gameWidth / 2,
-  y: gameHeight / 2 + 30,
-  text: getPopulationText(gameStore.get().population),
   lineHeight: 1.5,
   font: `40px ${defaultFontFamily}`,
   color: Color.Gray,
   anchor: { x: 0.5, y: 0.5 },
   textAlign: "center",
-});
+};
 
-gameStore.on("@changed", (state) => {
-  if (state.population)
-    populationLabel.text = getPopulationText(state.population);
+export const populationLabel = Text({
+  ...commonPopulationAndDaysPassedLabelProperties,
+  y: gameHeight / 2 + 30,
+  text: getPopulationText(gameStore.get().population),
 });
 
 function getDaysPassedText(daysPassed: number) {
@@ -33,19 +32,9 @@ function getDaysPassedText(daysPassed: number) {
 }
 
 export const daysPassedLabel = Text({
-  x: gameWidth / 2,
+  ...commonPopulationAndDaysPassedLabelProperties,
   y: gameHeight / 2 - 120,
   text: getDaysPassedText(gameStore.get().daysPassed),
-  lineHeight: 1.5,
-  font: `40px ${defaultFontFamily}`,
-  color: Color.Gray,
-  anchor: { x: 0.5, y: 0.5 },
-  textAlign: "center",
-});
-
-gameStore.on("@changed", (state) => {
-  if (state.daysPassed)
-    daysPassedLabel.text = getDaysPassedText(state.daysPassed);
 });
 
 function getConstructionSlotsText(availableConstructionSlots: number) {
@@ -63,13 +52,6 @@ export const constructionSlotsLabel = Text({
   textAlign: "center",
 });
 
-gameStore.on("@changed", (state) => {
-  if (!isNaN(state.availableConstructionSlots))
-    constructionSlotsLabel.text = getConstructionSlotsText(
-      state.availableConstructionSlots
-    );
-});
-
 function getFoodText() {
   const gameState = gameStore.get();
   const food = gameState.food.toLocaleString();
@@ -78,21 +60,19 @@ function getFoodText() {
   return `FOOD\n${food}\n⇧${foodCreatedPerTick} ⇩${foodConsumedPerTick}`;
 }
 
-export const foodLabel = Text({
-  x: gameWidth - 210,
+const commonTextProperties = {
   y: 100,
-  text: getFoodText(),
   font: `38px ${defaultFontFamily}`,
   lineHeight: 1.3,
   color: Color.Gray,
   anchor: { x: 0.5, y: 0.5 },
   textAlign: "center",
-});
+};
 
-gameStore.on("@changed", (state) => {
-  if (state.food || state.foodCreatedPerTick || state.foodConsumedPerTick) {
-    foodLabel.text = getFoodText();
-  }
+export const foodLabel = Text({
+  ...commonTextProperties,
+  x: gameWidth - 210,
+  text: getFoodText(),
 });
 
 function getResourcesText() {
@@ -104,17 +84,27 @@ function getResourcesText() {
 }
 
 export const resourcesLabel = Text({
+  ...commonTextProperties,
   x: 210,
-  y: 100,
   text: getResourcesText(),
-  font: `38px ${defaultFontFamily}`,
-  lineHeight: 1.3,
-  color: Color.Gray,
-  anchor: { x: 0.5, y: 0.5 },
-  textAlign: "center",
 });
 
 gameStore.on("@changed", (state) => {
+  if (state.population)
+    populationLabel.text = getPopulationText(state.population);
+
+  if (state.daysPassed)
+    daysPassedLabel.text = getDaysPassedText(state.daysPassed);
+
+  if (!isNaN(state.availableConstructionSlots))
+    constructionSlotsLabel.text = getConstructionSlotsText(
+      state.availableConstructionSlots
+    );
+
+  if (state.food || state.foodCreatedPerTick || state.foodConsumedPerTick) {
+    foodLabel.text = getFoodText();
+  }
+
   if (
     state.resources ||
     state.resourcesCreatedPerTick ||
