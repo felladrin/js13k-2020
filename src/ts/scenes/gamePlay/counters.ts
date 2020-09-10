@@ -1,6 +1,13 @@
 import { gameStore } from "../../gameStore";
 import { GameScene, GameEvent } from "../../enums";
 import { on } from "kontra";
+import { gameTicksPerGameDay, endGameDay } from "../../constants";
+
+let ticksPassed = 0;
+
+gameStore.on("resetDaysPassed", () => {
+  ticksPassed = 0;
+});
 
 on(GameEvent.GameTick, () => {
   if (gameStore.get().paused) return;
@@ -8,6 +15,7 @@ on(GameEvent.GameTick, () => {
   if (!gameStore.get().activeGameScenes.includes(GameScene.GamePlay)) return;
 
   const gameState = gameStore.get();
+
   const foodCreatedPerTick = gameState.farming * gameState.farmingConstructions;
   const foodConsumedPerTick =
     gameState.constructing +
@@ -22,14 +30,6 @@ on(GameEvent.GameTick, () => {
     foodCreatedPerTick,
     foodConsumedPerTick,
   });
-});
-
-on(GameEvent.GameTick, () => {
-  if (gameStore.get().paused) return;
-
-  if (!gameStore.get().activeGameScenes.includes(GameScene.GamePlay)) return;
-
-  const gameState = gameStore.get();
 
   gameStore.dispatch(
     "increaseResearchProgress",
@@ -45,14 +45,7 @@ on(GameEvent.GameTick, () => {
     "increaseConstructionProgress",
     (gameState.constructing * gameState.constructingImprovements) / 100
   );
-});
 
-on(GameEvent.GameTick, () => {
-  if (gameStore.get().paused) return;
-
-  if (!gameStore.get().activeGameScenes.includes(GameScene.GamePlay)) return;
-
-  const gameState = gameStore.get();
   const resourcesCreatedPerTick =
     gameState.scavenging * gameState.scavengingImprovements;
   const resourcesConsumedPerTick =
@@ -65,16 +58,6 @@ on(GameEvent.GameTick, () => {
     resourcesCreatedPerTick,
     resourcesConsumedPerTick,
   });
-});
-
-import { gameTicksPerGameDay, endGameDay } from "../../constants";
-
-let ticksPassed = 0;
-
-on(GameEvent.GameTick, () => {
-  if (gameStore.get().paused) return;
-
-  if (!gameStore.get().activeGameScenes.includes(GameScene.GamePlay)) return;
 
   ticksPassed++;
 
@@ -93,8 +76,4 @@ on(GameEvent.GameTick, () => {
     gameStore.dispatch("resetDaysPassed");
     gameStore.dispatch("doublePopulation");
   }
-});
-
-gameStore.on("resetDaysPassed", () => {
-  ticksPassed = 0;
 });
