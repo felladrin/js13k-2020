@@ -1,15 +1,17 @@
 import { Scene } from "kontra";
 import { getAllActionAreaLabels } from "./actionAreas";
 import { gameStore } from "../../gameStore";
-import { daysPassedLabel } from "./daysPassedLabel";
-import { foodLabel } from "./foodLabel";
-import { resourcesLabel } from "./resourcesLabel";
-import { populationLabel } from "./populationLabel";
+import {
+  daysPassedLabel,
+  populationLabel,
+  constructionSlotsLabel,
+  foodLabel,
+  resourcesLabel,
+} from "./labels";
 import { GameScene } from "../../enums";
 import { gameOverDialog } from "./gameOverDialog";
 import { nextConstructionOptions } from "./nextConstructionOptions";
 import { nextResearchOptions } from "./nextResearchOptions";
-import { constructionSlotsLabel } from "./constructionSlotsLabel";
 
 export const gamePlayScene = Scene({
   id: GameScene.GamePlay,
@@ -41,21 +43,27 @@ gameStore.on("@changed", (state) => {
       : gamePlayScene.hide();
   }
 
+  const labelsToToggle = [
+    daysPassedLabel,
+    populationLabel,
+    constructionSlotsLabel,
+  ];
+
   if (
     state.showingGameOverDialog &&
     !gamePlayScene.children.includes(gameOverDialog)
   ) {
     gamePlayScene.addChild(gameOverDialog);
-    gamePlayScene.removeChild(daysPassedLabel);
-    gamePlayScene.removeChild(populationLabel);
-    gamePlayScene.removeChild(constructionSlotsLabel);
+    for (const labelToRemove of labelsToToggle) {
+      gamePlayScene.removeChild(labelToRemove);
+    }
   } else if (
     !state.showingGameOverDialog &&
     gamePlayScene.children.includes(gameOverDialog)
   ) {
     gamePlayScene.removeChild(gameOverDialog);
-    gamePlayScene.addChild(daysPassedLabel);
-    gamePlayScene.addChild(populationLabel);
-    gamePlayScene.addChild(constructionSlotsLabel);
+    for (const labelToAdd of labelsToToggle) {
+      gamePlayScene.addChild(labelToAdd);
+    }
   }
 });
