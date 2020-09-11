@@ -24,9 +24,9 @@ interface Events {
     resourcesConsumedPerTick: number;
   };
   setActionToBoost: Action | null;
-  increaseExplorationProgress: number;
-  increaseConstructionProgress: number;
-  increaseResearchProgress: number;
+  increaseExplorationProgress: void;
+  increaseConstructionProgress: void;
+  increaseResearchProgress: void;
   incrementAvailableConstructionSlots: void;
   setHoveredButton: Button | null;
   activateGameScene: GameScene;
@@ -155,17 +155,18 @@ export const gameStore = createStoreon<State, Events>([
 
     store.on(
       "increaseConstructionProgress",
-      (
-        {
-          constructionProgressPercentage,
-          nextConstruction,
-          farmingConstructions,
-          researchingConstructions,
-          restingConstructions,
-          availableConstructionSlots,
-        },
-        percentage
-      ) => {
+      ({
+        constructing,
+        constructingImprovements,
+        constructionProgressPercentage,
+        nextConstruction,
+        farmingConstructions,
+        researchingConstructions,
+        restingConstructions,
+        availableConstructionSlots,
+      }) => {
+        const percentage = (constructing * constructingImprovements) / 100;
+
         let newPercentage = clamp(
           0,
           100,
@@ -203,7 +204,8 @@ export const gameStore = createStoreon<State, Events>([
 
     store.on(
       "increaseExplorationProgress",
-      ({ explorationProgressPercentage }, percentage) => {
+      ({ exploring, exploringImprovements, explorationProgressPercentage }) => {
+        const percentage = (exploring * exploringImprovements) / 100;
         let newPercentage = clamp(
           0,
           100,
@@ -223,16 +225,17 @@ export const gameStore = createStoreon<State, Events>([
 
     store.on(
       "increaseResearchProgress",
-      (
-        {
-          researchProgressPercentage,
-          nextResearch,
-          constructingImprovements,
-          exploringImprovements,
-          scavengingImprovements,
-        },
-        percentage
-      ) => {
+      ({
+        researching,
+        researchingConstructions,
+        researchProgressPercentage,
+        nextResearch,
+        constructingImprovements,
+        exploringImprovements,
+        scavengingImprovements,
+      }) => {
+        const percentage = (researching * researchingConstructions) / 100;
+
         let newPercentage = clamp(
           0,
           100,

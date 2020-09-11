@@ -31,20 +31,9 @@ on(GameEvent.GameTick, () => {
     foodConsumedPerTick,
   });
 
-  gameStore.dispatch(
-    "increaseResearchProgress",
-    (gameState.researching * gameState.researchingConstructions) / 100
-  );
-
-  gameStore.dispatch(
-    "increaseExplorationProgress",
-    (gameState.exploring * gameState.exploringImprovements) / 100
-  );
-
-  gameStore.dispatch(
-    "increaseConstructionProgress",
-    (gameState.constructing * gameState.constructingImprovements) / 100
-  );
+  gameStore.dispatch("increaseResearchProgress");
+  gameStore.dispatch("increaseExplorationProgress");
+  gameStore.dispatch("increaseConstructionProgress");
 
   const resourcesCreatedPerTick =
     gameState.scavenging * gameState.scavengingImprovements;
