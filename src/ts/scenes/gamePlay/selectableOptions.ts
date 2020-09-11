@@ -9,8 +9,8 @@ import { Action, Color } from "../../enums";
 import { gameStore } from "../../gameStore";
 
 const commonTextProperties = {
-  y: 850,
-  font: `23px ${defaultFontFamily}`,
+  y: 852,
+  font: `20px ${defaultFontFamily}`,
   lineHeight: 1.3,
   color: Color.Gray,
   anchor: { x: 0.5, y: 0.5 },
@@ -20,13 +20,13 @@ const commonTextProperties = {
 export const nextConstructionOptions = Text({
   ...commonTextProperties,
   x: 210,
-  text: "NEXT CONSTRUCTION",
+  text: "WHAT TO CONSTRUCT NEXT?",
 });
 
 export const nextResearchOptions = Text({
   ...commonTextProperties,
   x: 825,
-  text: "NEXT RESEARCH",
+  text: "WHAT TO IMPROVE NEXT?",
 });
 
 function getCommonButtonPropertiesForAction(action: Action) {
