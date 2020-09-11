@@ -1,4 +1,3 @@
-import "inobounce";
 import "./canvas";
 import "./scenes";
 import { game } from "./game";

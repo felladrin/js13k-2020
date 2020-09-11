@@ -37,7 +37,6 @@
     "eslint-plugin-prettier": "^3.1.4",
     "html-inline": "^1.2.0",
     "husky": "^4.2.5",
-    "inobounce": "^0.2.0",
     "jscpd": "^3.3.19",
     "kontra": "^7.1.2",
     "mkdirp": "^1.0.4",
