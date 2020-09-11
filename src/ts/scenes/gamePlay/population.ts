@@ -32,8 +32,8 @@ export const population = Pool({
 
 function fillPopulation(): void {
   population.get({
-    x: getActionAreaLabel(Action.Resting).position.x + randInt(-40, 40),
-    y: getActionAreaLabel(Action.Resting).position.y + randInt(-40, 40),
+    x: getActionAreaLabel(Action.Resting).position.x + randInt(-50, 50),
+    y: getActionAreaLabel(Action.Resting).position.y + randInt(-50, 50),
     width: 4,
     height: 4,
     sickOrInjured: false,
@@ -48,7 +48,7 @@ function fillPopulation(): void {
       if (!this.targetPosition && this.currentAction) {
         this.targetPosition = getActionAreaLabel(
           this.currentAction
-        ).position.add(Vector(randInt(-80, 80), randInt(-80, 80)));
+        ).position.add(Vector(randInt(-95, 95), randInt(-95, 95)));
       }
 
       if (
