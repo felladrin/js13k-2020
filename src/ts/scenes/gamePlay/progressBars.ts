@@ -2,19 +2,14 @@ import { Sprite } from "kontra";
 import { gameStore } from "../../gameStore";
 import { Color } from "../../enums";
 
-const commonProgressBarProperties: Partial<Sprite> = {
-  anchor: { x: 0, y: 0 },
-  height: 8,
-};
-
 function createProgressBar(foregroundColor: string, backgroundColor: string) {
   const progressBarForeground = Sprite({
-    ...commonProgressBarProperties,
+    height: 8,
     color: foregroundColor,
   });
 
   const progressBarBackground = Sprite({
-    ...commonProgressBarProperties,
+    height: 8,
     color: backgroundColor,
     children: [progressBarForeground],
   });

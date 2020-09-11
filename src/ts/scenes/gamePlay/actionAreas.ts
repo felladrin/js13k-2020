@@ -29,7 +29,6 @@ for (const key of getKeysFromEnum(Action)) {
   const positionInTheCircle = Vector(x, y).add(centralPosition);
 
   const icon = Sprite({
-    x: 0,
     y: 15,
     width: 512,
     height: 512,
@@ -46,7 +45,6 @@ for (const key of getKeysFromEnum(Action)) {
   });
 
   const peopleActingLabel = Text({
-    x: 0,
     y: -105,
     text: "0",
     font: `30px ${defaultFontFamily}`,
@@ -68,7 +66,6 @@ for (const key of getKeysFromEnum(Action)) {
   });
 
   const actionNameLabel = Text({
-    x: 0,
     y: -70,
     text: Action[key],
     font: `30px ${defaultFontFamily}`,
@@ -78,7 +75,6 @@ for (const key of getKeysFromEnum(Action)) {
   });
 
   const constructionsAndImprovementsLabel = Text({
-    x: 0,
     y: 85,
     text: Action[key],
     font: `20px ${defaultFontFamily}`,
