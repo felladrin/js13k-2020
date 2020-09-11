@@ -5,7 +5,7 @@ import { introTextTitle } from "./introText";
 import { addOneTimeListenerForClickTouchEndOnElement } from "../../functions";
 
 const fadeSpeed = 0.8;
-let fadeOutDelayInSeconds = 3;
+let fadeOutDelayInSeconds = 2;
 let isFadingIn = false;
 let isFadingOut = false;
 
