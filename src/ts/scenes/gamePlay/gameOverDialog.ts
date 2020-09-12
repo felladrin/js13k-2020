@@ -41,7 +41,7 @@ gameStore.on("@changed", (state) => {
     gameStore.get().resources > requiredFoodAndResourcesAmount
   ) {
     messageParagraphs = [
-      "Mission Complete!",
+      "Mission Accomplished!",
       "The land is ready to receive the newcomers with plenty of food and comfort!",
       "Click here if you wish to keep playing just for fun.",
     ];
