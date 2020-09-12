@@ -28,17 +28,66 @@ export const actionsImprovedByResearch: Action[] = [
   Action.Exploring,
 ];
 
-export const actionToSVGPathMap: { [key in Action]: string } = {
-  Constructing:
-    "M170 19h-3c-25 0-49 5-69 14 84 8 157 61 119 122l-6 10h1c-1 2-1 5 2 9 3 5 9 10 15 13 6 4 14 7 20 8 6 0 11 0 14-2l5-8c22-9 58 11 66 29a121 121 0 0138-74c-20 7-30-7-38-35-9-26-37-47-59-60-31-18-69-26-105-26zm239 122c-4-1-9 1-15 5-10 6-21 17-29 32-8 14-13 29-13 41-1 11 3 18 7 20s11 2 20-4c10-7 21-18 29-32s13-30 13-41c1-11-2-18-6-20l-4-1h-2zm-210 44C81 367 4 419 22 463c8 20 31 36 55 29 49-16 60-94 173-278l-3-1a74 74 0 01-48-28zm293 72l-110 22 51 16 31 149 19-4-32-149 41-34zm-200 16l-80 79 51-15 68 68-23 85 18 4 21-74 24 24 14-13-33-32 14-51 52-13-109-29 39 37-11 41-60-60 15-51z",
-  Exploring:
-    "M357 19l-18 2c-25 6-37 22-51 41-15 19-32 41-63 48-30 6-71-2-134-31-10 44-33 128-61 178 60 29 98 35 121 31 22-6 35-20 48-43 17-29 33-72 61-123l16 9c-17 30-29 58-40 83 8-7 19-12 31-15 28-6 65 0 122 25-7-29-2-62 9-92 13-33 34-63 57-84a263 263 0 00-98-29zm127 14l-2 1c-5 1-9 4-13 11L290 497h23L491 49c3-10-1-15-7-16z",
-  Farming:
-    "M106 19l26 59h3l19-6 17-10 3-3-18-40h-50zm75 57a95 95 0 01-42 19l17 38 25 1 17-20-17-38zm110 19c-19-1-47 6-75 15l3 8-27 31-3 4-45-3-4-7c-44 23-78 50-74 69a638 638 0 00160 285l12-14A628 628 0 0185 214l43-18a629 629 0 00157 275l11-14a627 627 0 01-152-268l42-19a628 628 0 00157 276l12-14a627 627 0 01-152-269l42-18a629 629 0 00157 275l12-14a627 627 0 01-153-268l42-19a629 629 0 00158 275l11-14a634 634 0 01-154-276c-5-6-14-9-27-9z",
-  Researching:
-    "M368 25l-42 38 50 39 26-50-34-27zm-63 42l-39 49 71 56 39-49-71-56zm-50 64l-59 74 119 89 6 6c2 3 1 7 1 7v128h-25v-24H89v24H62v60h371V338a66 66 0 01-63-117l-115-90zm-70 89l-68 87 113 2 27-35-72-54zm218 11a47 47 0 00-47 48 47 47 0 0047 47 47 47 0 0047-47 47 47 0 00-47-48zm0 18a30 30 0 0130 30 30 30 0 01-30 29 30 30 0 01-30-29 30 30 0 0130-30z",
-  Resting:
-    "M247 28v80h18V28zm35 0v64l80-32zm-26 96A669 669 0 0164 252c0 64-16 208-32 240h160c16-16 64-144 64-192 0 48 48 176 64 192h160c-16-32-32-176-32-240-48-16-144-80-192-128zM112 300h80v80h-80z",
-  Scavenging:
-    "M117 18l-94 96c16 19 43 36 66 40 15 3 30 2 43-4l87 88 22-23-87-87c6-13 8-28 4-43-8-31-21-48-41-67zm126 9c-10 0-19 1-28 3a827 827 0 01274 274c2-60-22-121-60-170-15 6-33 1-46-12a45 45 0 01-12-47c-40-29-85-48-128-48zM128 60c6 10 10 19 12 29 3 16 0 30-9 38-9 9-22 12-39 9-9-2-18-6-28-11zm264 16c-7 7-7 22 4 33 11 10 25 11 33 4 7-7 7-22-5-33-8-8-23-13-32-4zm-56 71L22 461c5 11 11 20 25 25l313-314c-7-9-15-17-24-25zm-44 119l-23 23 98 103c-16 15-32 27-47 36 56 56 125 78 162 55 23-38 1-107-54-162-10 15-22 30-36 45z",
+export const actionToSVGPathMap: {
+  [key in Action]: {
+    path: string;
+    originalWidth: number;
+    originalHeight: number;
+    desiredWidth: number;
+    desiredHeight: number;
+  };
+} = {
+  /** @see https://www.iconfinder.com/icons/2002553/building_construction_hammer_herramienta_de_mano_martillo_repair_tool_icon */
+  Constructing: {
+    path: "M19 3h-3v1h-1V3H9L4 4v1h5v2h2v14h2V7h2V6h1v1h3V4 3z",
+    originalWidth: 24,
+    originalHeight: 24,
+    desiredWidth: 130,
+    desiredHeight: 130,
+  },
+  /** @see https://www.iconfinder.com/icons/353412/flag_icon */
+  Exploring: {
+    path:
+      "M54 13l-1-1-1 1-3 1-3 1-3 1-2-1-6-2-5-1c-4 0-7 1-11 3l-2 1-1-3a4 4 0 00-2-7 4 4 0 00-3 8l6 42a3 3 0 005-1l-2-17c4-2 7-3 11-3l3 1 3 1 3 1 4 1a22 22 0 0010-4l1-1V14l-1-1z",
+    originalWidth: 64,
+    originalHeight: 64,
+    desiredWidth: 130,
+    desiredHeight: 130,
+  },
+  /** @see https://www.iconfinder.com/icons/3765546/carrot_root_vegetable_icon */
+  Farming: {
+    path:
+      "M30 13c-1-3-5-4-7-2h-1l1-11h-3l-1 9-4-7-3 1 5 8-8-4-1 2 9 5h-1c-2 2-3 5-2 7l2 2 5-3 1 2-5 3 8 9 5-3 2 2-5 3 12 14 3-2-8-25-5 3-1-2 5-3-3-8",
+    originalWidth: 50,
+    originalHeight: 50,
+    desiredWidth: 116,
+    desiredHeight: 116,
+  },
+  /** @see https://www.iconfinder.com/icons/111098/chemistry_science_icon */
+  Researching: {
+    path:
+      "M186 208L39 410a36 36 0 0029 58h364a36 36 0 0029-58L314 208V77h4a23 23 0 000-45H182a23 23 0 000 45h4v131zm46-131h36v137l64 91H168l64-91V77z",
+    originalWidth: 500,
+    originalHeight: 500,
+    desiredWidth: 116,
+    desiredHeight: 116,
+  },
+  /** @see https://www.iconfinder.com/icons/5402450/building_construction_home_house_property_real_estate_icon */
+  Resting: {
+    path:
+      "M22 12a1 1 0 01-1 1 1 1 0 01-1-1v7a2 2 0 01-2 2h-3a1 1 0 01-1-1v-4a1 1 0 00-1-1h-2a1 1 0 00-1 1v4a1 1 0 01-1 1H6a2 2 0 01-2-2v-7a1 1 0 01-2-1l8-7a3 3 0 014 0l8 7a1 1 0 010 1z",
+    originalWidth: 24,
+    originalHeight: 24,
+    desiredWidth: 140,
+    desiredHeight: 130,
+  },
+  /** @see https://www.iconfinder.com/icons/3553096/building_construction_pickaxe_icon */
+  Scavenging: {
+    path:
+      "M22 6v2l-1 1h-6l-1-1V6L0 9c0-2 9-7 16-8l1-1h2l1 1c7 1 16 6 16 8L22 6zm-5 4h3l1 1v21l-3 2-2-2V11l1-1z",
+    originalWidth: 36,
+    originalHeight: 34,
+    desiredWidth: 116,
+    desiredHeight: 110,
+  },
 };

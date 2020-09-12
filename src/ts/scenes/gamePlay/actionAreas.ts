@@ -29,18 +29,20 @@ for (const key of getKeysFromEnum(Action)) {
   const y = Math.cos(angle) * radius;
   const positionInTheCircle = Vector(x, y).add(centralPosition);
 
+  const iconInfo = actionToSVGPathMap[Action[key]];
+
   const icon = Sprite({
     y: 15,
-    width: 512,
-    height: 512,
-    scaleX: 120 / 512,
-    scaleY: 120 / 512,
+    width: iconInfo.originalWidth,
+    height: iconInfo.originalHeight,
+    scaleX: iconInfo.desiredWidth / iconInfo.originalWidth,
+    scaleY: iconInfo.desiredHeight / iconInfo.originalHeight,
     anchor: { x: 0.5, y: 0.5 },
     color: Color.Gray,
     render: () => {
       icon.context.fillStyle = icon.color;
       icon.context.beginPath();
-      const path = new Path2D(actionToSVGPathMap[Action[key]]);
+      const path = new Path2D(iconInfo.path);
       icon.context.fill(path);
     },
   });
