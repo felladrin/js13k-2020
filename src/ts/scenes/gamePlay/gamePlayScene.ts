@@ -19,7 +19,7 @@ import {
 
 export const gamePlayScene = Scene({
   id: GameScene.GamePlay,
-  hidden: true,
+  hidden: !gameStore.get().activeGameScenes.includes(GameScene.GamePlay),
   children: [
     ...getAllActionAreaLabels(),
     foodLabel,

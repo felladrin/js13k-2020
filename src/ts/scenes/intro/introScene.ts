@@ -13,7 +13,7 @@ export const introScene = Scene({
   id: GameScene.Intro,
   children: [introTextTitle],
   opacity: 0,
-  hidden: true,
+  hidden: !gameStore.get().activeGameScenes.includes(GameScene.Intro),
   onShow: () => {
     isFadingIn = true;
 
@@ -67,5 +67,3 @@ gameStore.on("@changed", (state) => {
     ? introScene.show()
     : introScene.hide();
 });
-
-gameStore.dispatch("activateGameScene", GameScene.Intro);

@@ -96,7 +96,7 @@ export const gameStore = createStoreon<State, Events>([
       scavengingImprovements: 1,
       actionToBoost: null,
       hoveredButton: null,
-      activeGameScenes: [],
+      activeGameScenes: [GameScene.Intro],
       paused: false,
       showingGameOverDialog: false,
       hasShownGameOverDialog: false,

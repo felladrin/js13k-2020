@@ -12,7 +12,7 @@ export const startScene = Scene({
   id: GameScene.Start,
   children: [startText],
   opacity: 0,
-  hidden: true,
+  hidden: !gameStore.get().activeGameScenes.includes(GameScene.Start),
   onShow: () => {
     isFadingIn = true;
 
