@@ -1,7 +1,8 @@
 import { Text, Vector, Sprite, Button, clamp } from "kontra";
-import { Action, ActionIconPath, Color } from "../../enums";
+import { Action, Color } from "../../enums";
 import { getKeysFromEnum } from "../../functions";
 import {
+  actionToSVGPathMap,
   gameHeight,
   defaultFontFamily,
   gameWidth,
@@ -39,7 +40,7 @@ for (const key of getKeysFromEnum(Action)) {
     render: () => {
       icon.context.fillStyle = icon.color;
       icon.context.beginPath();
-      const path = new Path2D(ActionIconPath[Action[key]]);
+      const path = new Path2D(actionToSVGPathMap[Action[key]]);
       icon.context.fill(path);
     },
   });
