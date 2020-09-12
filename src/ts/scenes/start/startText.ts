@@ -14,12 +14,13 @@ export const startText = Text({
   text: wrap(
     [
       "Earth is dying.",
-      "In a joint effort from humankind, a spaceship was crafted.",
-      "Large enough to transport supplies, animals and 404 astronauts, it was launched into space for a light-year trip to the nearest habitable planet: Secunda.",
-      "Get ready to conquer: You can start by exploring it to find new sites for construction, then research tools, strategies and techniques to improve the work efficiency.",
-      "Guide the population: Press and hold the action areas.",
-      `Objective: Have at least ${targetAmount} units of Food and Resources in stock before the next spaceship arrives.`,
-      "Press anywhere to start.",
+      "In a joint effort to save the humankind, a spaceship was crafted.",
+      "Large enough to transport supplies and animals along with 404 astronauts, it was launched into space for a light-year trip to the nearest habitable planet.",
+      "Get ready to conquer: You can start by exploring it to find new spots for construction. Then research tools, strategies and techniques to improve the work efficiency.",
+      "Guide the population: Press and hold the action areas to move people.",
+      "Be wise: Select the right research and construction to boost the areas you need more performance.",
+      `Focus on your goal: Have at least ${targetAmount} units of Food and Resources in stock before the next spaceship arrives.`,
+      "Press anywhere to start the mission.",
     ].join("\n\n"),
     { width: 60 }
   ),
