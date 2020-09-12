@@ -15,6 +15,7 @@ import {
   constructionProgressBar,
   explorationProgressBar,
 } from "./progressBars";
+import { actionAreaRadius } from "./constants";
 
 const actionAreas: Sprite[] = [];
 const actionsAmount = Object.keys(Action).length;
@@ -123,8 +124,8 @@ for (const key of getKeysFromEnum(Action)) {
   });
 
   const boostActionButton = Button({
-    width: 140 * 2,
-    height: 140 * 2,
+    width: actionAreaRadius * 2,
+    height: actionAreaRadius * 2,
     anchor: { x: 0.5, y: 0.5 },
     action: Action[key],
     onDown: () => {
@@ -153,7 +154,7 @@ for (const key of getKeysFromEnum(Action)) {
 
   const circleShadow = Sprite({
     color: Color.DarkerGray,
-    radius: 140,
+    radius: actionAreaRadius,
     anchor: { x: 0.5, y: 0.5 },
     opacity: 0,
     action: Action[key],
@@ -161,7 +162,7 @@ for (const key of getKeysFromEnum(Action)) {
       if (circleShadow.opacity == 0) {
         if (gameStore.get().actionToBoost == circleShadow.action) {
           circleShadow.opacity = 1;
-          circleShadow.radius = 140;
+          circleShadow.radius = actionAreaRadius;
         } else {
           return;
         }
@@ -182,7 +183,7 @@ for (const key of getKeysFromEnum(Action)) {
     x: positionInTheCircle.x,
     y: positionInTheCircle.y,
     color: Color.DarkerGray,
-    radius: 140,
+    radius: actionAreaRadius,
     anchor: { x: 0.5, y: 0.5 },
     action: Action[key],
     render: () => {

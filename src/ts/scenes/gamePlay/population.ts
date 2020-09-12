@@ -7,8 +7,10 @@ import {
   maxHealthConsumedPerTick,
   minHealthRestoredPerTick,
   maxHealthRestoredPerTick,
+  actionAreaRadius,
 } from "./constants";
 import { getKeysFromEnum } from "../../functions";
+import { gameHeight, gameWidth } from "../../constants";
 
 let canBoost = true;
 
@@ -32,8 +34,8 @@ export const population = Pool({
 
 function fillPopulation(): void {
   population.get({
-    x: getActionAreaLabel(Action.Resting).position.x + randInt(-50, 50),
-    y: getActionAreaLabel(Action.Resting).position.y + randInt(-50, 50),
+    x: getRandomPositionInCircle(gameWidth).x,
+    y: getRandomPositionInCircle(gameHeight).y,
     width: 4,
     height: 4,
     sickOrInjured: false,
@@ -48,7 +50,7 @@ function fillPopulation(): void {
       if (!this.targetPosition && this.currentAction) {
         this.targetPosition = getActionAreaLabel(
           this.currentAction
-        ).position.add(Vector(randInt(-95, 95), randInt(-95, 95)));
+        ).position.add(getRandomPositionInCircle(actionAreaRadius));
       }
 
       if (
@@ -254,4 +256,11 @@ function moveFromConstructingToExploringIfNeeded() {
       person.currentAction = Action.Exploring;
     }
   });
+}
+
+function getRandomPositionInCircle(circleRadius: number) {
+  const angle = Math.random() * Math.PI * 2;
+  const x = Math.sin(angle) * circleRadius;
+  const y = Math.cos(angle) * circleRadius;
+  return Vector(x, y);
 }
