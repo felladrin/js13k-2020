@@ -23,7 +23,7 @@ const commonPopulationAndDaysPassedLabelProperties = {
 
 export const populationLabel = Text({
   ...commonPopulationAndDaysPassedLabelProperties,
-  y: gameHeight / 2 + 30,
+  y: gameHeight / 2 - 110,
   text: getPopulationText(gameStore.get().population),
 });
 
@@ -33,12 +33,12 @@ function getDaysPassedText(daysPassed: number) {
 
 export const daysPassedLabel = Text({
   ...commonPopulationAndDaysPassedLabelProperties,
-  y: gameHeight / 2 - 120,
+  y: gameHeight / 2 + 30,
   text: getDaysPassedText(gameStore.get().daysPassed),
 });
 
 function getConstructionSlotsText(availableConstructionSlots: number) {
-  return `CONSTRUCTION SLOTS\n${availableConstructionSlots}`;
+  return `AVAILABLE SPOTS FOR\nCONSTRUCTION: ${availableConstructionSlots}`;
 }
 
 export const constructionSlotsLabel = Text({
@@ -71,7 +71,7 @@ const commonTextProperties = {
 
 export const foodLabel = Text({
   ...commonTextProperties,
-  x: gameWidth - 210,
+  x: 210,
   text: getFoodText(),
 });
 
@@ -85,7 +85,7 @@ function getResourcesText() {
 
 export const resourcesLabel = Text({
   ...commonTextProperties,
-  x: 210,
+  x: gameWidth - 210,
   text: getResourcesText(),
 });
 
