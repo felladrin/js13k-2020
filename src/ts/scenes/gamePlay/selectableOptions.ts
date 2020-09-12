@@ -57,14 +57,14 @@ for (const key of getKeysFromEnum(Action)) {
     yAndOnDownButtonProperties = {
       y: 40 + actionsImprovedByConstruction.indexOf(Action[key]) * 50,
       onDown: () => {
-        gameStore.dispatch("setNextConstruction", Action[key]);
+        gameStore.dispatch("update", { nextConstruction: Action[key] });
       },
     };
   } else if (actionCanBeImprovedByResearch) {
     yAndOnDownButtonProperties = {
       y: 40 + actionsImprovedByResearch.indexOf(Action[key]) * 50,
       onDown: () => {
-        gameStore.dispatch("setNextResearch", Action[key]);
+        gameStore.dispatch("update", { nextResearch: Action[key] });
       },
     };
   }
@@ -76,9 +76,9 @@ for (const key of getKeysFromEnum(Action)) {
       const { hoveredButton } = gameStore.get();
 
       if (!actionButton.hovered && hoveredButton == actionButton) {
-        gameStore.dispatch("setHoveredButton", null);
+        gameStore.dispatch("update", { hoveredButton: null });
       } else if (actionButton.hovered && hoveredButton != actionButton) {
-        gameStore.dispatch("setHoveredButton", actionButton);
+        gameStore.dispatch("update", { hoveredButton: actionButton });
       }
     },
     render: (() => {

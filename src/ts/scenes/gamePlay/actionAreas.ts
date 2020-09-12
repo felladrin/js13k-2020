@@ -128,21 +128,21 @@ for (const key of getKeysFromEnum(Action)) {
     anchor: { x: 0.5, y: 0.5 },
     action: Action[key],
     onDown: () => {
-      gameStore.dispatch("setActionToBoost", boostActionButton.action);
+      gameStore.dispatch("update", { actionToBoost: boostActionButton.action });
     },
     onUp: () => {
-      gameStore.dispatch("setActionToBoost", null);
+      gameStore.dispatch("update", { actionToBoost: null });
     },
     update: () => {
       const { hoveredButton } = gameStore.get();
 
       if (!boostActionButton.hovered && hoveredButton == boostActionButton) {
-        gameStore.dispatch("setHoveredButton", null);
+        gameStore.dispatch("update", { hoveredButton: null });
       } else if (
         boostActionButton.hovered &&
         hoveredButton != boostActionButton
       ) {
-        gameStore.dispatch("setHoveredButton", boostActionButton);
+        gameStore.dispatch("update", { hoveredButton: boostActionButton });
       }
     },
   });

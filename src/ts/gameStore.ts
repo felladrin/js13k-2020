@@ -7,36 +7,20 @@ type GameUpdateCallback = (deltaTime?: number) => void;
 type GameRenderCallback = () => void;
 
 interface Events {
+  update: Partial<State>;
   addUpdateCallback: GameUpdateCallback;
   addRenderCallback: GameRenderCallback;
   addOneDayPassed: void;
-  updatePopulationStats: {
-    [key in Action]: number;
-  };
-  updateFoodStats: {
-    food: number;
-    foodCreatedPerTick: number;
-    foodConsumedPerTick: number;
-  };
-  updateResourcesStats: {
-    resources: number;
-    resourcesCreatedPerTick: number;
-    resourcesConsumedPerTick: number;
-  };
-  setActionToBoost: Action | null;
   increaseExplorationProgress: void;
   increaseConstructionProgress: void;
   increaseResearchProgress: void;
   incrementAvailableConstructionSlots: void;
-  setHoveredButton: Button | null;
   activateGameScene: GameScene;
   deactivateGameScene: GameScene;
   pauseGame: void;
   resumeGame: void;
   showGameOverDialog: void;
   hideGameOverDialog: void;
-  setNextConstruction: Action;
-  setNextResearch: Action;
   doublePopulation: void;
   resetDaysPassed: void;
 }
@@ -69,7 +53,6 @@ interface State {
   exploringImprovements: number;
   scavengingImprovements: number;
   actionToBoost: Action | null;
-  cursorStyle: CSSStyleDeclaration["cursor"];
   hoveredButton: Button | null;
   activeGameScenes: GameScene[];
   paused: boolean;
@@ -113,7 +96,6 @@ export const gameStore = createStoreon<State, Events>([
       scavengingImprovements: 1,
       actionToBoost: null,
       hoveredButton: null,
-      cursorStyle: "auto",
       activeGameScenes: [],
       paused: false,
       showingGameOverDialog: false,
@@ -121,6 +103,8 @@ export const gameStore = createStoreon<State, Events>([
       nextConstruction: Action.Farming,
       nextResearch: Action.Scavenging,
     }));
+
+    store.on("update", (_, state) => state);
 
     store.on("addUpdateCallback", ({ onUpdateCallbacks }, callback) => ({
       onUpdateCallbacks: onUpdateCallbacks.concat([callback]),
@@ -132,25 +116,6 @@ export const gameStore = createStoreon<State, Events>([
 
     store.on("addOneDayPassed", ({ daysPassed }) => ({
       daysPassed: daysPassed + 1,
-    }));
-
-    store.on("updatePopulationStats", (_, newStats) => ({
-      farming: newStats.Farming,
-      scavenging: newStats.Scavenging,
-      researching: newStats.Researching,
-      constructing: newStats.Constructing,
-      exploring: newStats.Exploring,
-      resting: newStats.Resting,
-    }));
-
-    store.on("setActionToBoost", (_, actionToBoost) => ({
-      actionToBoost,
-    }));
-
-    store.on("updateFoodStats", (_, foodStats) => ({ ...foodStats }));
-
-    store.on("updateResourcesStats", (_, resourcesStats) => ({
-      ...resourcesStats,
     }));
 
     store.on(
@@ -274,11 +239,6 @@ export const gameStore = createStoreon<State, Events>([
       })
     );
 
-    store.on("setHoveredButton", (_, hoveredButton) => ({
-      hoveredButton,
-      cursorStyle: hoveredButton ? "pointer" : "auto",
-    }));
-
     store.on("activateGameScene", ({ activeGameScenes }, gameScene) => ({
       activeGameScenes: activeGameScenes.concat([gameScene]),
     }));
@@ -297,12 +257,6 @@ export const gameStore = createStoreon<State, Events>([
       showingGameOverDialog: false,
       hasShownGameOverDialog: true,
     }));
-
-    store.on("setNextConstruction", (_, nextConstruction) => ({
-      nextConstruction,
-    }));
-
-    store.on("setNextResearch", (_, nextResearch) => ({ nextResearch }));
 
     store.on("doublePopulation", ({ population }) => ({
       population: population * 2,

@@ -38,7 +38,6 @@ function handleWindowResize() {
     left: "50%",
     transform: `translate(-50%, -50%) scale(${scale})`,
     transformOrigin: "center center",
-    cursor: gameStore.get().cursorStyle,
   };
 
   for (const declaration of Object.keys(style)) {
@@ -55,7 +54,11 @@ function handleWindowResize() {
 handleWindowResize();
 
 gameStore.on("@changed", (state) => {
-  if (state.cursorStyle) canvas.style.cursor = state.cursorStyle;
+  if (state.hoveredButton) {
+    canvas.style.cursor = "pointer";
+  } else if (state.hoveredButton === null) {
+    canvas.style.cursor = "auto";
+  }
 });
 
 on(GameEvent.GameTick, () => {

@@ -25,7 +25,7 @@ on(GameEvent.GameTick, () => {
     gameState.scavenging;
   const food = gameState.food + foodCreatedPerTick - foodConsumedPerTick;
 
-  gameStore.dispatch("updateFoodStats", {
+  gameStore.dispatch("update", {
     food,
     foodCreatedPerTick,
     foodConsumedPerTick,
@@ -42,7 +42,7 @@ on(GameEvent.GameTick, () => {
   const resources =
     gameState.resources + resourcesCreatedPerTick - resourcesConsumedPerTick;
 
-  gameStore.dispatch("updateResourcesStats", {
+  gameStore.dispatch("update", {
     resources,
     resourcesCreatedPerTick,
     resourcesConsumedPerTick,

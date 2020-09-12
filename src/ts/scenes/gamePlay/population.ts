@@ -169,7 +169,14 @@ function updatePopulationStats() {
   const newStatsHash = JSON.stringify(newStats);
 
   if (newStatsHash != oldStatsHash) {
-    gameStore.dispatch("updatePopulationStats", newStats);
+    gameStore.dispatch("update", {
+      farming: newStats.Farming,
+      scavenging: newStats.Scavenging,
+      researching: newStats.Researching,
+      constructing: newStats.Constructing,
+      exploring: newStats.Exploring,
+      resting: newStats.Resting,
+    });
   }
 
   oldStatsHash = newStatsHash;
