@@ -17,11 +17,6 @@ interface Events {
   incrementAvailableConstructionSlots: void;
   activateGameScene: GameScene;
   deactivateGameScene: GameScene;
-  pauseGame: void;
-  resumeGame: void;
-  showGameOverDialog: void;
-  hideGameOverDialog: void;
-  doublePopulation: void;
   resetDaysPassed: void;
 }
 
@@ -245,21 +240,6 @@ export const gameStore = createStoreon<State, Events>([
 
     store.on("deactivateGameScene", ({ activeGameScenes }, gameScene) => ({
       activeGameScenes: activeGameScenes.filter((scene) => scene != gameScene),
-    }));
-
-    store.on("pauseGame", () => ({ paused: true }));
-
-    store.on("resumeGame", () => ({ paused: false }));
-
-    store.on("showGameOverDialog", () => ({ showingGameOverDialog: true }));
-
-    store.on("hideGameOverDialog", () => ({
-      showingGameOverDialog: false,
-      hasShownGameOverDialog: true,
-    }));
-
-    store.on("doublePopulation", ({ population }) => ({
-      population: population * 2,
     }));
 
     store.on("resetDaysPassed", () => ({ daysPassed: 0 }));

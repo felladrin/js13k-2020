@@ -47,8 +47,11 @@ gameStore.on("@changed", (state) => {
     ];
 
     clickOnCanvasCallback = () => {
-      gameStore.dispatch("hideGameOverDialog");
-      gameStore.dispatch("resumeGame");
+      gameStore.dispatch("update", {
+        paused: false,
+        showingGameOverDialog: false,
+        hasShownGameOverDialog: true,
+      });
     };
   }
 
