@@ -5,6 +5,7 @@ import {
   gameWidth,
   gameHeight,
   endGameDay,
+  requiredFoodAndResourcesAmount,
 } from "../../constants";
 import { Color } from "../../enums";
 
@@ -45,7 +46,7 @@ export const constructionSlotsLabel = Text({
   x: gameWidth / 2,
   y: gameHeight / 2 + 150,
   text: getConstructionSlotsText(gameStore.get().availableConstructionSlots),
-  lineHeight: 1.5,
+  lineHeight: 1.3,
   font: `22px ${defaultFontFamily}`,
   color: Color.Gray,
   anchor: { x: 0.5, y: 0.5 },
@@ -87,6 +88,27 @@ export const resourcesLabel = Text({
   ...commonTextProperties,
   x: gameWidth - 210,
   text: getResourcesText(),
+});
+
+const commonRequiredAmountLabelProperties = {
+  y: gameHeight / 2,
+  lineHeight: 1.3,
+  font: `20px ${defaultFontFamily}`,
+  color: Color.Gray,
+  anchor: { x: 0.5, y: 0.5 },
+  textAlign: "center",
+};
+
+export const requiredFoodAmountLabel = Text({
+  ...commonRequiredAmountLabelProperties,
+  x: 210,
+  text: `OBJECTIVE #1\nFOOD > ${requiredFoodAndResourcesAmount.toLocaleString()}`,
+});
+
+export const requiredResourcesAmountLabel = Text({
+  ...commonRequiredAmountLabelProperties,
+  x: gameWidth - 210,
+  text: `OBJECTIVE #2\nRESOURCES > ${requiredFoodAndResourcesAmount.toLocaleString()}`,
 });
 
 gameStore.on("@changed", (state) => {

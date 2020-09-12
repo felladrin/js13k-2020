@@ -7,6 +7,8 @@ import {
   constructionSlotsLabel,
   foodLabel,
   resourcesLabel,
+  requiredFoodAmountLabel,
+  requiredResourcesAmountLabel,
 } from "./labels";
 import { GameScene } from "../../enums";
 import { gameOverDialog } from "./gameOverDialog";
@@ -25,6 +27,8 @@ export const gamePlayScene = Scene({
     daysPassedLabel,
     populationLabel,
     constructionSlotsLabel,
+    requiredFoodAmountLabel,
+    requiredResourcesAmountLabel,
     nextConstructionOptions,
     nextResearchOptions,
   ],
@@ -67,5 +71,10 @@ gameStore.on("@changed", (state) => {
     for (const labelToAdd of labelsToToggle) {
       gamePlayScene.addChild(labelToAdd);
     }
+  }
+
+  if (state.hasShownGameOverDialog) {
+    gamePlayScene.removeChild(requiredFoodAmountLabel);
+    gamePlayScene.removeChild(requiredResourcesAmountLabel);
   }
 });
