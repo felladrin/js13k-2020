@@ -1,5 +1,5 @@
 import { Text } from "kontra";
-import { gameWidth, gameHeight } from "../../constants";
+import { gameWidth, gameHeight, defaultFontFamily } from "../../constants";
 import { Color } from "../../enums";
 
 export const introTextTitle = Text({
@@ -8,6 +8,6 @@ export const introTextTitle = Text({
   anchor: { x: 0.5, y: 0.5 },
   textAlign: "center",
   text: "POPULATION: 404",
-  font: `70px "Trebuchet MS", Helvetica, sans-serif`,
+  font: `70px ${defaultFontFamily}`,
   color: Color.White,
 });

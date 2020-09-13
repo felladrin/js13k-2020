@@ -45,14 +45,14 @@ export const actionToSVGPathMap: {
     desiredWidth: 130,
     desiredHeight: 130,
   },
-  /** @see https://www.iconfinder.com/icons/353412/flag_icon */
+  /** @see https://www.iconfinder.com/icons/4908137/destination_ensign_flag_pole_signal_icon */
   Exploring: {
     path:
-      "M54 13l-1-1-1 1-3 1-3 1-3 1-2-1-6-2-5-1c-4 0-7 1-11 3l-2 1-1-3a4 4 0 00-2-7 4 4 0 00-3 8l6 42a3 3 0 005-1l-2-17c4-2 7-3 11-3l3 1 3 1 3 1 4 1a22 22 0 0010-4l1-1V14l-1-1z",
-    originalWidth: 64,
-    originalHeight: 64,
-    desiredWidth: 130,
-    desiredHeight: 130,
+      "M6 13l1 1a7 7 0 006 0 5 5 0 014 0l3 2V5l-2-1a7 7 0 00-6 0 5 5 0 01-4 0L6 3V2H4v20h2z",
+    originalWidth: 24,
+    originalHeight: 24,
+    desiredWidth: 120,
+    desiredHeight: 120,
   },
   /** @see https://www.iconfinder.com/icons/3765546/carrot_root_vegetable_icon */
   Farming: {
@@ -78,7 +78,7 @@ export const actionToSVGPathMap: {
       "M22 12a1 1 0 01-1 1 1 1 0 01-1-1v7a2 2 0 01-2 2h-3a1 1 0 01-1-1v-4a1 1 0 00-1-1h-2a1 1 0 00-1 1v4a1 1 0 01-1 1H6a2 2 0 01-2-2v-7a1 1 0 01-2-1l8-7a3 3 0 014 0l8 7a1 1 0 010 1z",
     originalWidth: 24,
     originalHeight: 24,
-    desiredWidth: 140,
+    desiredWidth: 130,
     desiredHeight: 130,
   },
   /** @see https://www.iconfinder.com/icons/3553096/building_construction_pickaxe_icon */
