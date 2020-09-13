@@ -8,6 +8,7 @@ import {
   requiredFoodAndResourcesAmount,
 } from "../../constants";
 import { Color } from "../../enums";
+import { downArrow, upArrow } from "./constants";
 
 function getPopulationText(population: number) {
   return `POPULATION\n${population}`;
@@ -58,7 +59,7 @@ function getFoodText() {
   const food = gameState.food.toLocaleString();
   const foodCreatedPerTick = gameState.foodCreatedPerTick.toLocaleString();
   const foodConsumedPerTick = gameState.foodConsumedPerTick.toLocaleString();
-  return `FOOD\n${food}\n⇧${foodCreatedPerTick} ⇩${foodConsumedPerTick}`;
+  return `FOOD\n${food}\n${upArrow}${foodCreatedPerTick} ${downArrow}${foodConsumedPerTick}`;
 }
 
 const commonTextProperties = {
@@ -81,7 +82,7 @@ function getResourcesText() {
   const resources = gameState.resources.toLocaleString();
   const resourcesCreatedPerTick = gameState.resourcesCreatedPerTick.toLocaleString();
   const resourcesConsumedPerTick = gameState.resourcesConsumedPerTick.toLocaleString();
-  return `RESOURCES\n${resources}\n⇧${resourcesCreatedPerTick} ⇩${resourcesConsumedPerTick}`;
+  return `RESOURCES\n${resources}\n${upArrow}${resourcesCreatedPerTick} ${downArrow}${resourcesConsumedPerTick}`;
 }
 
 export const resourcesLabel = Text({
