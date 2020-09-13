@@ -1,4 +1,4 @@
-# js13k-2020
+# POPULATION: 404
 
 Game created for the 2020 [Js13kGames](https://js13kgames.com/) competition.
 
