@@ -15,10 +15,10 @@ export const startText = Text({
     [
       "Earth is dying.",
       "In a joint effort to save the humankind, a spaceship was crafted.",
-      "Large enough to transport supplies and animals along with 404 astronauts, it was launched into space for a light-year trip to the nearest habitable planet.",
+      "Large enough to transport 404 astronauts, it was launched into space for a light-year trip to the nearest habitable planet.",
       "Guide the population: Press and hold the action areas to move people.",
-      "Get ready to conquer: You can start by exploring the land to find new spots for construction.",
-      "Be wise: Select the right research and construction to boost the areas you need more performance.",
+      "Prepare to conquer: Explore the land to find good spots for construction.",
+      "Be wise: Select Researches and Constructions carefully to boost the areas you need more performance.",
       `Focus on your goal: Have at least ${targetAmount} units of Food and Resources in stock before the next spaceship arrives.`,
       "Press anywhere to start the mission.",
     ].join("\n\n"),
