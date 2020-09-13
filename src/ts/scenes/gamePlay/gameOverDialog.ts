@@ -28,7 +28,7 @@ gameStore.on("@changed", (state) => {
 
   let messageParagraphs = [
     "Mission Failed!",
-    "The lack of food or resources made it impossible to receive the newcomers.",
+    "The lack of food or resources made it impossible to receive newcomers.",
     "Click here to restart.",
   ];
 
